@@ -38,6 +38,54 @@ app.controller('SelectionController', function($scope){
 		{
 			name:	"Tho"
 		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
+		{
+			name:	"Tho"
+		},
 	];
 	
 	var options = [ "yes", "maybe", "no" ];
@@ -65,6 +113,32 @@ app.controller('SelectionController', function($scope){
 		[ "yes", "yes", "maybe" ]
 	];
 });
+
+/*
+var out = "";
+var maxUsers = 250;
+for(var i=1; i<=maxUsers; i++)
+{
+	var p = Math.round((100/i)*10000) / 10000.0;
+	out += "#SelectionContainer.count-" + i + " .single-selection { width: " + p + "%; }";
+}
+
+for(var u=maxUsers; u>=2; u--)
+{
+	out += "@media (max-width: " + (250 + (u-2) * 75) + "px) {";
+	
+	for(var i=1; i<=maxUsers; i++)
+	{
+		var p = Math.round((i/u)*1000000) / 10000.0;
+		if(p < 100) p = 100;
+		out += "#SelectionContainer.count-"+i+" .time_scale_wrapper { width: " + p + "%; }";
+	}
+	
+	out += "}";
+}
+
+console.log(out);
+//*/
 
 app.directive('ngEnter', function () {
 	return function (scope, element, attrs) {

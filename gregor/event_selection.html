@@ -7,6 +7,7 @@
 		
 		<meta name="viewport" content="initial-scale=0.8, maximum-scale=1.0, user-scalable=no, width=100%" />
 		<link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
+		<link type="text/css" rel="stylesheet" href="css/selection_sizes.css">
 		
 		<style>
 			body {
@@ -133,21 +134,24 @@
 				border-bottom:	1px solid #000;
 			}
 			
-			#Users > ul {
+			#Users > div {
 				height:			150px;
 				overflow-x:		auto;
+			}
+			
+			#Users > div > ul {
 				padding:		0px;
 				margin:			0px;
 			}
 			
-			#Users > ul > li {
+			#Users > div > ul > li {
 				position:			relative;
 				list-style-type:	none;
 				display:			inline-block;
 				height:				100px;
 			}
 			
-			#Users > ul > li > div {
+			#Users > div > ul > li > div {
 				position:			absolute;
 				bottom:				0px;
 				top:				20px;
@@ -156,7 +160,7 @@
 				background:			#eee;
 			}
 			
-			#Users > ul > li:not(:first-child) > div {
+			#Users > div > ul > li:not(:first-child) > div {
 				left:	0px;
 			}
 			
@@ -170,12 +174,12 @@
 				overflow:	scroll;
 			}
 			
-			#Selections > div:nth-child(odd), #Days > ul > li:nth-child(odd) {
-				background-color:	#eee;
+			#Selections > div {
+				width:	100%;
 			}
 			
-			#Selections > div > ul > li, #Users > ul > li {
-				width:	33.333%;
+			#Selections > div:nth-child(odd), #Days > ul > li:nth-child(odd) {
+				background-color:	#eee;
 			}
 			
 			#Selections > div > ul, #Selections > ul > li, ul.times > li {
@@ -260,20 +264,22 @@
 				</ul>
 			</div>
 		</div>
-		<div id="SelectionContainer">
+		<div id="SelectionContainer"  class="count-{{ users.length }}">
 			<div id="Users">
-				<ul>
-					<li data-ng-repeat="user in users">
-						<div>
-							{{ user.name }}
-						</div>
-					</li>
-				</ul>
+				<div>
+					<ul class="time_scale_wrapper">
+						<li class="single-selection" data-ng-repeat="user in users">
+							<div>
+								{{ user.name }}
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 			<div id="Selections">
-				<div data-ng-repeat="day in selectionMap">
+				<div class="time_scale_wrapper" data-ng-repeat="day in selectionMap">
 					<ul data-ng-repeat="moment in day">
-						<li class="{{ option }}" ng-repeat="option in moment track by $index">
+						<li class="single-selection" class="{{ option }}" ng-repeat="option in moment track by $index">
 							<div data-ng-switch="option">
 								<i class="fa fa-check" ng-switch-when="yes"></i>
 								<i class="fa fa-question" ng-switch-when="maybe"></i>
@@ -286,8 +292,27 @@
 		</div>
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script type="text/javascript" src="js/angular.js"></script>
 		<script type="text/javascript" src="js/SelectionController.js"></script>
 		<script type="text/javascript" src="js/init.js"></script>
+		
+		<script src="http://cdn.jsdelivr.net/jquery.scrollto/2.1.0/jquery.scrollTo.min.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+				$("#Days > ul").scroll(function(e){
+					$("#Selections").scrollTo({ top: $(e.target).scrollTop(), left: $("#Selections").scrollLeft() });
+				});$("#Selections")
+				
+				$("#Selections").scroll(function(e){
+					$("#Days > ul").scrollTo({ top: $(e.target).scrollTop(), left: 0 });
+					$("#Users > div").scrollTo({ top: 0, left: $(e.target).scrollLeft() });
+				});
+				
+				$("#Users > div").scroll(function(e){
+					$("#Selections").scrollTo({ top: $("#Selections").scrollTop(), left: $(e.target).scrollLeft() });
+				});
+			});
+		</script>
 	</body>
 </html>
