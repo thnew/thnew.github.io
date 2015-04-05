@@ -1,0 +1,604 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="event_selection">
+	<head>
+		<title>
+			Gregor
+		</title>
+		
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="viewport" content="initial-scale=0.8, maximum-scale=1.0, user-scalable=no, width=100%" />
+		<link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
+		<link type="text/css" rel="stylesheet" href="css/selection_sizes.css">
+		
+		<style>
+			* {
+				-webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+				-webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+				-webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+				webkit-user-select: none;                 /* prevent copy paste, to allow, change 'none' to 'text' */
+			}
+			
+			body {
+				padding:		0px;
+				margin:			0px;
+				font-size:		20px;
+				font-family:	Arial;
+			}
+			
+			#TimeContainer {
+				position:		absolute;
+				top:			0px;
+				bottom:			0px;
+				width:			100px;
+				height:			100%;
+			}
+			
+			#TimeContainer #Month {
+				z-index:		200;
+				//border-bottom:	1px solid #000;
+				position:		relative;
+				width:			100%;
+				height:			100px;
+				text-align:		center;	
+			}
+			
+			#TimeContainer #Month > div {
+				position:		absolute;
+				text-align:		center;
+				font-size:		16px;
+				bottom:			10px;
+				left:			0px;
+				right:			0px;
+			}
+			
+			#Days {
+				z-index:		99;
+				position:		absolute;
+				display:		block;
+				width:			100px;
+				top:			100px;
+				bottom:			0px;
+				//border-right:	1px solid #000;
+				overflow:		hidden;
+			}
+			
+			#Days > ul {
+				position:		relative;
+				height:			100%;
+				display:		block;
+				overflow-x:		hidden;
+				overflow-y:		scroll;
+				width:			150px;
+				padding:		0px;
+				margin:			0px;
+			}
+			
+			#Days > ul > li {
+				position:			relative;
+				list-style-type:	none;
+				border-bottom:		1px solid #000;
+			}
+			
+			#Days > ul > li .day {
+				position:			absolute;
+				left:				5px;
+				top:				0px;
+				font-size:			16px;
+				height:				100%;
+				width:				30px;
+			}
+			
+			/*
+			#Days > ul > li.isFirstDayInMonth {
+				box-shadow:	2px -2px 2px #000;
+			}
+			*/
+			
+			#Days > ul > li .day > div {
+				position:	absolute;
+				height:		23px;
+				width:		100px;
+				text-align:	center;
+				top:		50%;
+				left:		-35px;
+				margin-top:	-12px;
+				-ms-transform:		rotate(-90deg);
+				-webkit-transform:	rotate(-90deg);
+				transform:			rotate(-90deg);
+			}
+			
+			#Days > ul > li .day.small > div {
+				width:		75px;
+				left:		-20px;
+			}
+			
+			#Days .month-separator > div {
+				position:	absolute;
+				width:		66%;
+				text-align:	center;
+				top:		6px;
+			}
+			
+			ul.times {
+				padding:		0px;
+				margin:			0px;
+			}
+			
+			ul.times > li {
+				list-style-type:	none;
+				position:			relative;
+				margin-left:		40px;
+				border-top:			1px solid #000;
+				width:				60px;
+			}
+			
+			ul.times > li:first-child {
+				border:	0px;
+			}
+			
+			li ul.times > li > div {
+				position:	absolute;
+				right:		5px;
+				top:		50%;
+				margin-top:	-12px;
+			}
+			
+			#SelectionContainer {
+				position:	absolute;
+				right:		0px;
+				top:		0px;
+				bottom:		0px;
+				left:		100px;
+			}
+			
+			#Users {
+				z-index:		200;
+				position:		absolute;
+				top:			0px;
+				right:			0px;
+				left:			0px;
+				height:			100px;
+				overflow:		hidden;
+				white-space:	nowrap;
+				//border-bottom:	1px solid #000;
+			}
+			
+			#Users > div {
+				height:			150px;
+				overflow-x:		auto;
+			}
+			
+			#Users > div > ul {
+				padding:		0px;
+				margin:			0px;
+			}
+			
+			#Users > div > ul > li {
+				position:			relative;
+				list-style-type:	none;
+				display:			inline-block;
+				height:				100px;
+			}
+			
+			#Users > div > ul > li > div {
+				position:			absolute;
+				bottom:				0px;
+				top:				30px;
+				left:				5px;
+				right:				5px;
+				background:			#eee;
+				border-radius:		10px 10px 10px 10px;
+				text-align:			center;
+				padding-top:		8px;
+				color:				#bbb;
+			}
+			
+			#Users > div > ul > li:not(:first-child) > div {
+				left:	0px;
+			}
+			
+			#Users > div > ul > li > div > * {
+				display:	block;
+				position:	absolute;
+				left:		0px;
+				width:		100%;
+				text-align:	center;
+			}
+			
+			#Users > div > ul > li .img, #Users > div > ul > li img {
+				z-index:		1000;
+				width:			40px;
+				height:			40px;
+				left:			50%;
+				margin-left:	-20px;
+				bottom:			25px;
+				border-radius:	5px;
+				box-shadow:		inset 0px 0px 10px rgba(0,0,0,0.8);
+			}
+			
+			#Users > div > ul > li img {
+				z-index:	999;
+			}
+			
+			#Users > div > ul > li i {
+				bottom:		27px;
+				font-size:	35px;
+			}
+			
+			#Users > div > ul > li title {
+				bottom:		2px;
+				font-size:	16px;
+			}
+			
+			#Selections {
+				z-index:	98;
+				position:	absolute;
+				top:		100px;
+				bottom:		0px;
+				left:		0px;
+				right:		0px;
+				overflow:	scroll;
+			}
+			
+			#Selections > div {
+				width:	100%;
+			}
+			
+			#Selections > div.isWeekend, #Days > ul > li.isWeekend {
+				background-color:	#DDD;
+			}
+			
+			/*
+			#Selections > div:nth-child(odd), #Days > ul > li:nth-child(odd) {
+				background-color:	#eee;
+			}
+			*/
+			
+			#Selections > div > ul, #Selections > ul > li, ul.times > li {
+				height:	70px;
+			}
+			
+			#Days .month-separator, #Selections .month-separator {
+				position:			relative;
+				height:				30px;
+				font-size:			16px;
+				background-color:	#999;
+				color:				#fff;
+			}
+			
+			#Selections .month-separator {
+				border-bottom:	1px solid #000;
+			}
+			
+			#Selections > div > ul {
+				padding:		0px;
+				margin:			0px;
+				border-bottom:	1px solid #000;
+				white-space:	nowrap;
+			}
+			
+			#Selections > div > ul > li {
+				position:			relative;
+				height:				100%;
+				display:			inline-block;
+				list-style-type:	none;
+			}
+			
+			#Selections > div > ul > li > div {
+				position:			absolute;
+				bottom:				5px;
+				top:				5px;
+				left:				5px;
+				right:				5px;
+			}
+			
+			#Selections > div > ul > li:not(:first-child) > div {
+				left:	0px;
+			}
+			
+			#Selections > div > ul > li > div {
+				text-align:	center;
+				font-size:	30px;
+			}
+			
+			#Selections > div > ul > li i {
+				margin-top:		15px;
+				//text-shadow:	0px 0px 5px #000;
+			}
+			
+			#Selections > div > ul > li.yes i {
+				
+			}
+			
+			#Selections > div > ul > li.maybe > div {
+				
+			}
+			
+			#Selections > div > ul > li.no > div {
+				
+			}
+			
+			#ScrollField {
+				z-index:	1000;
+				position:	absolute;
+				top:		0%;
+				left:		0%;
+				width:		100%;
+				height:		100%;
+				overflow:	scroll;
+			}
+			
+			#ScrollField .dragger {
+				font-size:	60px;
+				width:		50px;
+				height:		200%;
+				top:		0%;
+				left:		50%;
+			}
+			
+			#HintForMoreUsers {
+				z-index:		200;
+				position:		absolute;
+				width:			200px;
+				text-align:		center;
+				right:			50%;
+				margin-right:	-100px;
+				top:			5px;
+				font-size:		14px;
+			}
+			
+			#HintForMoreUsers:before {
+				content: "" !important;
+			}
+			
+			header {
+				z-index:		200;
+				position:		absolute;
+				top:			0px;
+				left:			0px;
+				width:			100px;
+				height:			100px;
+				border-radius:	0px 0px 5px 0px;
+				background:		#0094FF;
+			}
+			
+			header:active {
+				background-color:	#7FC9FF;
+			}
+			
+			header i {
+				position:		absolute;
+				left:			50%;
+				margin-left:	-23px;
+				font-size:		50px;
+				top:			13px;
+			}
+			
+			#HeaderBar {
+				z-index:		200;
+				position:		absolute;
+				top:			0px;
+				right:			0px;
+				left:			100px;
+				background:		#0094FF;
+				height:			30px;
+			}
+			
+			#HeaderBar > div {
+				position:			absolute;
+				bottom:				0px;
+				left:				0px;
+				height:				5px;
+				width:				100%;
+				border-radius:		5px 0px 0px 0px;
+				background-color:	#eee;
+			}
+			
+			#HeaderBackgrund {
+				z-index:			199;
+				position:			absolute;
+				top:				0px;
+				left:				0px;
+				right:				0px;
+				height:				100px;
+				background:			#eee;
+				box-shadow:			0px 0px 5px #000;
+			}
+			
+			.blank_space {
+				height:	0px;
+				width:	5px;
+			}
+		</style>
+	</head>
+	<body data-ng-controller="SelectionController">
+		<div id="ScrollField">
+			<div class="dragger"></div>
+		</div>
+		
+		<header>
+			<i class="fa fa-arrow-left"></i>
+		</header>
+		<div id="HeaderBar"><div></div></div>
+		<div id="HeaderBackgrund"></div>
+		
+		<div id="TimeContainer">
+			<div id="Month">
+				<div>
+					mm yy
+				</div>
+			</div>
+			
+			<div id="Days">
+				<ul>
+					<div class="blank_space">&nbsp;</div>
+					
+					<li data-ng-repeat="day in days track by $index" data-ng-class="day.isWeekend ? 'isWeekend' : ''"  data-date="{{ day.date.toISOString() }}">
+						<div data-ng-if="!day.isMonthSeparator" class="day" data-ng-class="day.times.length == 1 ? 'small' : ''">
+							<div>
+								{{ day.date | date : "EEE, d" }}
+								
+							</div>
+						</div>
+						
+						<ul data-ng-if="!day.isMonthSeparator" class="times">
+							<li data-ng-repeat="time in day.times">
+								<div>
+									{{ time | date : "H:mm" }}
+								</div>
+							</li>
+						</ul>
+						
+						<div data-ng-if="day.isMonthSeparator" class="month-separator" data-year="{{ day.date | date : 'MMM yyyy' }}">
+							<div>
+								{{ day.date | date : "MMM yyyy" }}
+							</div>
+						</div>
+						
+						<div style="clear:both;"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="SelectionContainer" class="count-{{ users.length }}">
+			<div id="HintForMoreUsers">
+				<i class="fa fa-arrow-left"></i>
+				{{ users.length }} participants
+				<i class="fa fa-arrow-right"></i>
+			</div>
+			
+			<div id="Users">
+				<div>
+					<ul class="time_scale_wrapper">
+						<li class="single-selection" data-ng-repeat="user in users track by $index">
+							<div>
+								<i data-ng-if="user.image == null" class="fa fa-user"></i><br />
+								<div class="img" data-ng-if="user.image != null"></div>
+								<img data-ng-if="user.image != null" data-ng-src="{{ user.image }}" />
+								
+								<title>{{ user.name }}</title>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div id="Selections">
+				<div class="blank_space">&nbsp;</div>
+				
+				<div class="time_scale_wrapper" data-ng-repeat="day in selectionMap track by $index" data-ng-class="day.isWeekend ? 'isWeekend' : ''">
+					<div data-ng-if="day.isMonthSeparator" class="month-separator"></div>
+					
+					<ul data-ng-if="!day.isMonthSeparator" data-ng-repeat="moment in day.selections">
+						<li class="single-selection" class="{{ option }}" ng-repeat="option in moment track by $index">
+							<div data-ng-switch="option">
+								<i class="fa fa-check" ng-switch-when="yes"></i>
+								<span ng-switch-when="maybe">(<i class="fa fa-check"></i>)</span>
+								<i class="fa fa-times" ng-switch-when="no"></i>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/angular.js"></script>
+		<script type="text/javascript" src="js/SelectionController.js"></script>
+		<script type="text/javascript" src="js/init.js"></script>
+		
+		<script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+		
+		<script>
+			$(document).ready(function() {
+				var daysElemContainer = $("#Days");
+				var daysElem = $("> ul", daysElemContainer);
+				var usersElemContainer = $("#Users");
+				var usersElem = $("> div", usersElemContainer);
+				var selectionsElem = $("#Selections");
+				
+				var scrollField = $("#ScrollField");
+				
+				//navigator.notification.alert("hii", function(){});
+				
+				/* Handlers for Scrolling */ {
+					window.setTimeout(function() {
+						var diffY = daysElem[0].scrollHeight - $(daysElemContainer).height();
+						var diffX = usersElem[0].scrollWidth - $(usersElemContainer).width();
+						
+						$(".dragger", scrollField)
+							.height(scrollField.height() + diffY)
+							.width(scrollField.width() + diffX);
+						scrollField.scroll(function(){
+							daysElem.scrollTo({ top: scrollField.scrollTop(), left: 0 });
+							usersElem.scrollTo({ top: 0, left: scrollField.scrollLeft() });
+							selectionsElem.scrollTo({ top: scrollField.scrollTop(), left: scrollField.scrollLeft() });
+						});
+					}, 1000);
+					
+					/* Continuously find out which is the date at the top */ {
+						var interval = window.setInterval(setMonthInHead, 500);
+						var intervalLeft = window.setInterval(setParticipantArrows, 50);
+						
+						$(window).resize(function() {
+							setParticipantArrows(true);
+						});
+						
+						var lastScrollLeft;
+						function setParticipantArrows(doIt) {
+							var scrollLeft = scrollField.scrollLeft();
+							if(scrollLeft != lastScrollLeft || doIt)
+							{
+								lastScrollLeft = scrollLeft;
+								var scrollRight = $(".time_scale_wrapper", selectionsElem).width() - selectionsElem.width() - scrollLeft;
+								
+								var isLeft = (scrollLeft == 0);
+								var isRight = (scrollRight == 0);
+								
+								$("#HintForMoreUsers .fa-arrow-left").css("visibility", (isLeft ? "hidden" : "visible"));
+								$("#HintForMoreUsers .fa-arrow-right").css("visibility", (isRight ? "hidden" : "visible"));
+							}
+						}
+						
+						var lastScrollTop;
+						function setMonthInHead() {
+							var scrollTop = scrollField.scrollTop();
+							if(scrollTop != lastScrollTop)
+							{
+								lastScrollTop = scrollTop;
+								
+								// Detect
+								var lastElem;
+								var monthHeight = $("#Month").height();
+								var separators = $("#Days .month-separator");
+								var separatorsLength = separators.size();
+								separators.each(function(index, elem) {
+									elem = $(elem);
+									if(lastElem == null) lastElem = elem;
+									
+									var top = elem.offset().top - monthHeight;
+									var isLastElem = (index == (separatorsLength - 1));
+									if(top > 0 || isLastElem)
+									{
+										if(top < 0 && isLastElem) lastElem = elem;
+										
+										var year = lastElem.attr("data-year");
+										
+										// Replace month and year with new current
+										$("#Month > div").text(year);
+										
+										return false;
+									}
+									
+									lastElem = elem;
+								});
+							}
+						};
+						
+						setMonthInHead();
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
