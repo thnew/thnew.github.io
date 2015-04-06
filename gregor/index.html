@@ -1,317 +1,140 @@
 ﻿<!DOCTYPE html>
-<html data-ng-app="event_selection">
+<html data-ng-app="overview">
 	<head>
-		<title>
-			Gregor
-		</title>
-		
+		<meta name="msapplication-tap-highlight" content="no" />
 		<meta name="viewport" content="initial-scale=0.8, maximum-scale=1.0, user-scalable=no, width=100%" />
 		<link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
-		<link type="text/css" rel="stylesheet" href="css/selection_sizes.css">
-		
-		<style>
-			body {
-				padding:		0px;
-				margin:			0px;
-				font-size:		20px;
-				font-family:	Arial;
-			}
-			
-			#TimeContainer {
-				position:		absolute;
-				top:			0px;
-				bottom:			0px;
-				width:			100px;
-				height:			100%;
-			}
-			
-			#TimeContainer #Month {
-				z-index:		100;
-				border-bottom:	1px solid #000;
-				position:		relative;
-				width:			100%;
-				height:			100px;
-				text-align:		center;	
-			}
-			
-			#TimeContainer #Month > div {
-				position:		absolute;
-				text-align:		center;
-				bottom:			0px;
-				left:			0px;
-				right:			0px;
-			}
-			
-			#Days {
-				z-index:		99;
-				position:		absolute;
-				display:		block;
-				width:			100px;
-				top:			100px;
-				bottom:			0px;
-				border-right:	1px solid #000;
-				overflow:		hidden;
-			}
-			
-			#Days > ul {
-				position:		relative;
-				height:			100%;
-				display:		block;
-				overflow-x:		hidden;
-				overflow-y:		scroll;
-				width:			150px;
-				padding:		0px;
-				margin:			0px;
-			}
-			
-			#Days > ul > li {
-				position:			relative;
-				list-style-type:	none;
-				border-bottom:		1px solid #000;
-			}
-			
-			#Days > ul > li .day {
-				position:			absolute;
-				left:				0px;
-				top:				0px;
-				height:				100%;
-				width:				30px;
-				//transform:	rotate(-90deg);
-			}
-			
-			#Days > ul > li .day > div {
-				position:	absolute;
-				height:		23px;
-				width:		100px;
-				text-align:	center;
-				top:		50%;
-				left:		-35px;
-				margin-top:	-12px;
-				transform:	rotate(-90deg);
-			}
-			
-			ul.times {
-				padding:		0px;
-				margin:			0px;
-			}
-			
-			ul.times > li {
-				list-style-type:	none;
-				position:			relative;
-				margin-left:		30px;
-				border-top:			1px solid #000;
-				width:				70px;
-			}
-			
-			ul.times > li:first-child {
-				border:	0px;
-			}
-			
-			li ul.times > li > div {
-				position:	absolute;
-				right:		5px;
-				top:		50%;
-				margin-top:	-12px;
-			}
-			
-			#SelectionContainer {
-				position:	absolute;
-				right:		0px;
-				top:		0px;
-				bottom:		0px;
-				left:		100px;
-			}
-			
-			#Users {
-				z-index:		100;
-				position:		absolute;
-				top:			0px;
-				right:			0px;
-				left:			0px;
-				height:			100px;
-				overflow:		hidden;
-				white-space:	nowrap;
-				border-bottom:	1px solid #000;
-			}
-			
-			#Users > div {
-				height:			150px;
-				overflow-x:		auto;
-			}
-			
-			#Users > div > ul {
-				padding:		0px;
-				margin:			0px;
-			}
-			
-			#Users > div > ul > li {
-				position:			relative;
-				list-style-type:	none;
-				display:			inline-block;
-				height:				100px;
-			}
-			
-			#Users > div > ul > li > div {
-				position:			absolute;
-				bottom:				0px;
-				top:				20px;
-				left:				5px;
-				right:				5px;
-				background:			#eee;
-			}
-			
-			#Users > div > ul > li:not(:first-child) > div {
-				left:	0px;
-			}
-			
-			#Selections {
-				z-index:	98;
-				position:	absolute;
-				top:		100px;
-				bottom:		0px;
-				left:		0px;
-				right:		0px;
-				overflow:	scroll;
-			}
-			
-			#Selections > div {
-				width:	100%;
-			}
-			
-			#Selections > div:nth-child(odd), #Days > ul > li:nth-child(odd) {
-				background-color:	#eee;
-			}
-			
-			#Selections > div > ul, #Selections > ul > li, ul.times > li {
-				height:	70px;
-			}
-			
-			#Selections > div > ul {
-				padding:		0px;
-				margin:			0px;
-				border-bottom:	1px solid #000;
-				white-space:	nowrap;
-			}
-			
-			#Selections > div > ul > li {
-				position:			relative;
-				height:				100%;
-				display:			inline-block;
-				list-style-type:	none;
-			}
-			
-			#Selections > div > ul > li > div {
-				position:			absolute;
-				bottom:				5px;
-				top:				5px;
-				left:				5px;
-				right:				5px;
-			}
-			
-			#Selections > div > ul > li:not(:first-child) > div {
-				left:	0px;
-			}
-			
-			#Selections > div > ul > li > div {
-				text-align:	center;
-				font-size:	30px;
-			}
-			
-			#Selections > div > ul > li i {
-				margin-top:		15px;
-				//text-shadow:	0px 0px 5px #000;
-			}
-			
-			#Selections > div > ul > li.yes i {
-				
-			}
-			
-			#Selections > div > ul > li.maybe > div {
-				
-			}
-			
-			#Selections > div > ul > li.no > div {
-				
-			}
-		</style>
+		<link type="text/less" rel="stylesheet" href="css/main.css">
+		<link type="text/less" rel="stylesheet" href="css/header.css">
+		<link type="text/less" rel="stylesheet" href="css/events.css">
 	</head>
-	<body data-ng-controller="SelectionController">
-		<div id="TimeContainer">
-			<div id="Month">
-				<div>
-					April 2014
-				</div>
-			</div>
-			
-			<div id="Days">
-				<ul>
-					<li data-ng-repeat="day in days">
-						<div class="day">
-							<div>
-								{{ day.date }}
-							</div>
-						</div>
-						
-						<ul class="times">
-							<li data-ng-repeat="time in day.times">
-								<div>
-									{{ time }}
-								</div>
-							</li>
-						</ul>
-						<div style="clear:both;"></div>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div id="SelectionContainer"  class="count-{{ users.length }}">
-			<div id="Users">
-				<div>
-					<ul class="time_scale_wrapper">
-						<li class="single-selection" data-ng-repeat="user in users">
-							<div>
-								{{ user.name }}
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-			<div id="Selections">
-				<div class="time_scale_wrapper" data-ng-repeat="day in selectionMap">
-					<ul data-ng-repeat="moment in day">
-						<li class="single-selection" class="{{ option }}" ng-repeat="option in moment track by $index">
-							<div data-ng-switch="option">
-								<i class="fa fa-check" ng-switch-when="yes"></i>
-								<i class="fa fa-question" ng-switch-when="maybe"></i>
-								<i class="fa fa-times" ng-switch-when="no"></i>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+	<body data-ng-controller="OverviewController">
+		<header>
+			<title>
+				Events
+			</title>
+			</a>
+		</header>
 		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<ul id="Events">
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+			<a href="event_overview.html">
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>
+					<div class="title">Billard</div>
+					<div class="description">2 of 4 people voted</div>
+					<aside>10:00</aside>
+				</div>
+			</a>
+		</ul>
+		
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/angular.js"></script>
-		<script type="text/javascript" src="js/SelectionController.js"></script>
 		<script type="text/javascript" src="js/init.js"></script>
 		
-		<script src="http://cdn.jsdelivr.net/jquery.scrollto/2.1.0/jquery.scrollTo.min.js"></script>
+		<script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
 		
 		<script>
 			$(document).ready(function() {
-				$("#Days > ul").scroll(function(e){
-					$("#Selections").scrollTo({ top: $(e.target).scrollTop(), left: $("#Selections").scrollLeft() });
-				});$("#Selections")
-				
-				$("#Selections").scroll(function(e){
-					$("#Days > ul").scrollTo({ top: $(e.target).scrollTop(), left: 0 });
-					$("#Users > div").scrollTo({ top: 0, left: $(e.target).scrollLeft() });
-				});
-				
-				$("#Users > div").scroll(function(e){
-					$("#Selections").scrollTo({ top: $("#Selections").scrollTop(), left: $(e.target).scrollLeft() });
-				});
 			});
 		</script>
 	</body>
