@@ -1,0 +1,83 @@
+header title {
+	display:		block;
+	position:		absolute;
+	top:			50%;
+	margin-top:		-11px;
+	left:			10px;
+	color:			#fff;
+	font-weight:	bold;
+	font-size:		20px;
+}
+
+#Events {
+	position:	absolute;
+	top:		50px;
+	left:		0px;
+	bottom:		0px;
+	width:		100%;
+	padding:	0px;
+	margin:		0px;
+	overflow-x:	auto;
+}
+
+#Events > a {
+	display:			block;
+	position:			relative;
+	list-style-type:	none;
+	height:				80px;
+	font-size:			18px;
+}
+
+#Events > a:active {
+	background-color:	#eee;
+}
+
+#Events > a > img {
+	position:		absolute;
+	width:			60px;
+	height:			60px;
+	top:			10px;
+	left:			15px;
+	border-radius:	50px;
+}
+
+#Events > a > div {
+	position:	absolute;
+	left:		90px;
+	top:		10px;
+	right:		0px;
+	display:	block;
+	height:		60px;
+	color:		#000;
+}
+
+#Events > a > div .title {
+	position:		absolute;
+	top:			5px;
+	font-weight:	bold;
+}
+
+#Events > a > div .description {
+	position:	absolute;
+	right:		0px;
+	bottom:		5px;
+	left:		0px;
+	color:		#666;
+}
+
+#Events > a > div aside {
+	display:	block;
+	position:	absolute;
+	width:		100px;
+	text-align:	right;
+	right:		5px;
+	top:		5px;
+	color:		#666;
+}
+
+#Events .separator_overview_list {
+	background-color:	#E5E5E5;
+	height:				1px;
+	width:				96%;
+	margin-left:		2%;
+}

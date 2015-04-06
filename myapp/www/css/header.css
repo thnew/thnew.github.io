@@ -1,0 +1,127 @@
+header {
+	z-index:			1000001;
+	position:			absolute;
+	top:				0px;
+	left:				0px;
+	height:				50px;
+	width:				100%;
+	background-color:	#0094FF;
+	box-shadow:			0px 0px 5px #000;
+}
+
+#Title {
+	display:		block;
+	position:		absolute;
+	left:			0px;
+	top:			0px;
+	bottom:			0px;
+	right:			50px;
+	color:			#fff;
+}
+
+#Title:active, #Title:hover {
+	background:	#7FC9FF;
+}
+
+#Title > div {
+	position:		absolute;
+	left:			7px;
+	top:			5px;
+	bottom:			5px;
+	right:			5px;
+}
+
+#Title > div > * {
+	position:	absolute;
+	display:	inline-block;
+	font-size:	20px;
+}
+
+#Title > div > div {
+	top:		50%;
+	margin-top:	-11px;
+}
+
+#Title > div > div:first-child {
+	left:			0px;
+}
+
+#Title > div > img {
+	height:			40px;
+	top:			0px;
+	left:			15px;
+	border-radius:	50px;
+}
+
+#Title > div > div:last-child {
+	left:	66px;
+}
+
+#Logo {
+	z-index:		1000000;
+	position:		absolute;
+	top:			50px;
+	left:			0px;
+	width:			100px;
+	height:			90px;
+	border-radius:	0px 0px 5px 0px;
+	background:		#7FC9FF;
+}
+
+#Logo i {
+	position:		absolute;
+	left:			50%;
+	margin-left:	-20px;
+	font-size:		40px;
+	top:			13px;
+}
+
+#HeaderBar {
+	z-index:		1000000;
+	position:		absolute;
+	top:			50px;
+	right:			0px;
+	left:			100px;
+	background:		#7FC9FF;
+	height:			5px;
+}
+
+#HeaderBar > div {
+	position:			absolute;
+	bottom:				0px;
+	left:				0px;
+	height:				5px;
+	width:				100%;
+	border-radius:		5px 0px 0px 0px;
+	background-color:	#eee;
+}
+
+#HeaderBackgrund {
+	z-index:			199;
+	position:			absolute;
+	top:				50px;
+	left:				0px;
+	right:				0px;
+	height:				90px;
+	background:			#eee;
+	box-shadow:			0px 0px 5px #000;
+}
+
+.blank_space {
+	height:	0px;
+	width:	5px;
+}
+
+.logo_subtitle {
+	position:		absolute;
+	text-align:		center;
+	font-size:		16px;
+	bottom:			10px;
+	left:			0px;
+	right:			0px;
+}
+
+.header_content {
+	z-index:	1000000;
+	color:		#004A7F;
+}
