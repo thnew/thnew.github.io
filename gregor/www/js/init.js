@@ -101,7 +101,12 @@ app.controller('SelectionController', function($scope){
 	];
 	
 	/* SELECTIONS */ {
-		var options = [ "yes", "maybe", "no" ];
+		$scope.OPTION = {
+			YES:	"YES",
+			MAYBE:	"MAYBE",
+			NO:		"NO"
+		};
+		var options = [ $scope.OPTION.YES, $scope.OPTION.MAYBE, $scope.OPTION.NO ];
 		
 		$scope.selectionMap = [];
 		for(var f in $scope.days)
@@ -109,22 +114,46 @@ app.controller('SelectionController', function($scope){
 			if($scope.days[f].isMonthSeparator) continue;
 			
 			var day = {
-				isWeekend:	$scope.days[f].isWeekend,
-				selections:	[]
+				isWeekend:			$scope.days[f].isWeekend,
+				times:				[]
 			};
+			$scope.selectionMap.push(day);
+			
 			for(var g in $scope.days[f].times)
 			{
-				var moment = [];
+				var timeBlock = {
+					positiveVoteCount:	0,
+					votes:				[]
+				};
+				
 				for(var h in $scope.users)
 				{
 					var option = options[Math.round(Math.random() * (options.length - 1))];
-					moment.push(option);
+					timeBlock.votes.push(option);
 				}
-				
-				day.selections.push(moment);
+				day.times.push(timeBlock);
 			}
+		}
+		
+		// Count the positive votes
+		for(var f in $scope.selectionMap)
+		{
+			var day = $scope.selectionMap[f];
 			
-			$scope.selectionMap.push(day);
+			for(var g in day.times)
+			{
+				var timeBlock = day.times[g];
+				
+				for(var h in timeBlock.votes)
+				{
+					var vote = timeBlock.votes[h];
+					
+					if(vote == $scope.OPTION.YES || vote == $scope.OPTION.MAYBE)
+					{
+						timeBlock.positiveVoteCount++;
+					}
+				}
+			}
 		}
 		
 		// Add month separators
@@ -132,6 +161,7 @@ app.controller('SelectionController', function($scope){
 		var i = 0;
 		for(var f in $scope.selectionMap)
 		{
+			var day = $scope.selectionMap[f];
 			var dayIndex = f*1.0 + i;
 			
 			if($scope.days[dayIndex].isMonthSeparator === true)
@@ -142,13 +172,33 @@ app.controller('SelectionController', function($scope){
 					isMonthSeparator:	true,
 					date:				nextDay.date
 				});
+				
 				i++;
 			}
 			
-			mapWithSeparators.push($scope.selectionMap[f]);
+			mapWithSeparators.push(day);
 		}
 		
 		$scope.selectionMap = mapWithSeparators;
+		
+		$scope.vote = function(selection) {
+			var resultingIndex = -1;
+			for(var f in options)
+			{
+				if(selection == options[f])
+				{
+					resultingIndex = f + 1;
+				}
+			}
+			
+			if(resultingIndex == -1 || resultingIndex >= options.length)
+			{
+				resultingIndex = 0;
+			}
+			
+			selection = options[resultingIndex];
+			console.log(selection);
+		};
 	}
 });
 
