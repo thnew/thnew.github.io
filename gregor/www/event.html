@@ -13,9 +13,25 @@
 		<link type="text/less" rel="stylesheet" href="css/header.css">
 		<link type="text/less" rel="stylesheet" href="css/event.css">
 	</head>
-	<body data-ng-controller="SelectionController">
+	<body data-ng-controller="SelectionController" class="development">
 		<div id="ScrollField">
-			<div class="dragger"></div>
+			<div class="dragger">
+				<!---->				
+				<div class="time_container"></div>
+				
+				<div class="selection_container count-{{ users.length }}">
+					<div class="selections">
+						<div class="time_scale_wrapper" data-ng-show="!showOverview" data-ng-repeat="day in selectionMap track by $index">
+							<div data-ng-if="day.isMonthSeparator" class="month-separator"></div>
+							
+							<ul data-ng-if="!day.isMonthSeparator" data-ng-repeat="timeBlock in day.times">
+								<li class="single-selection" onclick="alert(3432)"></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!---->
+			</div>
 		</div>
 		
 		<header>
@@ -29,7 +45,7 @@
 			
 			<div>
 				<a>
-					<i class="fa fa-arrows-alt"></i>
+					<i class="fa fa-arrows-alt" data-ng-click="showOverview=!showOverview"></i>
 				</a>
 				<a>
 					<i class="fa fa-clock-o"></i>
@@ -62,8 +78,8 @@
 		<div id="VotePanel"></div>
 		<!---->
 		
-		<div id="TimeContainer">
-			<div id="Days">
+		<div id="TimeContainer" class="time_container">
+			<div id="Days" class="days">
 				<ul>
 					<li data-ng-repeat="day in days track by $index" data-ng-class="day.isWeekend ? 'isWeekend' : ''"  data-date="{{ day.date.toISOString() }}">
 						<div data-ng-if="!day.isMonthSeparator" class="day" data-ng-class="day.times.length == 1 ? 'small' : ''">
@@ -96,7 +112,7 @@
 				</ul>
 			</div>
 		</div>
-		<div id="SelectionContainer" class="count-{{ users.length }}">
+		<div id="SelectionContainer" class="selection_container count-{{ users.length }}" data-ng-class="showOverview ? 'overview' : ''">
 			<div id="HintForMoreUsers">
 				<i class="fa fa-ellipsis-h"></i>
 				<i class="fa fa-ellipsis-h"></i>
@@ -127,22 +143,11 @@
 					</ul>
 				</div>
 			</div>
-			<div id="Selections">
+			<div id="Selections" class="selections">
 				<div class="time_scale_wrapper" data-ng-repeat="day in selectionMap track by $index" data-ng-class="day.isWeekend ? 'isWeekend' : ''">
 					<div data-ng-if="day.isMonthSeparator" class="month-separator"></div>
 					
 					<ul data-ng-if="!day.isMonthSeparator" data-ng-repeat="timeBlock in day.times">
-						<!--
-						<li class="single-selection" data-ng-class="moment.ownSelection" data-ng-switch="moment.ownSelection">
-							<button data-ng-click="vote(moment.ownSelection)">
-								<i class="fa fa-question" ng-switch-when=""></i>
-								<i class="fa fa-check" ng-switch-when="yes"></i>
-								<span ng-switch-when="maybe">(<i class="fa fa-check"></i>)</span>
-								<i class="fa fa-times" ng-switch-when="no"></i>
-							</button>
-						</li>
-						<!---->
-						
 						<li class="single-selection" data-ng-class="vote" data-ng-switch="vote" ng-repeat="vote in timeBlock.votes track by $index">
 							<i class="fa fa-check" ng-switch-when="YES"></i>
 							<span ng-switch-when="MAYBE">(<i class="fa fa-check"></i>)</span>

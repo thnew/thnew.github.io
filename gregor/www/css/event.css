@@ -1,13 +1,13 @@
-#TimeContainer {
+.time_container {
 	z-index:		99;
 	position:		absolute;
 	top:			0px;
 	bottom:			0px;
-	width:			100px;
+	width:			78px;
 	height:			100%;
 }
 
-#Days {
+.days {
 	position:		absolute;
 	display:		block;
 	width:			100px;
@@ -17,7 +17,7 @@
 	overflow:		hidden;
 }
 
-#Days > ul {
+.days > ul {
 	position:		relative;
 	height:			100%;
 	display:		block;
@@ -28,13 +28,13 @@
 	margin:			0px;
 }
 
-#Days > ul > li {
+.days > ul > li {
 	position:			relative;
 	list-style-type:	none;
 	border-bottom:		1px solid #000;
 }
 
-#Days > ul > li .day {
+.days > ul > li .day {
 	position:			absolute;
 	left:				5px;
 	top:				0px;
@@ -43,12 +43,12 @@
 }
 
 /*
-#Days > ul > li.isFirstDayInMonth {
+.days > ul > li.isFirstDayInMonth {
 	box-shadow:	2px -2px 2px #000;
 }
 */
 
-#Days > ul > li .day > div {
+.days > ul > li .day > div {
 	position:	absolute;
 	height:		23px;
 	width:		100px;
@@ -61,12 +61,12 @@
 	transform:			rotate(-90deg);
 }
 
-#Days > ul > li .day.small > div {
+.days > ul > li .day.small > div {
 	width:		75px;
 	left:		-20px;
 }
 
-#Days .month-separator > div {
+.days .month-separator > div {
 	position:	absolute;
 	width:		66%;
 	text-align:	center;
@@ -104,7 +104,7 @@ li ul.times > li > aside {
 	font-size:	80%;
 }
 
-#SelectionContainer {
+.selection_container {
 	z-index:	300;
 	position:	absolute;
 	right:		0px;
@@ -191,7 +191,7 @@ li ul.times > li > aside {
 	font-weight:	bold;
 }
 
-#Selections {
+.selections {
 	z-index:	98;
 	position:	absolute;
 	top:		105px;
@@ -201,50 +201,50 @@ li ul.times > li > aside {
 	overflow:	scroll;
 }
 
-#Selections > div {
+.selections > div {
 	width:	100%;
 }
 
-#Selections > div.isWeekend, #Days > ul > li.isWeekend {
+.selections > div.isWeekend, .days > ul > li.isWeekend {
 	background-color:	#DDD;
 }
 
 /*
-#Selections > div:nth-child(odd), #Days > ul > li:nth-child(odd) {
+.selections > div:nth-child(odd), .days > ul > li:nth-child(odd) {
 	background-color:	#eee;
 }
 */
 
-#Selections > div > ul, #Selections > ul > li, ul.times > li {
+.selections > div > ul, .selections > ul > li, ul.times > li {
 	height:	56px;
 }
 
-#Days .month-separator, #Selections .month-separator {
+.days .month-separator, .selections .month-separator {
 	position:			relative;
 	height:				30px;
 	background-color:	#999;
 	color:				#fff;
 }
 
-#Selections .month-separator {
+.selections .month-separator {
 	border-bottom:	1px solid #000;
 }
 
-#Selections > div > ul {
+.selections > div > ul {
 	padding:		0px;
 	margin:			0px;
 	border-bottom:	1px solid #000;
 	white-space:	nowrap;
 }
 
-#Selections > div > ul > li {
+.selections > div > ul > li {
 	position:			relative;
 	height:				100%;
 	display:			inline-block;
 	list-style-type:	none;
 }
 
-#Selections > div > ul > li > * {
+.selections > div > ul > li > * {
 	position:	absolute;
 	bottom:		0px;
 	top:		0px;
@@ -255,44 +255,53 @@ li ul.times > li > aside {
 	font-size:	30px;
 }
 
-#Selections > div > ul > li > button {
+.selections > div > ul > li > button {
 	background:	none;
 	border:		0px;
 }
 
-#Selections > div > ul > li > button i {
+.selections > div > ul > li > button i {
 	margin:	2px;
 }
 
-#Selections > div > ul > li:not(:first-child) > * {
+.selections > div > ul > li:not(:first-child) > * {
 	left:	0px;
 }
 
-#Selections .single-selection > i {
+.selections .single-selection > i {
 	top:			50%;
 	margin-top:		-15px;
 }
 
-#Selections .single-selection > span {
+.selections .single-selection > span {
 	top:			50%;
 	margin-top:		-17px;
 }
 
-#Selections > div > ul > li > div {
+.selections > div > ul > li > div {
 	font-size:	20px;
 	top:		50%;
 	margin-top:	-12px;
 }
 
-#Selections > div > ul > li.YES {
+.selections > div > ul > li.YES {
 	background-color:	rgba(127,201,255,0.7);
 }
 
-#Selections > div > ul > li.MAYBE {
+.selections > div > ul > li.MAYBE {
 	background-color:	rgba(181,224,255,0.7);
 }
 
-#Selections > div > ul > li.NO {
+.selections > div > ul > li.NO {
+}
+
+.selection_container.overview .time_scale_wrapper {
+	width: 100% !important;
+}
+
+.selection_container.overview .selections .single-selection > * {
+	font-size:	8px;
+	margin-top:	-4px;
 }
 
 #ScrollField {
@@ -311,6 +320,41 @@ li ul.times > li > aside {
 	height:		200%;
 	top:		0%;
 	left:		50%;
+}
+
+#ScrollField  .month-separator {
+	background-color:	transparent;
+	border-bottom:	1px solid transparent !important;
+}
+
+#ScrollField .time_container {
+	position:	fixed;
+}
+
+#ScrollField .selection_container {
+	z-index:	98;
+}
+
+#ScrollField .selections {
+	position:	static;
+	margin-top:	105px;
+	overflow:	hidden;
+}
+
+#ScrollField .selections > div > ul {
+	border-bottom:	1px solid transparent;
+}
+
+#ScrollField .selections > div > ul > li {
+	cursor:	pointer;
+}
+
+.development #ScrollField .selections > div > ul > li {
+	border:	1px solid red;
+}
+
+.development #ScrollField .selections > div > ul > li:active {
+	border:	1px solid green;
 }
 
 #HintForMoreUsers {

@@ -221,13 +221,13 @@ app.controller('SelectionController', function($scope){
 	}
 });
 
-/*
+//*
 var out = "";
 var maxUsers = 15;
 for(var i=1; i<=maxUsers; i++)
 {
 	var p = Math.round((100/i)*10000) / 10000.0;
-	out += "#SelectionContainer.count-" + i + " .single-selection { width: " + p + "%; }";
+	out += ".selection_container.count-" + i + " .single-selection { width: " + p + "%; }";
 }
 
 for(var maxUsersPerScreen=maxUsers; maxUsersPerScreen>=2; maxUsersPerScreen--)
@@ -238,13 +238,13 @@ for(var maxUsersPerScreen=maxUsers; maxUsersPerScreen>=2; maxUsersPerScreen--)
 	{
 		var p = Math.round((userCount/maxUsersPerScreen)*1000000) / 10000.0;
 		if(p < 100) p = 100;
-		out += "#SelectionContainer.count-" + userCount + " .time_scale_wrapper { width: " + p + "%; }";
+		out += ".selection_container.count-" + userCount + " .time_scale_wrapper { width: " + p + "%; }";
 		
 		//var usersOverTheScreenLimit = userCount - maxUsersPerScreen ;
 		//if(usersOverTheScreenLimit > 0)
 		//{
-		//	out += "#SelectionContainer.count-" + userCount + " #HintForMoreUsers { display:block; content: '" + usersOverTheScreenLimit + "'; }";
-		//	out += "#SelectionContainer.count-" + userCount + " #HintForMoreUsers:before { content: '" + usersOverTheScreenLimit + "'; }";
+		//	out += ".selection_container.count-" + userCount + " #HintForMoreUsers { display:block; content: '" + usersOverTheScreenLimit + "'; }";
+		//	out += ".selection_container.count-" + userCount + " #HintForMoreUsers:before { content: '" + usersOverTheScreenLimit + "'; }";
 		//}
 	}
 	
