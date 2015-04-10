@@ -113,7 +113,7 @@ li ul.times > li > aside {
 	left:		78px;
 }
 
-#Users {
+.users {
 	z-index:		200;
 	position:		absolute;
 	top:			40px;
@@ -124,24 +124,24 @@ li ul.times > li > aside {
 	white-space:	nowrap;
 }
 
-#Users > div {
+.users > div {
 	height:			120px;
 	overflow-x:		auto;
 }
 
-#Users > div > ul {
+.users > div > ul {
 	padding:		0px;
 	margin:			0px;
 }
 
-#Users > div > ul > li {
+.users > div > ul > li {
 	position:			relative;
 	list-style-type:	none;
 	display:			inline-block;
 	height:				60px;
 }
 
-#Users > div > ul > li > div {
+.users > div > ul > li > div {
 	position:			absolute;
 	bottom:				0px;
 	top:				30px;
@@ -151,11 +151,11 @@ li ul.times > li > aside {
 	padding-top:		8px;
 }
 
-#Users > div > ul > li:not(:first-child) > div {
+.users > div > ul > li:not(:first-child) > div {
 	left:	0px;
 }
 
-#Users > div > ul > li > div > * {
+.users > div > ul > li > div > * {
 	display:	block;
 	position:	absolute;
 	left:		0px;
@@ -163,7 +163,7 @@ li ul.times > li > aside {
 	text-align:	center;
 }
 
-#Users > div > ul > li .img, #Users > div > ul > li img {
+.users > div > ul > li .img, .users > div > ul > li img {
 	z-index:		1000;
 	width:			32px;
 	height:			32px;
@@ -174,16 +174,16 @@ li ul.times > li > aside {
 	box-shadow:		inset 0px 0px 10px rgba(0,0,0,0.8);
 }
 
-#Users > div > ul > li img {
+.users > div > ul > li img {
 	z-index:	999;
 }
 
-#Users > div > ul > li i {
+.users > div > ul > li i {
 	bottom:		22px;
 	font-size:	28px;
 }
 
-#Users > div > ul > li title {
+.users > div > ul > li title {
 	bottom:		2px;
 }
 
@@ -266,7 +266,7 @@ li ul.times > li > aside {
 
 .selections > div > ul > li:not(:first-child) > * {
 	left:			0px;
-	opacity: 		0.7;
+	opacity: 		0.5;
 }
 
 .selections .single-selection > i {
@@ -297,14 +297,19 @@ li ul.times > li > aside {
 	color:				rgba(37,37,37,0.3);
 }
 
-.selection_container.overview .time_scale_wrapper {
-	width: 100% !important;
-}
+/*overview*/
+	#ScrollField.overview .dragger {
+		width:	100% !important;
+	}
 
-.selection_container.overview .selections .single-selection > * {
-	font-size:	8px;
-	margin-top:	-4px;
-}
+	.selection_container.overview .time_scale_wrapper {
+		width: 100% !important;
+	}
+
+	.selection_container.overview .selections .single-selection > * {
+		font-size:	8px;
+		margin-top:	-4px;
+	}
 
 #ScrollField {
 	z-index:	2000;
@@ -329,7 +334,7 @@ li ul.times > li > aside {
 	border-bottom:	1px solid transparent !important;
 }
 
-#ScrollField .time_container {
+#ScrollField .time_container, #ScrollField .users {
 	position:	fixed;
 }
 

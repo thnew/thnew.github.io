@@ -14,14 +14,16 @@
 		<link type="text/less" rel="stylesheet" href="css/event.css">
 	</head>
 	<body data-ng-controller="SelectionController" class="Xdevelopment">
-		<div id="ScrollField">
+		<div id="ScrollField" data-ng-class="showOverview ? 'overview' : ''">
 			<div class="dragger">
 				<!---->				
 				<div class="time_container"></div>
 				
-				<div class="selection_container count-{{ users.length }}">
+				<div class="selection_container count-{{ users.length }}" data-ng-class="showOverview ? 'overview' : ''">
+					<div class="users"></div>
+					
 					<div class="selections">
-						<div class="time_scale_wrapper" data-ng-show="!showOverview" data-ng-repeat="day in selectionMap track by $index">
+						<div class="time_scale_wrapper" data-ng-repeat="day in selectionMap track by $index">
 							<div data-ng-if="day.isMonthSeparator" class="month-separator"></div>
 							
 							<ul data-ng-if="!day.isMonthSeparator" data-ng-repeat="timeBlock in day.times track by $index">
@@ -118,7 +120,7 @@
 				<i class="fa fa-ellipsis-h"></i>
 			</div>
 			
-			<div id="Users">
+			<div id="Users" class="users">
 				<div>
 					<ul class="time_scale_wrapper">
 						<!--
