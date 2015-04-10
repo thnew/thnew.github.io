@@ -245,14 +245,14 @@ li ul.times > li > aside {
 }
 
 .selections > div > ul > li > * {
-	position:	absolute;
-	bottom:		0px;
-	top:		0px;
-	left:		0px;
-	right:		0px;
-	width:		100%;
-	text-align:	center;
-	font-size:	30px;
+	position:		absolute;
+	bottom:			0px;
+	top:			0px;
+	left:			0px;
+	right:			0px;
+	width:			100%;
+	text-align:		center;
+	font-size:		30px;
 }
 
 .selections > div > ul > li > button {
@@ -265,7 +265,8 @@ li ul.times > li > aside {
 }
 
 .selections > div > ul > li:not(:first-child) > * {
-	left:	0px;
+	left:			0px;
+	opacity: 		0.7;
 }
 
 .selections .single-selection > i {
@@ -285,14 +286,15 @@ li ul.times > li > aside {
 }
 
 .selections > div > ul > li.YES {
-	background-color:	rgba(127,201,255,0.7);
+	background-color:	rgba(153,214,255,0.7);
 }
 
 .selections > div > ul > li.MAYBE {
-	background-color:	rgba(181,224,255,0.7);
+	background-color:	rgba(221,241,255,0.7);
 }
 
 .selections > div > ul > li.NO {
+	color:				rgba(37,37,37,0.3);
 }
 
 .selection_container.overview .time_scale_wrapper {
