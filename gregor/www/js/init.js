@@ -127,7 +127,10 @@ app.controller('SelectionController', function($scope){
 			
 			for(var g in $scope.days[f].times)
 			{
+				var time = $scope.days[f].times[g];
+				
 				var timeBlock = {
+					datetime:			time.date,
 					positiveVoteCount:	0,
 					votes:				[]
 				};
@@ -219,9 +222,44 @@ app.controller('SelectionController', function($scope){
 			console.log(selection);
 		};
 	}
+	
+	$scope._clickUserField = function(datetime) {
+		var time = getVoteObjectByDatetime(datetime);
+		//alert(time.votes[0]);
+		
+		switch(time.votes[0])
+		{
+			case "NO":
+				time.votes[0] = "YES";
+				break;
+			case "YES":
+				time.votes[0] = "MAYBE";
+				break;
+			case "MAYBE":
+				time.votes[0] = "NO";
+				break;
+		}
+	};
+	
+	var getVoteObjectByDatetime = function(datetime) {
+		for(var f in $scope.selectionMap)
+		{
+			var day = $scope.selectionMap[f];
+			
+			for(var g in day.times)
+			{
+				var time = day.times[g];
+				
+				if(time.datetime.toISOString() == datetime.toISOString())
+				{
+					return time;
+				}
+			}
+		}
+	};
 });
 
-//*
+/*
 var out = "";
 var maxUsers = 15;
 for(var i=1; i<=maxUsers; i++)

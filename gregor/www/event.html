@@ -13,7 +13,7 @@
 		<link type="text/less" rel="stylesheet" href="css/header.css">
 		<link type="text/less" rel="stylesheet" href="css/event.css">
 	</head>
-	<body data-ng-controller="SelectionController" class="development">
+	<body data-ng-controller="SelectionController" class="Xdevelopment">
 		<div id="ScrollField">
 			<div class="dragger">
 				<!---->				
@@ -24,8 +24,8 @@
 						<div class="time_scale_wrapper" data-ng-show="!showOverview" data-ng-repeat="day in selectionMap track by $index">
 							<div data-ng-if="day.isMonthSeparator" class="month-separator"></div>
 							
-							<ul data-ng-if="!day.isMonthSeparator" data-ng-repeat="timeBlock in day.times">
-								<li class="single-selection" onclick="alert(3432)"></li>
+							<ul data-ng-if="!day.isMonthSeparator" data-ng-repeat="timeBlock in day.times track by $index">
+								<li class="single-selection" data-ng-click="_clickUserField(timeBlock.datetime)"></li>
 							</ul>
 						</div>
 					</div>
