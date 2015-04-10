@@ -97,6 +97,13 @@ li ul.times > li > div {
 	margin-top:	-7px;
 }
 
+li ul.times > li > aside {
+	position:	absolute;
+	right:		5px;
+	bottom:		0px;
+	font-size:	80%;
+}
+
 #SelectionContainer {
 	z-index:	300;
 	position:	absolute;
@@ -333,23 +340,6 @@ li ul.times > li > div {
 #HintForMoreUsers i:last-child {
 	right:		3px;
 }
-
-/*
-#HintForSwypeLeft {
-	z-index:		200;
-	position:		absolute;
-	width:			200px;
-	text-align:		right;
-	right:			5px;
-	top:			55px;
-	font-size:		14px;
-	color:			#999;
-}
-
-#HintForSwypeLeft.active {
-	color:			#000;
-}
-*/
 
 #HintForMoreUsers:before {
 	content: "" !important;

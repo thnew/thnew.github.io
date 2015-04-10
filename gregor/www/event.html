@@ -73,8 +73,12 @@
 						<ul data-ng-if="!day.isMonthSeparator" class="times">
 							<li data-ng-repeat="time in day.times">
 								<div>
-									{{ time | date : "H:mm" }}
+									{{ time.date | date : "H:mm" }}
 								</div>
+								
+								<aside>
+									{{ time.positiveVoteCount }}
+								</aside>
 							</li>
 						</ul>
 						
@@ -95,26 +99,9 @@
 				<i class="fa fa-ellipsis-h"></i>
 			</div>
 			
-			<!--
-			<div id="HintForSwypeLeft">
-				vote
-				<i class="fa fa-arrow-right"></i>
-			</div>
-			<!---->
-			
 			<div id="Users">
 				<div>
 					<ul class="time_scale_wrapper">
-						<!--
-						<li class="single-selection">
-							<div>
-								<i class="fa fa-user"></i><br />
-								
-								<title>You</title>
-							</div>
-						</li>
-						<!---->
-						
 						<li id="CurrentUser" class="single-selection">
 							<div>
 								<img />
@@ -238,8 +225,6 @@
 								
 								$("#HintForMoreUsers i:first-child").css("visibility", (isLeft ? "hidden" : "visible"));
 								$("#HintForMoreUsers i:last-child").css("visibility", (isRight ? "hidden" : "visible"));
-								
-								//$("#HintForSwypeLeft").toggle(isRight);
 								
 								/* View Panel from the right
 								if(isRight)

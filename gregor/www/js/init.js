@@ -67,7 +67,10 @@ app.controller('SelectionController', function($scope){
 			lastday = daydate;
 		}
 		
-		day.times.push(t);
+		day.times.push({
+			date:				t,
+			positiveVoteCount:	0
+		});
 	}
 	
 	$scope.users = [
@@ -181,6 +184,19 @@ app.controller('SelectionController', function($scope){
 		
 		$scope.selectionMap = mapWithSeparators;
 		
+		// Copy the positive votes counter to selectionMap
+		for(var f in $scope.selectionMap)
+		{
+			var day = $scope.selectionMap[f];
+			
+			for(var g in day.times)
+			{
+				var timeBlock = day.times[g];
+				
+				$scope.days[f].times[g].positiveVoteCount = timeBlock.positiveVoteCount;
+			}
+		}
+		
 		$scope.vote = function(selection) {
 			var resultingIndex = -1;
 			for(var f in options)
@@ -202,7 +218,7 @@ app.controller('SelectionController', function($scope){
 	}
 });
 
-//*
+/*
 var out = "";
 var maxUsers = 15;
 for(var i=1; i<=maxUsers; i++)
