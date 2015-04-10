@@ -75,6 +75,9 @@ app.controller('SelectionController', function($scope){
 	
 	$scope.users = [
 		{
+			name:	"You"
+		},
+		{
 			name:	"Til",
 			image:	"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xpa1/v/t1.0-1/p160x160/1898057_780397738680482_3483702163707855720_n.jpg?oh=ad79bfc69ab9212be19a6f7ff42df259&oe=55ADCBFA&__gda__=1437262533_f7d51d22f5a031347de4e50837365d00"
 		},

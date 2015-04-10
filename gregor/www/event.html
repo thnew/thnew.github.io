@@ -29,6 +29,9 @@
 			
 			<div>
 				<a>
+					<i class="fa fa-arrows-alt"></i>
+				</a>
+				<a>
 					<i class="fa fa-clock-o"></i>
 				</a>
 				<a>
@@ -93,7 +96,7 @@
 				</ul>
 			</div>
 		</div>
-		<div id="SelectionContainer" class="count-{{ users.length + 1 }}">
+		<div id="SelectionContainer" class="count-{{ users.length }}">
 			<div id="HintForMoreUsers">
 				<i class="fa fa-ellipsis-h"></i>
 				<i class="fa fa-ellipsis-h"></i>
@@ -102,6 +105,7 @@
 			<div id="Users">
 				<div>
 					<ul class="time_scale_wrapper">
+						<!--
 						<li id="CurrentUser" class="single-selection">
 							<div>
 								<img />
@@ -109,6 +113,7 @@
 								<title>You</title>
 							</div>
 						</li>
+						<!---->
 						
 						<li class="single-selection" data-ng-repeat="user in users track by $index">
 							<div>
@@ -138,17 +143,10 @@
 						</li>
 						<!---->
 						
-						<li class="single-selection">
-							<button>
-								<i class="fa fa-check"></i>
-							</button>
-							<!--{{ timeBlock.positiveVoteCount }}-->
-						</li>
-						
-						<li class="single-selection" data-ng-class="{{ vote }}" data-ng-switch="vote" ng-repeat="vote in timeBlock.votes track by $index">
+						<li class="single-selection" data-ng-class="vote" data-ng-switch="vote" ng-repeat="vote in timeBlock.votes track by $index">
 							<i class="fa fa-check" ng-switch-when="YES"></i>
 							<span ng-switch-when="MAYBE">(<i class="fa fa-check"></i>)</span>
-							<i class="fa fa-times" ng-switch-when="NO"></i>
+							<i class="fa fa-circle-thin" ng-switch-when="NO"></i>
 						</li>
 					</ul>
 				</div>

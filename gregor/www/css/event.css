@@ -145,7 +145,7 @@ li ul.times > li > aside {
 	position:			absolute;
 	bottom:				0px;
 	top:				30px;
-	left:				5px;
+	left:				0px;
 	right:				0px;
 	text-align:			center;
 	padding-top:		8px;
@@ -248,7 +248,7 @@ li ul.times > li > aside {
 	position:	absolute;
 	bottom:		0px;
 	top:		0px;
-	left:		5px;
+	left:		0px;
 	right:		0px;
 	width:		100%;
 	text-align:	center;
@@ -284,16 +284,15 @@ li ul.times > li > aside {
 	margin-top:	-12px;
 }
 
-#Selections > div > ul > li.YES i {
-	
+#Selections > div > ul > li.YES {
+	background-color:	rgba(127,201,255,0.7);
 }
 
-#Selections > div > ul > li.MAYBE > div {
-	
+#Selections > div > ul > li.MAYBE {
+	background-color:	rgba(181,224,255,0.7);
 }
 
-#Selections > div > ul > li.NO > div {
-	
+#Selections > div > ul > li.NO {
 }
 
 #ScrollField {
