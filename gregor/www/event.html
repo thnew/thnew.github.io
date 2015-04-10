@@ -6,363 +6,12 @@
 		</title>
 		
 		<meta name="msapplication-tap-highlight" content="no" />
-		<meta name="viewport" content="initial-scale=0.8, maximum-scale=1.0, user-scalable=no, width=100%" />
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=100%" />
 		<link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
 		<link type="text/css" rel="stylesheet" href="css/selection_sizes.css">
 		<link type="text/less" rel="stylesheet" href="css/main.css">
 		<link type="text/less" rel="stylesheet" href="css/header.css">
-		
-		<style>
-			#TimeContainer {
-				position:		absolute;
-				top:			0px;
-				bottom:			0px;
-				width:			100px;
-				height:			100%;
-			}
-			
-			#Days {
-				z-index:		99;
-				position:		absolute;
-				display:		block;
-				width:			100px;
-				top:			130px;
-				bottom:			0px;
-				//border-right:	1px solid #000;
-				overflow:		hidden;
-			}
-			
-			#Days > ul {
-				position:		relative;
-				height:			100%;
-				display:		block;
-				overflow-x:		hidden;
-				overflow-y:		scroll;
-				width:			150px;
-				padding:		0px;
-				margin:			0px;
-			}
-			
-			#Days > ul > li {
-				position:			relative;
-				list-style-type:	none;
-				border-bottom:		1px solid #000;
-			}
-			
-			#Days > ul > li .day {
-				position:			absolute;
-				left:				5px;
-				top:				0px;
-				font-size:			16px;
-				height:				100%;
-				width:				30px;
-			}
-			
-			/*
-			#Days > ul > li.isFirstDayInMonth {
-				box-shadow:	2px -2px 2px #000;
-			}
-			*/
-			
-			#Days > ul > li .day > div {
-				position:	absolute;
-				height:		23px;
-				width:		100px;
-				text-align:	center;
-				top:		50%;
-				left:		-35px;
-				margin-top:	-12px;
-				-ms-transform:		rotate(-90deg);
-				-webkit-transform:	rotate(-90deg);
-				transform:			rotate(-90deg);
-			}
-			
-			#Days > ul > li .day.small > div {
-				width:		75px;
-				left:		-20px;
-			}
-			
-			#Days .month-separator > div {
-				position:	absolute;
-				width:		66%;
-				text-align:	center;
-				top:		6px;
-			}
-			
-			ul.times {
-				padding:		0px;
-				margin:			0px;
-			}
-			
-			ul.times > li {
-				list-style-type:	none;
-				position:			relative;
-				margin-left:		40px;
-				border-top:			1px solid #000;
-				width:				60px;
-			}
-			
-			ul.times > li:first-child {
-				border:	0px;
-			}
-			
-			li ul.times > li > div {
-				position:	absolute;
-				right:		5px;
-				top:		50%;
-				margin-top:	-12px;
-			}
-			
-			#SelectionContainer {
-				position:	absolute;
-				right:		0px;
-				top:		0px;
-				bottom:		0px;
-				left:		100px;
-			}
-			
-			#Users {
-				z-index:		200;
-				position:		absolute;
-				top:			50px;
-				right:			0px;
-				left:			0px;
-				height:			80px;
-				overflow:		hidden;
-				white-space:	nowrap;
-			}
-			
-			#Users > div {
-				height:			150px;
-				overflow-x:		auto;
-			}
-			
-			#Users > div > ul {
-				padding:		0px;
-				margin:			0px;
-			}
-			
-			#Users > div > ul > li {
-				position:			relative;
-				list-style-type:	none;
-				display:			inline-block;
-				height:				75px;
-			}
-			
-			#Users > div > ul > li > div {
-				position:			absolute;
-				bottom:				0px;
-				top:				30px;
-				left:				5px;
-				right:				5px;
-				text-align:			center;
-				padding-top:		8px;
-			}
-			
-			#Users > div > ul > li:not(:first-child) > div {
-				left:	0px;
-			}
-			
-			#Users > div > ul > li > div > * {
-				display:	block;
-				position:	absolute;
-				left:		0px;
-				width:		100%;
-				text-align:	center;
-			}
-			
-			#Users > div > ul > li .img, #Users > div > ul > li img {
-				z-index:		1000;
-				width:			40px;
-				height:			40px;
-				left:			50%;
-				margin-left:	-20px;
-				bottom:			25px;
-				border-radius:	5px;
-				box-shadow:		inset 0px 0px 10px rgba(0,0,0,0.8);
-			}
-			
-			#Users > div > ul > li img {
-				z-index:	999;
-			}
-			
-			#Users > div > ul > li i {
-				bottom:		27px;
-				font-size:	35px;
-			}
-			
-			#Users > div > ul > li title {
-				bottom:		2px;
-				font-size:	16px;
-			}
-			
-			#Selections {
-				z-index:	98;
-				position:	absolute;
-				top:		130px;
-				bottom:		0px;
-				left:		0px;
-				right:		0px;
-				overflow:	scroll;
-			}
-			
-			#Selections > div {
-				width:	100%;
-			}
-			
-			#Selections > div.isWeekend, #Days > ul > li.isWeekend {
-				background-color:	#DDD;
-			}
-			
-			/*
-			#Selections > div:nth-child(odd), #Days > ul > li:nth-child(odd) {
-				background-color:	#eee;
-			}
-			*/
-			
-			#Selections > div > ul, #Selections > ul > li, ul.times > li {
-				height:	70px;
-			}
-			
-			#Days .month-separator, #Selections .month-separator {
-				position:			relative;
-				height:				30px;
-				font-size:			16px;
-				background-color:	#999;
-				color:				#fff;
-			}
-			
-			#Selections .month-separator {
-				border-bottom:	1px solid #000;
-			}
-			
-			#Selections > div > ul {
-				padding:		0px;
-				margin:			0px;
-				border-bottom:	1px solid #000;
-				white-space:	nowrap;
-			}
-			
-			#Selections > div > ul > li {
-				position:			relative;
-				height:				100%;
-				display:			inline-block;
-				list-style-type:	none;
-			}
-			
-			#Selections > div > ul > li > * {
-				position:			absolute;
-				bottom:				5px;
-				top:				5px;
-				left:				5px;
-				right:				5px;
-				text-align:	center;
-				font-size:	30px;
-			}
-			
-			#Selections > div > ul > li:not(:first-child) > * {
-				left:	0px;
-			}
-			
-			#Selections > div > ul > li i {
-				margin-top:		15px;
-				//text-shadow:	0px 0px 5px #000;
-			}
-			
-			#Selections > div > ul > li > div {
-				font-size:	20px;
-				top:		50%;
-				margin-top:	-12px;
-			}
-			
-			#Selections > div > ul > li.YES i {
-				
-			}
-			
-			#Selections > div > ul > li.MAYBE > div {
-				
-			}
-			
-			#Selections > div > ul > li.NO > div {
-				
-			}
-			
-			#ScrollField {
-				z-index:	2000;
-				position:	absolute;
-				top:		0%;
-				left:		0%;
-				width:		100%;
-				height:		100%;
-				overflow:	scroll;
-			}
-			
-			#ScrollField .dragger {
-				font-size:	60px;
-				width:		50px;
-				height:		200%;
-				top:		0%;
-				left:		50%;
-			}
-			
-			#HintForMoreUsers {
-				z-index:		200;
-				position:		absolute;
-				text-align:		center;
-				left:			0px;
-				right:			0px;
-				height:			80px;
-				//right:			50%;
-				//margin-right:	-100px;
-				top:			55px;
-				font-size:		14px;
-				color:			#999;
-			}
-			
-			#HintForMoreUsers i {
-				position:	absolute;
-				bottom:		3px;
-			}
-			
-			#HintForMoreUsers i:first-child {
-				left:		3px;
-			}
-			
-			#HintForMoreUsers i:last-child {
-				right:		3px;
-			}
-			
-			/*
-			#HintForSwypeLeft {
-				z-index:		200;
-				position:		absolute;
-				width:			200px;
-				text-align:		right;
-				right:			5px;
-				top:			55px;
-				font-size:		14px;
-				color:			#999;
-			}
-			
-			#HintForSwypeLeft.active {
-				color:			#000;
-			}
-			*/
-			
-			#HintForMoreUsers:before {
-				content: "" !important;
-			}
-			
-			#VotePanel {
-				z-index:		1000;
-				position:		absolute;
-				top:			0px;
-				width:			100%;
-				height:			100%;
-				right:			-100000px;
-				background:		red;
-			}
-		</style>
+		<link type="text/less" rel="stylesheet" href="css/event.css">
 	</head>
 	<body data-ng-controller="SelectionController">
 		<div id="ScrollField">
@@ -370,7 +19,7 @@
 		</div>
 		
 		<header>
-			<a href="index.html" id="Title">
+			<a href="index.html" id="BackButton">
 				<div>
 					<div><i class="fa fa-chevron-left"></i></div>
 					<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
@@ -379,8 +28,14 @@
 			</a>
 			
 			<div>
-				<a href="vote.html">
-					<i class="fa fa-check-square-o"></i>
+				<a>
+					<i class="fa fa-clock-o"></i>
+				</a>
+				<a>
+					<i class="fa fa-globe"></i>
+				</a>
+				<a>
+					<i class="fa fa-plus"></i>
 				</a>
 			</div>
 		</header>
@@ -460,17 +115,17 @@
 						</li>
 						<!---->
 						
-						<li class="single-selection">
+						<li id="CurrentUser" class="single-selection">
 							<div>
-								<i class="fa fa-group"></i><br />
+								<img />
 								
-								<title></title>
+								<title>You</title>
 							</div>
 						</li>
 						
 						<li class="single-selection" data-ng-repeat="user in users track by $index">
 							<div>
-								<i data-ng-if="user.image == null" class="fa fa-user"></i><br />
+								<i data-ng-if="user.image == null" class="fa fa-user"></i>
 								<div class="img" data-ng-if="user.image != null"></div>
 								<img data-ng-if="user.image != null" data-ng-src="{{ user.image }}" />
 								
@@ -497,9 +152,10 @@
 						<!---->
 						
 						<li class="single-selection">
-							<div>
-								{{ timeBlock.positiveVoteCount }}
-							</div>
+							<button>
+								<i class="fa fa-check"></i>
+							</button>
+							<!--{{ timeBlock.positiveVoteCount }}-->
 						</li>
 						
 						<li class="single-selection" data-ng-class="{{ vote }}" data-ng-switch="vote" ng-repeat="vote in timeBlock.votes track by $index">

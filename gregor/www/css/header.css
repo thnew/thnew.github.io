@@ -1,26 +1,41 @@
+body {
+	font-size:	12px;
+}
+
 header {
 	z-index:			1000001;
 	position:			absolute;
 	top:				0px;
 	left:				0px;
-	height:				50px;
+	height:				40px;
 	width:				100%;
 	background-color:	#0094FF;
+	font-size:			16px;
 	box-shadow:			0px 0px 5px #000;
+}
+
+header > title {
+	display:		block;
+	position:		absolute;
+	top:			50%;
+	margin-top:		-9px;
+	left:			10px;
+	color:			#fff;
+	font-weight:	bold;
 }
 
 header > div {
 	position:		absolute;
 	top:			0px;
 	right:			0px;
-	height:			50px;
+	height:			40px;
 }
 
 header > div a {
 	position:		relative;
 	display:		inline-block;
-	width:			50px;
-	height:			50px;
+	width:			40px;
+	height:			40px;
 }
 
 header > div a:active {
@@ -31,9 +46,9 @@ header > div a i {
 	position:		absolute;
 	top:			50%;
 	left:			50%;
-	margin-top:		-10px;
-	margin-left:	-10px;
-	font-size:		25px;
+	font-size:		24px !important;
+	margin-top:		-12px;
+	margin-left:	-12px;
 	color:			rgba(255,255,255,0.7);
 }
 
@@ -41,68 +56,68 @@ header > div a i.fa-ellipsis-v {
 	margin-left:	-2px;
 }
 
-#Title {
+#BackButton {
 	display:		block;
 	position:		absolute;
 	left:			0px;
 	top:			0px;
 	bottom:			0px;
-	right:			100px;
+	right:			80px;
 	color:			#fff;
 }
 
-#Title:active, #Title:hover {
+#BackButton:active, #BackButton:hover {
 	background:	#7FC9FF;
 }
 
-#Title > div {
+#BackButton > div {
 	position:		absolute;
 	left:			7px;
-	top:			5px;
-	bottom:			5px;
+	top:			0px;
+	bottom:			0px;
 	right:			5px;
 }
 
-#Title > div > * {
+#BackButton > div > * {
 	position:	absolute;
 	display:	inline-block;
-	font-size:	20px;
 }
 
-#Title > div > div {
+#BackButton > div > div {
 	top:		50%;
-	margin-top:	-11px;
+	margin-top:	-7px;
 }
 
-#Title > div > div:first-child {
+#BackButton > div > div:first-child {
 	left:			0px;
 }
 
-#Title > div > img, #Title > div > i {
-	height:			40px;
-	top:			0px;
-	left:			20px;
+#BackButton > div > img, #BackButton > div > i {
+	height:			24px;
+	top:			50%;
+	margin-top:		-12px;
+	left:			16px;
 	border-radius:	50px;
 }
 
-#Title > div > i {
+#BackButton > div > i {
 	top:			50%;
 	margin-top:		-13px;
 	margin-left:	7px;
-	font-size:		30px;
+	font-size:		24px;
 }
 
-#Title > div > div:last-child {
-	left:	66px;
+#BackButton > div > div:last-child {
+	left:	48px;
 }
 
 #Logo {
 	z-index:		1000;
 	position:		absolute;
-	top:			50px;
+	top:			40px;
 	left:			0px;
-	width:			100px;
-	height:			80px;
+	width:			78px;
+	height:			64px;
 	border-radius:	0px 0px 5px 0px;
 	background:		#7FC9FF;
 }
@@ -110,15 +125,15 @@ header > div a i.fa-ellipsis-v {
 #Logo i {
 	position:		absolute;
 	left:			50%;
-	margin-left:	-14px;
-	font-size:		30px;
+	margin-left:	-11px;
+	font-size:		24px;
 	top:			13px;
 }
 
 #HeaderBar {
 	z-index:		1000;
 	position:		absolute;
-	top:			50px;
+	top:			40px;
 	right:			0px;
 	left:			100px;
 	background:		#7FC9FF;
@@ -138,10 +153,10 @@ header > div a i.fa-ellipsis-v {
 #HeaderBackgrund {
 	z-index:			199;
 	position:			absolute;
-	top:				50px;
+	top:				40px;
 	left:				0px;
 	right:				0px;
-	height:				80px;
+	height:				64px;
 	background:			#eee;
 	box-shadow:			0px 0px 5px #000;
 }
@@ -149,8 +164,8 @@ header > div a i.fa-ellipsis-v {
 .logo_subtitle {
 	position:		absolute;
 	text-align:		center;
-	font-size:		16px;
-	bottom:			7px;
+	font-size:		12px;
+	bottom:			5px;
 	left:			0px;
 	right:			0px;
 }

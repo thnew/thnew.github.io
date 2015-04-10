@@ -202,7 +202,7 @@ app.controller('SelectionController', function($scope){
 	}
 });
 
-/*
+//*
 var out = "";
 var maxUsers = 15;
 for(var i=1; i<=maxUsers; i++)
@@ -213,7 +213,7 @@ for(var i=1; i<=maxUsers; i++)
 
 for(var maxUsersPerScreen=maxUsers; maxUsersPerScreen>=2; maxUsersPerScreen--)
 {
-	out += "@media (max-width: " + (250 + (maxUsersPerScreen-2) * 75) + "px) {";
+	out += "@media (max-width: " + (200 + (maxUsersPerScreen-2) * 75) + "px) {";
 	
 	for(var userCount=1; userCount<=maxUsers; userCount++)
 	{
@@ -221,13 +221,12 @@ for(var maxUsersPerScreen=maxUsers; maxUsersPerScreen>=2; maxUsersPerScreen--)
 		if(p < 100) p = 100;
 		out += "#SelectionContainer.count-" + userCount + " .time_scale_wrapper { width: " + p + "%; }";
 		
-		var usersOverTheScreenLimit = userCount - maxUsersPerScreen ;
-		
-		if(usersOverTheScreenLimit > 0)
-		{
-			out += "#SelectionContainer.count-" + userCount + " #HintForMoreUsers { display:block; content: '" + usersOverTheScreenLimit + "'; }";
-			out += "#SelectionContainer.count-" + userCount + " #HintForMoreUsers:before { content: '" + usersOverTheScreenLimit + "'; }";
-		}
+		//var usersOverTheScreenLimit = userCount - maxUsersPerScreen ;
+		//if(usersOverTheScreenLimit > 0)
+		//{
+		//	out += "#SelectionContainer.count-" + userCount + " #HintForMoreUsers { display:block; content: '" + usersOverTheScreenLimit + "'; }";
+		//	out += "#SelectionContainer.count-" + userCount + " #HintForMoreUsers:before { content: '" + usersOverTheScreenLimit + "'; }";
+		//}
 	}
 	
 	out += "}";
