@@ -47,7 +47,7 @@
 			
 			<div>
 				<a data-ng-click="showOverview=!showOverview">
-					<i class="fa fa-arrows-alt"></i>
+					<i class="fa" data-ng-class="showOverview ? 'fa-expand' : 'fa-compress'"></i>
 				</a>
 				<a>
 					<i class="fa fa-info"></i>
@@ -81,7 +81,7 @@
 				mm yy
 			</div>
 		</div>
-		<div id="HeaderBar"><div class="header_content"></div></div>
+		<!--<div id="HeaderBar"><div class="header_content"></div></div>-->
 		<div id="HeaderBackgrund" class="header_content"></div>
 		
 		<!--
@@ -123,7 +123,7 @@
 			</div>
 		</div>
 		<div id="SelectionContainer" class="selection_container count-{{ users.length }}" data-ng-class="showOverview ? 'overview' : ''">
-			<div id="HintForMoreUsers">
+			<div id="HintForMoreUsers" data-ng-show="!showOverview">
 				<i class="fa fa-ellipsis-h"></i>
 				<i class="fa fa-ellipsis-h"></i>
 			</div>
