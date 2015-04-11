@@ -1,5 +1,5 @@
 // Create angular app
-var app = angular.module('event_selection', []);
+var app = angular.module('gregor', []);
 
 app.controller('SelectionController', function($scope){
 	var times = [
