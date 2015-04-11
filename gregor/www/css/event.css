@@ -11,7 +11,7 @@
 	position:		absolute;
 	display:		block;
 	width:			100px;
-	top:			105px;
+	top:			115px;
 	bottom:			0px;
 	//border-right:	1px solid #000;
 	overflow:		hidden;
@@ -26,6 +26,10 @@
 	width:			120px;
 	padding:		0px;
 	margin:			0px;
+}
+
+.days > ul > li:first-child {
+	border-top:		1px solid #000;
 }
 
 .days > ul > li {
@@ -116,7 +120,7 @@ li ul.times > li > aside {
 .users {
 	z-index:		200;
 	position:		absolute;
-	top:			40px;
+	top:			50px;
 	right:			0px;
 	left:			0px;
 	height:			64px;
@@ -194,7 +198,7 @@ li ul.times > li > aside {
 .selections {
 	z-index:	98;
 	position:	absolute;
-	top:		105px;
+	top:		115px;
 	bottom:		0px;
 	left:		0px;
 	right:		0px;
@@ -224,6 +228,10 @@ li ul.times > li > aside {
 	height:				30px;
 	background-color:	#999;
 	color:				#fff;
+}
+
+.selections .time_scale_wrapper:first-child .month-separator {
+	border-top:	1px solid #000;
 }
 
 .selections .month-separator {
@@ -334,6 +342,10 @@ li ul.times > li > aside {
 	border-bottom:	1px solid transparent !important;
 }
 
+#ScrollField .time_scale_wrapper:first-child .month-separator {
+	border-top:	1px solid transparent !important;
+}
+
 #ScrollField .time_container, #ScrollField .users {
 	position:	fixed;
 }
@@ -344,7 +356,7 @@ li ul.times > li > aside {
 
 #ScrollField .selections {
 	position:	static;
-	margin-top:	105px;
+	margin-top:	115px;
 	overflow:	hidden;
 }
 
@@ -373,7 +385,7 @@ li ul.times > li > aside {
 	height:			70px;
 	//right:			50%;
 	//margin-right:	-100px;
-	top:			40px;
+	top:			50px;
 	font-size:		14px;
 	color:			#999;
 }

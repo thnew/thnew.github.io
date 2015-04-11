@@ -3,10 +3,10 @@ header {
 	position:			absolute;
 	top:				0px;
 	left:				0px;
-	height:				40px;
+	height:				50px;
 	width:				100%;
 	background-color:	#0094FF;
-	font-size:			125%;
+	font-size:			150%;
 	box-shadow:			0px 0px 5px #000;
 }
 
@@ -14,7 +14,7 @@ header > title {
 	display:		block;
 	position:		absolute;
 	top:			50%;
-	margin-top:		-9px;
+	margin-top:		-10px;
 	left:			10px;
 	color:			#fff;
 	font-weight:	bold;
@@ -24,14 +24,14 @@ header > div {
 	position:		absolute;
 	top:			0px;
 	right:			0px;
-	height:			40px;
+	height:			50px;
 }
 
 header > div a {
 	position:		relative;
 	display:		inline-block;
-	width:			40px;
-	height:			40px;
+	width:			50px;
+	height:			50px;
 }
 
 header > div a:active {
@@ -62,7 +62,7 @@ header > div a i.fa-info {
 	left:			0px;
 	top:			0px;
 	bottom:			0px;
-	right:			80px;
+	right:			150px;
 	color:			#fff;
 }
 
@@ -72,7 +72,7 @@ header > div a i.fa-info {
 
 #BackButton > div {
 	position:		absolute;
-	left:			7px;
+	left:			10px;
 	top:			0px;
 	bottom:			0px;
 	right:			5px;
@@ -85,7 +85,7 @@ header > div a i.fa-info {
 
 #BackButton > div > div {
 	top:		50%;
-	margin-top:	-7px;
+	margin-top:	-9px;
 }
 
 #BackButton > div > div:first-child {
@@ -93,10 +93,10 @@ header > div a i.fa-info {
 }
 
 #BackButton > div > img, #BackButton > div > i {
-	height:			24px;
+	height:			32px;
 	top:			50%;
-	margin-top:		-12px;
-	left:			16px;
+	margin-top:		-16px;
+	left:			20px;
 	border-radius:	50px;
 }
 
@@ -108,13 +108,13 @@ header > div a i.fa-info {
 }
 
 #BackButton > div > div:last-child {
-	left:	48px;
+	left:	60px;
 }
 
 #Logo {
 	z-index:		1000;
 	position:		absolute;
-	top:			40px;
+	top:			50px;
 	left:			0px;
 	width:			78px;
 	height:			65px;
@@ -134,7 +134,7 @@ header > div a i.fa-info {
 #HeaderBar {
 	z-index:		1000;
 	position:		absolute;
-	top:			40px;
+	top:			50px;
 	right:			0px;
 	left:			78px;
 	background:		#7FC9FF;
@@ -155,7 +155,7 @@ header > div a i.fa-info {
 #HeaderBackgrund {
 	z-index:			199;
 	position:			absolute;
-	top:				40px;
+	top:				50px;
 	left:				0px;
 	right:				0px;
 	height:				65px;
