@@ -44,12 +44,16 @@ header > div a i {
 	left:			50%;
 	font-size:		24px !important;
 	margin-top:		-12px;
-	margin-left:	-12px;
+	margin-left:	-10px;
 	color:			rgba(255,255,255,0.7);
 }
 
 header > div a i.fa-ellipsis-v {
-	margin-left:	-2px;
+	margin-left:	-3px;
+}
+
+header > div a i.fa-info {
+	margin-left:	-3px;
 }
 
 #BackButton {
