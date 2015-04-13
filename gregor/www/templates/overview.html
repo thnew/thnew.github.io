@@ -1,0 +1,17 @@
+﻿<div data-ng-controller="OverviewController">
+	<link type="text/less" rel="stylesheet" href="css/index.css">
+
+	<ul id="Events">
+		<li data-ng-repeat="event in events track by $index">
+			<a href="event.html">
+				<img data-ng-src="{{ event.img }}" />
+				<div class="text_container">
+					<div class="title">{{ event.title }}</div>
+					<div class="description">{{ event.description }}</div>
+					<aside>{{ event.time | date: 'H:mm' }}</aside>
+				</div>
+			</a>
+			<div class="separator_overview_list">&nbsp;</div>
+		</li>
+	</ul>
+</div>
