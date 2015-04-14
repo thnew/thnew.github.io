@@ -13,7 +13,7 @@
 		<link type="text/less" rel="stylesheet" href="css/header.css">
 		<link type="text/less" rel="stylesheet" href="css/event.css">
 	</head>
-	<body data-ng-controller="SelectionController" class="Xdevelopment">
+	<body class="Xdevelopment" data-ng-controller="MainController">
 		<header>
 			<a href="index.html" id="BackButton">
 				<div>
@@ -52,13 +52,15 @@
 		<div id="VotePanel"></div>
 		<!---->
 		
-		<div data-ng-include="'/template/event.html'"></div>
+		<div data-ng-include="'/template/event.html'" data-ng-controller="SelectionController"></div>
 		
 		<!--<script type="text/javascript" src="cordova.js"></script>-->
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/angular.js"></script>
-		<script type="text/javascript" src="js/init.js"></script>
 		
-		<script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+		<!--Angular initialization and controllers-->
+		<script type="text/javascript" src="js/MainController.js"></script>
+		<script type="text/javascript" src="js/SelectionController.js"></script>
+		<script type="text/javascript" src="js/init.js"></script>
 	</body>
 </html>

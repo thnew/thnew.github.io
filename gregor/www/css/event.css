@@ -205,11 +205,11 @@ li ul.times > li > aside {
 	overflow:	scroll;
 }
 
-.selections > div {
+.selections_row {
 	width:	100%;
 }
 
-.selections > div.isWeekend, .days > ul > li.isWeekend {
+.selections_row .isWeekend, .days .isWeekend {
 	background-color:	#DDD;
 }
 
