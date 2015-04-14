@@ -1,14 +1,14 @@
 ﻿<!DOCTYPE html>
-<html data-ng-app="overview">
+<html data-ng-app="Gregor">
 	<head>
 		<meta name="msapplication-tap-highlight" content="no" />
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=100%" />
 		<link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
 		<link type="text/less" rel="stylesheet" href="css/main.css">
 		<link type="text/less" rel="stylesheet" href="css/header.css">
-		<link type="text/less" rel="stylesheet" href="css/index.css">
 	</head>
-	<body data-ng-controller="OverviewController">
+	
+	<body data-ng-controller="MainController">
 		<header>
 			<title>
 				Events
@@ -16,124 +16,19 @@
 			
 			<div>
 				<a>
-					<i class="fa fa-plus"></i>
+					<i class="fa fa-plus" data-ng-click="switchScreens()"></i>
 				</a>
 			</div>
 		</header>
 		
-		<ul id="Events">
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-			<a href="event.html">
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>
-					<div class="title">Billard</div>
-					<div class="description">2 of 4 people voted</div>
-					<aside>10:00</aside>
-				</div>
-			</a>
-		</ul>
+		<div id="ScreenA" class="screen" data-ng-class="isScreenA ? 'show' : ''" data-ng-include="'templates/overview.html'"></div>
+		<div id="ScreenB" class="screen" data-ng-class="!isScreenA ? 'show' : ''" data-ng-include="'templates/overview.html'"></div>
 		
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/angular.js"></script>
+		<script type="text/javascript" src="js/MainController.js"></script>
+		<script type="text/javascript" src="js/OverviewController.js"></script>
 		<script type="text/javascript" src="js/init.js"></script>
 		
 		<script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>

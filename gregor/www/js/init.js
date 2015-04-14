@@ -1,8 +1,9 @@
 // Create angular app
-var app = angular.module('gregor', []);
+var app = angular.module('Gregor', []);
 
 app.controller('MainController', MainController);
 app.controller('SelectionController', SelectionController);
+app.controller('OverviewController', OverviewController);
 
 /*
 var out = "";
