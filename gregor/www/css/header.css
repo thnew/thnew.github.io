@@ -5,9 +5,9 @@ header {
 	left:				0px;
 	height:				50px;
 	width:				100%;
-	background-color:	#0094FF;
+	background-color:	#2980B9;
 	font-size:			150%;
-	box-shadow:			0px 0px 5px #000;
+	box-shadow:			0px 0px 5px #252525;
 }
 
 header > title {
@@ -67,7 +67,7 @@ header > div a i.fa-info {
 }
 
 #BackButton:active, #BackButton:hover {
-	background:	#7FC9FF;
+	background:	#3498DB;
 }
 
 #BackButton > div {
@@ -118,7 +118,8 @@ header > div a i.fa-info {
 	left:			0px;
 	width:			78px;
 	height:			65px;
-	background:		#7FC9FF;
+	color:			#ECF0F1;
+	background:		#7F8C8D;
 }
 
 #Logo i {
@@ -159,14 +160,14 @@ header > div a i.fa-info {
 	left:				0px;
 	right:				0px;
 	height:				65px;
-	background:			#eee;
+	background:			#7F8C8D;
 }
 
 .logo_subtitle {
 	position:		absolute;
 	text-align:		center;
 	font-size:		12px;
-	bottom:			5px;
+	bottom:			7px;
 	left:			0px;
 	right:			0px;
 }
