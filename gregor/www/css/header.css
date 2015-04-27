@@ -115,8 +115,7 @@ header > div a i.fa-info {
 	z-index:		1000;
 	position:		absolute;
 	top:			50px;
-	left:			0px;
-	width:			78px;
+	width:			98px;
 	height:			65px;
 	color:			#ECF0F1;
 	background:		#7F8C8D;
@@ -130,6 +129,14 @@ header > div a i.fa-info {
 	top:			13px;
 }
 
+.logo_subtitle {
+	position:		absolute;
+	font-size:		125%;
+	text-transform:	uppercase;
+	bottom:			6px;
+	left:			15px;
+	right:			0px;
+}
 
 /*
 #HeaderBar {
@@ -161,15 +168,6 @@ header > div a i.fa-info {
 	right:				0px;
 	height:				65px;
 	background:			#7F8C8D;
-}
-
-.logo_subtitle {
-	position:		absolute;
-	text-align:		center;
-	font-size:		12px;
-	bottom:			7px;
-	left:			0px;
-	right:			0px;
 }
 
 .header_content {

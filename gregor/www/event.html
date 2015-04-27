@@ -24,7 +24,9 @@
 					
 					<div class="selections">
 						<div class="time_scale_wrapper" data-ng-repeat="day in selectionMap track by $index">
+							<!---
 							<div data-ng-if="day.isMonthSeparator" class="month-separator"></div>
+							<!---->
 							
 							<ul data-ng-if="!day.isMonthSeparator" data-ng-repeat="timeBlock in day.times track by $index">
 								<li class="single-selection" data-ng-click="_clickUserField(timeBlock.datetime)"></li>
@@ -69,8 +71,8 @@
 			</div>
 		</header>
 		<div id="Logo">
-			<i class="fa fa-calendar winter"></i>
 			<!--
+			<i class="fa fa-calendar winter"></i>
 			<i class="fa fa-leaf winter"></i>
 			<i class="fa fa-cloud spring"></i>
 			<i class="fa fa-sun-o summer"></i>
@@ -91,21 +93,25 @@
 		<div id="TimeContainer" class="time_container">
 			<div id="Days" class="days">
 				<ul>
-					<li data-ng-repeat="day in days track by $index" data-ng-class="day.isWeekend ? 'isWeekend' : ''"  data-date="{{ day.date.toISOString() }}">
+					<li data-ng-repeat="day in days track by $index" data-ng-class="day.isWeekend ? 'isWeekend' : ''" data-month="{{ day.date | date : 'MMM' }}" data-year="{{ day.date | date : 'yyyy' }}" data-date="{{ day.date.toISOString() }}">
+						<!--
 						<div data-ng-if="!day.isMonthSeparator" class="day" data-ng-class="day.times.length == 1 ? 'small' : ''">
 							<div>
 								{{ day.date | date : "EEE, d" }}
-								
 							</div>
 						</div>
+						<!---->
 						
 						<ul data-ng-if="!day.isMonthSeparator" class="times">
 							<li data-ng-repeat="time in day.times">
 								<div>
-									{{ time.date | date : "H:mm" }}
+									<div class="day_name">
+										{{ time.date | date : "EEEE" }}
+									</div>
+									{{ time.date | date : "d MMM H:mm" }}
 								</div>
 								
-								<aside>
+								<aside class="day_vote_count">
 									{{ time.positiveVoteCount }}
 									
 									<i class="fa fa-check"></i>
@@ -113,11 +119,13 @@
 							</li>
 						</ul>
 						
-						<div data-ng-if="day.isMonthSeparator" class="month-separator" data-month="{{ day.date | date : 'MMM yyyy' }}" data-month-nr="{{ day.date | date : 'M' }}">
+						<!--
+						<div data-ng-if="day.isMonthSeparator" class="month-separator" data-month="{{ day.date | date : 'MMM' }}" data-year="{{ day.date | date : 'yyyy' }}">
 							<div>
 								{{ day.date | date : "MMM yyyy" }}
 							</div>
 						</div>
+						<!---->
 						
 						<div style="clear:both;"></div>
 					</li>
@@ -157,13 +165,15 @@
 			</div>
 			<div id="Selections" class="selections">
 				<div class="time_scale_wrapper" data-ng-repeat="day in selectionMap track by $index" data-ng-class="day.isWeekend ? 'isWeekend' : ''">
+					<!--
 					<div data-ng-if="day.isMonthSeparator" class="month-separator"></div>
+					<!---->
 					
 					<ul data-ng-if="!day.isMonthSeparator" data-ng-repeat="timeBlock in day.times">
 						<li class="single-selection" data-ng-class="vote" data-ng-switch="vote" ng-repeat="vote in timeBlock.votes track by $index">
 							<i class="fa fa-check" ng-switch-when="YES"></i>
 							<span ng-switch-when="MAYBE">(<i class="fa fa-check"></i>)</span>
-							<i class="fa fa-circle-thin" ng-switch-when="NO"></i>
+							<i class="fa fa-circle" ng-switch-when="NO"></i>
 						</li>
 					</ul>
 				</div>
@@ -267,7 +277,7 @@
 								// Detect
 								var lastElem;
 								var headerHeight = $("header").height() + $("#Logo").height();
-								var separators = $("#Days .month-separator");
+								var separators = $("#Days > ul > li");
 								var separatorsLength = separators.size();
 								separators.each(function(index, elem) {
 									elem = $(elem);
@@ -280,10 +290,10 @@
 										if(top < 0 && isLastElem) lastElem = elem;
 										
 										var month = lastElem.attr("data-month");
-										var monthNr = lastElem.attr("data-month-nr");
+										var year = lastElem.attr("data-year");
 										
 										// Replace month and year with new current
-										$("#Month").text(month);
+										$("#Month").html(month + " " + year);
 										
 										/*
 										$("#Logo i").hide();

@@ -21,16 +21,16 @@ app.controller('SelectionController', function($scope){
 		new Date(2015, 5, 10, 15, 00, 0),
 		new Date(2015, 5, 11, 10, 30, 0),
 		new Date(2015, 5, 11, 14, 30, 0),
-		new Date(2016, 5, 11, 18, 30, 0),
-		new Date(2016, 5, 15, 10, 30, 0),
-		new Date(2016, 5, 15, 14, 30, 0),
-		new Date(2016, 5, 16, 18, 30, 0),
-		new Date(2016, 5, 17, 18, 30, 0),
-		new Date(2016, 5, 18, 18, 30, 0),
-		new Date(2016, 5, 19, 18, 30, 0),
-		new Date(2016, 5, 19, 19, 30, 0),
-		new Date(2016, 5, 19, 20, 30, 0),
-		new Date(2016, 5, 19, 21, 30, 0),
+		new Date(2015, 8, 11, 18, 30, 0),
+		new Date(2015, 8, 15, 10, 30, 0),
+		new Date(2015, 8, 15, 14, 30, 0),
+		new Date(2015, 8, 16, 18, 30, 0),
+		new Date(2015, 8, 17, 18, 30, 0),
+		new Date(2015, 8, 18, 18, 30, 0),
+		new Date(2015, 8, 19, 18, 30, 0),
+		new Date(2015, 8, 19, 19, 30, 0),
+		new Date(2015, 8, 19, 20, 30, 0),
+		new Date(2015, 8, 19, 21, 30, 0),
 	];
 	
 	// Convert times to display format
@@ -41,7 +41,7 @@ app.controller('SelectionController', function($scope){
 	{
 		var t = times[f];
 		
-		/* Push separators for new months */ {
+		/* Push separators for new months * / {
 			var month = t.getFullYear() + "/" + t.getMonth();
 			if(month != lastMonth)
 			{
@@ -55,6 +55,7 @@ app.controller('SelectionController', function($scope){
 				lastMonth = month;
 			}
 		}
+		//*/
 		
 		var daydate = Date.UTC(t.getFullYear(), t.getMonth(), t.getDate());
 		if(daydate != lastday)
@@ -120,7 +121,7 @@ app.controller('SelectionController', function($scope){
 		$scope.selectionMap = [];
 		for(var f in $scope.days)
 		{
-			if($scope.days[f].isMonthSeparator) continue;
+			//if($scope.days[f].isMonthSeparator) continue;
 			
 			var day = {
 				isWeekend:			$scope.days[f].isWeekend,
@@ -168,7 +169,7 @@ app.controller('SelectionController', function($scope){
 			}
 		}
 		
-		// Add month separators
+		/*/ Add month separators
 		var mapWithSeparators = [];
 		var i = 0;
 		for(var f in $scope.selectionMap)
@@ -192,6 +193,7 @@ app.controller('SelectionController', function($scope){
 		}
 		
 		$scope.selectionMap = mapWithSeparators;
+		//*/
 		
 		// Copy the positive votes counter to selectionMap
 		for(var f in $scope.selectionMap)
