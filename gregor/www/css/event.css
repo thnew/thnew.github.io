@@ -3,7 +3,7 @@
 	position:		absolute;
 	top:			0px;
 	bottom:			0px;
-	width:			78px;
+	width:			98px;
 	height:			100%;
 }
 
@@ -13,7 +13,7 @@
 	width:			100px;
 	top:			115px;
 	bottom:			0px;
-	//border-right:	1px solid #000;
+	//border-right:	1px solid #252525;
 	overflow:		hidden;
 }
 
@@ -28,14 +28,9 @@
 	margin:			0px;
 }
 
-.days > ul > li:first-child {
-	border-top:		1px solid #000;
-}
-
 .days > ul > li {
 	position:			relative;
 	list-style-type:	none;
-	border-bottom:		1px solid #000;
 }
 
 .days > ul > li .day {
@@ -48,7 +43,7 @@
 
 /*
 .days > ul > li.isFirstDayInMonth {
-	box-shadow:	2px -2px 2px #000;
+	box-shadow:	2px -2px 2px #252525;
 }
 */
 
@@ -71,10 +66,12 @@
 }
 
 .days .month-separator > div {
-	position:	absolute;
-	width:		66%;
-	text-align:	center;
-	top:		6px;
+	position:		absolute;
+	width:			66%;
+	font-size:		140%;
+	text-transform:	uppercase;
+	bottom:			3px;
+	left:			15px;
 }
 
 ul.times {
@@ -85,23 +82,23 @@ ul.times {
 ul.times > li {
 	list-style-type:	none;
 	position:			relative;
-	margin-left:		30px;
-	border-top:			1px solid #000;
-	width:				48px;
-}
-
-ul.times > li:first-child {
-	border:	0px;
+	margin-left:		0px;
+	border-bottom:			1px solid #7F8C8D;
+	width:				98px;
 }
 
 li ul.times > li > div {
 	position:	absolute;
-	right:		5px;
+	left:		15px;
 	top:		50%;
-	margin-top:	-7px;
+	margin-top:	-14px;
+}
+.day_name {
+	text-transform:	uppercase;
+	color:			#7F8C8D;
 }
 
-li ul.times > li > aside {
+.day_vote_count {
 	position:	absolute;
 	right:		5px;
 	bottom:		0px;
@@ -114,7 +111,7 @@ li ul.times > li > aside {
 	right:		0px;
 	top:		0px;
 	bottom:		0px;
-	left:		78px;
+	left:		98px;
 }
 
 .users {
@@ -126,6 +123,11 @@ li ul.times > li > aside {
 	height:			64px;
 	overflow:		hidden;
 	white-space:	nowrap;
+}
+
+#Users, #Logo {
+	background-color:	#BDC3C7;
+	box-shadow:			-5px 0px 5px #252525;
 }
 
 .users > div {
@@ -209,8 +211,8 @@ li ul.times > li > aside {
 	width:	100%;
 }
 
-.selections_row .isWeekend, .days .isWeekend {
-	background-color:	#DDD;
+#Days > ul > li:nth-child(odd), #Selections > div:nth-child(odd) {
+	background-color:	#DBDFE0;
 }
 
 /*
@@ -220,28 +222,27 @@ li ul.times > li > aside {
 */
 
 .selections > div > ul, .selections > ul > li, ul.times > li {
-	height:	56px;
+	height:	80px;
 }
 
 .days .month-separator, .selections .month-separator {
 	position:			relative;
-	height:				30px;
-	background-color:	#999;
-	color:				#fff;
+	height:				40px;
+	background-color:	#BDC3C7;
 }
 
 .selections .time_scale_wrapper:first-child .month-separator {
-	border-top:	1px solid #000;
+	border-top:	1px solid #252525;
 }
 
 .selections .month-separator {
-	border-bottom:	1px solid #000;
+	border-bottom:	1px solid #252525;
 }
 
 .selections > div > ul {
 	padding:		0px;
 	margin:			0px;
-	border-bottom:	1px solid #000;
+	border-bottom:	1px solid #7F8C8D;
 	white-space:	nowrap;
 }
 
@@ -260,7 +261,7 @@ li ul.times > li > aside {
 	right:			0px;
 	width:			100%;
 	text-align:		center;
-	font-size:		30px;
+	font-size:		150%;
 }
 
 .selections > div > ul > li > button {
@@ -279,12 +280,12 @@ li ul.times > li > aside {
 
 .selections .single-selection > i {
 	top:			50%;
-	margin-top:		-15px;
+	margin-top:		-9px;
 }
 
 .selections .single-selection > span {
 	top:			50%;
-	margin-top:		-17px;
+	margin-top:		-10px;
 }
 
 .selections > div > ul > li > div {
@@ -293,17 +294,23 @@ li ul.times > li > aside {
 	margin-top:	-12px;
 }
 
+/**/
 .selections > div > ul > li.YES {
-	background-color:	rgba(153,214,255,0.7);
+	xbackground-color:	rgba(153,214,255,0.7);
 }
 
 .selections > div > ul > li.MAYBE {
-	background-color:	rgba(221,241,255,0.7);
+	xbackground-color:	rgba(221,241,255,0.7);
 }
 
 .selections > div > ul > li.NO {
-	color:				rgba(37,37,37,0.3);
+	xcolor:				rgba(37,37,37,0.3);
 }
+
+.selections > div > ul > li.NO i {
+	xcolor:				rgba(37,37,37,0.3);
+	color:			rgba(43,43,43,0.2);}
+/**/
 
 /*overview*/
 	#ScrollField.overview .dragger {
@@ -339,7 +346,7 @@ li ul.times > li > aside {
 
 #ScrollField  .month-separator {
 	background-color:	transparent;
-	border-bottom:	1px solid transparent !important;
+	border-bottom:		1px solid transparent !important;
 }
 
 #ScrollField .time_scale_wrapper:first-child .month-separator {
