@@ -31,7 +31,6 @@
 .days > ul > li {
 	position:			relative;
 	list-style-type:	none;
-	border-bottom:		1px solid #252525;
 }
 
 .days > ul > li .day {
@@ -84,12 +83,8 @@ ul.times > li {
 	list-style-type:	none;
 	position:			relative;
 	margin-left:		0px;
-	border-top:			1px solid #252525;
+	border-bottom:			1px solid #7F8C8D;
 	width:				98px;
-}
-
-ul.times > li:first-child {
-	border:	0px;
 }
 
 li ul.times > li > div {
@@ -128,7 +123,11 @@ li ul.times > li > div {
 	height:			64px;
 	overflow:		hidden;
 	white-space:	nowrap;
-	color:			#ECF0F1;
+}
+
+#Users, #Logo {
+	background-color:	#BDC3C7;
+	box-shadow:			-5px 0px 5px #252525;
 }
 
 .users > div {
@@ -243,7 +242,7 @@ li ul.times > li > div {
 .selections > div > ul {
 	padding:		0px;
 	margin:			0px;
-	border-bottom:	1px solid #252525;
+	border-bottom:	1px solid #7F8C8D;
 	white-space:	nowrap;
 }
 
