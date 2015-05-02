@@ -5,30 +5,18 @@
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=100%" />
 		<link type="text/css" rel="stylesheet" href="css/font-awesome.min.css">
 		<link type="text/less" rel="stylesheet" href="css/main.css">
-		<link type="text/less" rel="stylesheet" href="css/header.css">
 	</head>
 	
 	<body data-ng-controller="MainController">
-		<header>
-			<title>
-				Events
-			</title>
-			
-			<div>
-				<a>
-					<i class="fa fa-plus" data-ng-click="switchScreens()"></i>
-				</a>
-			</div>
-		</header>
-		
-		<div id="ScreenA" class="screen" data-ng-class="isScreenA ? 'show' : ''" data-ng-include="'templates/overview.html'"></div>
-		<div id="ScreenB" class="screen" data-ng-class="!isScreenA ? 'show' : ''" data-ng-include="'templates/vote.html'"></div>
+		<div id="ScreenA" class="screen" data-ng-class="isScreenA ? 'show' : ''" data-ng-include="screenA.path" data-ng-controller="screenA.controller"></div>
+		<div id="ScreenB" class="screen" data-ng-class="!isScreenA ? 'show' : ''" data-ng-include="screenB.path"data-ng-controller="screenB.controller"></div>
 		
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/angular.js"></script>
 		<script type="text/javascript" src="js/MainController.js"></script>
 		<script type="text/javascript" src="js/OverviewController.js"></script>
+		<script type="text/javascript" src="js/VoteController.js"></script>
 		<script type="text/javascript" src="js/init.js"></script>
 		
 		<script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>

@@ -1,4 +1,64 @@
 function MainController($scope) {
+	/* SCREENS */ {
+		$scope.SCREENS = {
+			BLANK: {
+				path:		"templates/blank.html",
+				controller:	OverviewController
+			},
+			OVERVIEW: {
+				path:		"templates/overview.html",
+				controller:	OverviewController
+			},
+			EVENT_NEW: {
+				path:	"templates/event_new.html"
+			},
+			VOTE: {
+				path:		"templates/vote.html",
+				controller:	VoteController
+			}
+		};
+		
+		$scope.isScreenA = true;
+		
+		$scope.screenA = $scope.SCREENS.OVERVIEW;
+		$scope.screenB = $scope.SCREENS.BLANK;
+		
+		var _onLoaded = null;
+		
+		$scope.showScreen = function(screen) {
+			if($scope.isScreenA)
+			{
+				console.log("B", screen.path);
+				$scope.screenB = screen;
+			}
+			else
+			{
+				console.log("A", screen.path);
+				$scope.screenA = screen;
+			}
+			
+			_onLoaded = function() {
+				$scope.isScreenA = !$scope.isScreenA;
+			}
+			
+			//_onLoaded();
+		};
+		
+		//*
+		$scope.$on('$includeContentLoaded', function(event) {
+			console.log("typeof(_onLoaded)", typeof(_onLoaded));
+			console.log("event", event);
+			if(typeof(_onLoaded) == "function")
+			{
+				_onLoaded();
+				_onLoaded = null;
+			}
+			
+			//$('#output').append('<p>' + event.targetScope.name + ' include\'s content was loaded.</p>');
+		});
+		//*/
+	}
+	
 	$scope.OPTION = {
 		YES:	"YES",
 		MAYBE:	"MAYBE",
@@ -104,11 +164,5 @@ function MainController($scope) {
 				votes:	votes
 			}
 		});
-	};
-	
-	$scope.isScreenA = true;
-	
-	$scope.switchScreens = function() {
-		$scope.isScreenA = !$scope.isScreenA;
 	};
 };

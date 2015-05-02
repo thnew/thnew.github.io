@@ -1,5 +1,33 @@
-﻿<div data-ng-controller="OverviewController">
-	<link type="text/less" rel="stylesheet" href="css/index.css">
+﻿<div>
+	<link type="text/less" rel="stylesheet" href="css/vote.css">
+	
+	<header>
+		<a data-ng-click="SUPER.showScreen(SUPER.SCREENS.OVERVIEW)" id="BackButton">
+			<div>
+				<div><i class="fa fa-chevron-left"></i></div>
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div>Billard</div>
+			</div>
+		</a>
+		
+		<div>
+			
+		</div>
+	</header>
 
-	sdfsd
+	<content>
+		<ul id="Dates">
+			<li>
+				Friday, 30.9.
+				19:00
+				
+				isMainScreen:
+				{{ isMainScreen ? "yes" : "no" }}
+				
+				<button>
+					<i class="fa fa-smile-o"></i>
+				</button>
+			</li>
+		</ul>
+	</content>
 </div>

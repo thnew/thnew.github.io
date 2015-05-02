@@ -3,6 +3,7 @@ var app = angular.module('Gregor', []);
 
 app.controller('MainController', MainController);
 app.controller('OverviewController', OverviewController);
+app.controller('VoteController', VoteController);
 
 app.controller('SelectionController', function($scope){
 	var times = [
