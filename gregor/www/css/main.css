@@ -24,7 +24,6 @@ body {
 	top:		20%;
 	transition:	opacity ease-out 0.3s, top ease-out 0.3s;
 	opacity: 	0;
-	background:	#fff;
 }
 
 .screen.show {
