@@ -1,0 +1,72 @@
+#Dates {
+	margin: 0px;
+	padding: 0px;
+}
+
+#Dates li {
+	position:		relative;
+	height:			64px;
+	border-bottom:	1px solid #E5E5E5;
+}
+
+#Dates li time {
+	display:	block;
+	position:	absolute;
+	top:		50%;
+	left:		15px;
+	margin-top:	-17px;
+	font-size:	125%;
+}
+
+#Dates li button {
+	display:	block;
+	position:	absolute;
+	top:		0px;
+	bottom:		0px;
+	right:		0px;
+	width:		64px;
+	background:	none;
+	border:		0px;
+	
+}
+
+#Dates li button:active, #Dates li button:hover {
+	background-color:	#BDC3C7;
+	outline:			0px none;
+}
+
+#Dates li button.MAYBE {
+	right:	64px;
+}
+
+#Dates li button.NO {
+	right:	128px;
+}
+
+
+#Dates li button i {
+	font-size:	30px;
+}
+
+#Dates li {
+	overflow-x:		scroll;
+}
+
+#Dates .container {
+	white-space:	nowrap;
+	width:			200%;
+}
+
+#Dates .container .slice {
+	position:		absolute;
+	top:			0px;
+	left:			0px;
+	display:		inline-block;
+	width:			100%;
+	height:			64px;
+	border-right:	1px solid #000;
+}
+
+#Dates .container .slice:last-child {
+	left:	100%;
+}

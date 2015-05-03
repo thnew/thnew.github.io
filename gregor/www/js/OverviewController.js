@@ -1,5 +1,6 @@
 function OverviewController($scope) {
 	$scope.SUPER = $scope.$parent;
+	$scope.name = "OverviewController";
 	
 	$scope.events = [
 		{

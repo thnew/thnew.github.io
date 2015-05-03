@@ -8,8 +8,8 @@
 	</head>
 	
 	<body data-ng-controller="MainController">
-		<div id="ScreenA" class="screen" data-ng-class="isScreenA ? 'show' : ''" data-ng-include="screenA.path" data-ng-controller="screenA.controller"></div>
-		<div id="ScreenB" class="screen" data-ng-class="!isScreenA ? 'show' : ''" data-ng-include="screenB.path"data-ng-controller="screenB.controller"></div>
+		<div id="ScreenA" class="screen" data-ng-class="isScreenA ? 'show' : ''" data-ng-include="screenA.path"></div>
+		<div id="ScreenB" class="screen" data-ng-class="!isScreenA ? 'show' : ''" data-ng-include="screenB.path"></div>
 		
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/jquery.min.js"></script>
@@ -17,6 +17,7 @@
 		<script type="text/javascript" src="js/MainController.js"></script>
 		<script type="text/javascript" src="js/OverviewController.js"></script>
 		<script type="text/javascript" src="js/VoteController.js"></script>
+		<script type="text/javascript" src="js/SelectionController.js"></script>
 		<script type="text/javascript" src="js/init.js"></script>
 		
 		<script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>

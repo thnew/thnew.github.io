@@ -1,4 +1,7 @@
 function SelectionController($scope) {
+	$scope.SUPER = $scope.$parent;
+	$scope.name = "SelectionController";
+	
 	var eventId = 123;
 	
 	$scope.$parent.getTimes(eventId, function(resp) {

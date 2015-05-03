@@ -1,4 +1,6 @@
 function MainController($scope) {
+	$scope.name = "MainController";
+	
 	/* SCREENS */ {
 		$scope.SCREENS = {
 			BLANK: {
@@ -12,15 +14,19 @@ function MainController($scope) {
 			EVENT_NEW: {
 				path:	"templates/event_new.html"
 			},
+			EVENT_OVERVIEW: {
+				path:		"templates/event_Overview.html",
+				controller:	VoteController
+			},
 			VOTE: {
 				path:		"templates/vote.html",
 				controller:	VoteController
-			}
+			},
 		};
 		
 		$scope.isScreenA = true;
 		
-		$scope.screenA = $scope.SCREENS.OVERVIEW;
+		$scope.screenA = $scope.SCREENS.VOTE;
 		$scope.screenB = $scope.SCREENS.BLANK;
 		
 		var _onLoaded = null;
@@ -41,10 +47,11 @@ function MainController($scope) {
 				$scope.isScreenA = !$scope.isScreenA;
 			}
 			
-			//_onLoaded();
+			_onLoaded();
+			//window.setTimeout(_onLoaded, 500);
 		};
 		
-		//*
+		/*
 		$scope.$on('$includeContentLoaded', function(event) {
 			console.log("typeof(_onLoaded)", typeof(_onLoaded));
 			console.log("event", event);

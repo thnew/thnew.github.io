@@ -1,31 +1,62 @@
-﻿<div>
+﻿<div data-ng-controller="VoteController">
 	<link type="text/less" rel="stylesheet" href="css/vote.css">
 	
 	<header>
 		<a data-ng-click="SUPER.showScreen(SUPER.SCREENS.OVERVIEW)" id="BackButton">
 			<div>
-				<div><i class="fa fa-chevron-left"></i></div>
+				<i class="fa fa-chevron-left back_symbol"></i>
 				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div>Billard</div>
+				<div class="title">Billard</div>
+				<aside>Cafe Kö, Mundsburg</aside>
 			</div>
 		</a>
 		
 		<div>
-			
+			<a>
+				<i class="fa fa-info" data-ng-click="showScreen(SCREENS.EVENT_OVERVIEW)"></i>
+			</a>
 		</div>
 	</header>
 
 	<content>
 		<ul id="Dates">
 			<li>
-				Friday, 30.9.
-				19:00
+				<div class="container">
+					<div class="slice">
+						<time>
+							Thursday, 29.9.<br />
+							20:00
+						</time>
+						
+						<button class="YES">
+							<i class="fa fa-smile-o"></i>
+						</button>
+						<button class="MAYBE">
+							<i class="fa fa-meh-o"></i>
+						</button>
+						<button class="NO">
+							<i class="fa fa-frown-o"></i>
+						</button>
+					</div>
+					<div class="slice">
+						DETAILS
+					</div>
+				</div>
+			</li>
+			<li data-vote="YES">
+				<time>
+					Friday, 30.9.<br />
+					20:00
+				</time>
 				
-				isMainScreen:
-				{{ isMainScreen ? "yes" : "no" }}
-				
-				<button>
+				<button class="YES">
 					<i class="fa fa-smile-o"></i>
+				</button>
+				<button class="MAYBE">
+					<i class="fa fa-meh-o"></i>
+				</button>
+				<button class="NO">
+					<i class="fa fa-frown-o"></i>
 				</button>
 			</li>
 		</ul>
