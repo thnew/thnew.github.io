@@ -1,4 +1,6 @@
-﻿<div data-ng-controller="OverviewController">
+﻿<link type="text/less" rel="stylesheet" href="css/event_new.css">
+
+<div data-ng-controller="EventNewController">
 	<link type="text/less" rel="stylesheet" href="css/vote.css">
 	
 	<header>
@@ -8,9 +10,98 @@
 				<div class="title">New Event</div>
 			</div>
 		</a>
+		
+		
+		<div class="icons">
+			<a class="big" data-ng-click="nextStep()">
+				<i class="fa fa-check"></i>
+				{{ step < 3 ? "next" : "create" }}
+			</a>
+		</div>
 	</header>
-
-	<content>
-		kmkll
-	</content>
+	
+	<div data-ng-switch="step" class="event_new">
+		<content data-ng-switch-when="1">
+			<div class="img">
+				<div>
+					Give your event an image
+				</div>
+			</div>
+			
+			<div class="input">
+				<div class="label"></div>
+				
+				<label>
+					<div>
+						<input type="text" data-ng-model="name" placeholder="Give your event a name.." />
+					</div>
+					
+					<div>
+						<i class="fa fa-smile-o"></i>
+					</div>
+				</label>
+			</div>
+		</content>
+		
+		<content data-ng-switch-when="2">
+			<div class="input">
+				<div class="label">
+					Add friends to your event
+				</div>
+				
+				<label>
+					<div>
+						<input type="text" data-ng-model="name" placeholder="Type in a name.." />
+					</div>
+					
+					<div>
+						<i class="fa fa-plus"></i>
+					</div>
+				</label>
+			</div>
+			
+			<ul id="Members">
+				<li data-ng-repeat="member in members track by $index">
+					<div class="profile_img">
+						<i class="fa fa-user"></i>
+					</div>
+					<div class="name">
+						{{ member.name }}
+					</div>
+					<div class="remove" data-ng-click="removeMember($index)">
+						<i class="fa fa-close"></i>
+					</div>
+					
+					<div class="separator"></div>
+				</li>
+			</ul>
+		</content>
+		
+		<content data-ng-switch-when="3">
+			How long will your event take?
+			<button>15min</button>
+			<button>30min</button>
+			<button>45min</button>
+			<button>60min</button>
+			<button>90min</button>
+			<button>2h</button>
+			
+			What times do you want to suggest?
+			
+			
+			<ul id="Dates">
+				<li data-ng-repeat="date in dates">
+					<div class="date">
+						<button></button>
+					</div>
+					<div class="time">
+						<button></button>
+					</div>
+					<div class="remove" data-ng-click="removeMember($index)">
+						<i class="fa fa-close"></i>
+					</div>
+				<li>
+			</ul>
+		</content>
+	</div>
 </div>

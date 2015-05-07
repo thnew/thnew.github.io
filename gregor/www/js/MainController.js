@@ -26,7 +26,7 @@ function MainController($scope) {
 		
 		$scope.isScreenA = true;
 		
-		$scope.screenA = $scope.SCREENS.VOTE;
+		$scope.screenA = $scope.SCREENS.EVENT_NEW;
 		$scope.screenB = $scope.SCREENS.BLANK;
 		
 		var _onLoaded = null;

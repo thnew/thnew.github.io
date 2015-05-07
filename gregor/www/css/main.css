@@ -61,115 +61,146 @@ body {
 		right:			0px;
 		height:			50px;
 	}
-
-	header > div a {
-		position:		relative;
-		display:		inline-block;
-		width:			50px;
-		height:			50px;
-	}
-
-	header > div a:active {
-		background-color:	rgba(255,255,255,0.4);
-	}
-
-	header > div a i {
-		position:		absolute;
-		top:			50%;
-		left:			50%;
-		font-size:		24px !important;
-		margin-top:		-12px;
-		margin-left:	-10px;
-		color:			rgba(255,255,255,0.7);
-	}
-
-	header > div a i.fa-ellipsis-v {
-		margin-left:	-3px;
-	}
-
-	header > div a i.fa-info {
-		margin-left:	-3px;
-	}
-
-	#BackButton {
-		display:		block;
-		position:		absolute;
-		left:			0px;
-		top:			0px;
-		bottom:			0px;
-		right:			150px;
-		color:			#fff;
-	}
-
-	#BackButton:active, #BackButton:hover {
-		background:	#3A6F81;
-	}
-
-	#BackButton > div {
-		position:		absolute;
-		left:			10px;
-		top:			0px;
-		bottom:			0px;
-		right:			5px;
-	}
-
-	#BackButton > div > * {
-		position:	absolute;
-		display:	inline-block;
-	}
 	
-	#BackButton img {
-		height:			32px;
-		top:			50%;
-		left:			25px;
-		margin-top:		-16px;
-		border-radius:	50px;
-	}
-	
-	#BackButton .back_symbol {
-		top:			50%;
-		left:			0px;
-		margin-top:		-9px;
-		margin-left:	7px;
-	}
+	/* Icons */
+		.icons a {
+			position:		relative;
+			display:		inline-block;
+			width:			50px;
+			height:			50px;
+			color:			#BDC3C7;
+		}
 
-	#BackButton .title {
-		top:	7px;
-		left:	70px;
-	}
-	
-	#BackButton aside {
-		left:			70px;
-		bottom:			7px;
-		font-weight:	normal;
-		font-size:		75%;
-	}
+		.icons a:active {
+			background-color:	rgba(255,255,255,0.4);
+		}
+		
+		.icons a i {
+			position:		absolute;
+			top:			50%;
+			left:			50%;
+			font-size:		24px !important;
+			margin-top:		-12px;
+			margin-left:	-10px;
+		}
 
-	#Logo {
-		z-index:		1000;
-		position:		absolute;
-		top:			50px;
-		width:			98px;
-		height:			64px;
-		background:		#7F8C8D;
-	}
+		.icons a i.fa-ellipsis-v {
+			margin-left:	-3px;
+		}
 
-	#Logo i {
-		position:		absolute;
-		left:			50%;
-		margin-left:	-11px;
-		font-size:		24px;
-		top:			13px;
-	}
+		.icons a i.fa-info {
+			margin-left:	-3px;
+		}
+		
+		/*BIG*/
+			.icons a.big {
+				width:			auto;
+				height:			auto;
+				padding:		17px;
+				font-size:		75%;
+				text-transform:	uppercase;
+			}
+			
+			.icons a.big i {
+				position:		relative;
+				top:			0px;
+				left:			0px;
+				font-size:		100% !important;
+				margin:			0px;
+			}
+			
 
-	.logo_subtitle {
-		position:		absolute;
-		font-size:		125%;
-		text-transform:	uppercase;
-		bottom:			6px;
-		left:			15px;
-		right:			0px;
-	}
+	/* BackButton */
+		#BackButton {
+			display:		block;
+			position:		absolute;
+			left:			0px;
+			top:			0px;
+			bottom:			0px;
+			right:			150px;
+			color:			#fff;
+		}
+
+		#BackButton:active, #BackButton:hover {
+			background:	#3A6F81;
+		}
+
+		#BackButton > div {
+			position:		absolute;
+			left:			10px;
+			top:			0px;
+			bottom:			0px;
+			right:			5px;
+		}
+		
+		/*Each Element inside the button has position absolute*/
+		#BackButton > div > * {
+			position:	absolute;
+			display:	inline-block;
+		}
+		
+		#BackButton .back_symbol {
+			top:			50%;
+			left:			0px;
+			margin-top:		-9px;
+			margin-left:	7px;
+		}
+		
+		#BackButton img {
+			height:			32px;
+			top:			50%;
+			left:			25px;
+			margin-top:		-16px;
+			border-radius:	50px;
+		}
+
+		#BackButton .title {
+			top:	15px;
+			left:	40px;
+		}
+		
+		#BackButton.hasImage .title {
+			left:	70px;
+		}
+		
+		#BackButton.hasSubtitle .title {
+			top:	7px;
+		}
+		
+		#BackButton aside {
+			left:			70px;
+			bottom:			7px;
+			font-weight:	normal;
+			font-size:		75%;
+			color:			#BDC3C7;
+		}
+
+	/* Logo */
+		#Logo {
+			z-index:		1000;
+			position:		absolute;
+			top:			50px;
+			width:			98px;
+			height:			64px;
+			background:		#7F8C8D;
+		}
+
+		#Logo i {
+			position:		absolute;
+			left:			50%;
+			margin-left:	-11px;
+			font-size:		24px;
+			top:			13px;
+		}
+
+		.logo_subtitle {
+			position:		absolute;
+			font-size:		125%;
+			text-transform:	uppercase;
+			bottom:			6px;
+			left:			15px;
+			right:			0px;
+		}
 
 	/*
 	#HeaderBar {

@@ -5,6 +5,7 @@ app.controller('MainController', MainController);
 app.controller('OverviewController', OverviewController);
 app.controller('VoteController', VoteController);
 app.controller('SelectionController', SelectionController);
+app.controller('EventNewController', EventNewController);
 
 /*
 var out = "";
