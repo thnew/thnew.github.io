@@ -1,11 +1,11 @@
 // Create angular app
-var app = angular.module('Gregor', []);
+var app = angular.module('TimeUp', []);
 
 app.controller('MainController', MainController);
+app.controller('EventsController', EventsController);
 app.controller('OverviewController', OverviewController);
 app.controller('VoteController', VoteController);
-app.controller('SelectionController', SelectionController);
-app.controller('EventNewController', EventNewController);
+app.controller('NewController', NewController);
 
 /*
 var out = "";
@@ -38,7 +38,6 @@ for(var maxUsersPerScreen=maxUsers; maxUsersPerScreen>=2; maxUsersPerScreen--)
 }
 
 console.log(out);
-//*/
 
 app.directive('ngEnter', function () {
 	return function (scope, element, attrs) {
@@ -67,3 +66,4 @@ app.directive('ngEsc', function () {
 		});
 	};
 });
+//*/

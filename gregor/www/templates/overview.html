@@ -1,29 +1,297 @@
-﻿<div data-ng-controller="OverviewController">
+﻿<link type="text/css" rel="stylesheet" href="css/selection_sizes.css">
+<link type="text/less" rel="stylesheet" href="css/event.css">
+
+<div data-ng-controller="OverviewController" class="Xdevelopment">
+	<div id="ScrollField" data-ng-class="showOverview ? 'overview' : ''">
+		<div class="dragger">
+			<!---->				
+			<div class="time_container"></div>
+			
+			<div class="selection_container count-{{ users.length }}" data-ng-class="showOverview ? 'overview' : ''">
+				<div class="users"></div>
+				
+				<div class="selections">
+					<div class="time_scale_wrapper" data-ng-repeat="day in selectionMap track by $index">
+						<!---
+						<div data-ng-if="day.isMonthSeparator" class="month-separator"></div>
+						<!---->
+						
+						<ul data-ng-if="!day.isMonthSeparator" data-ng-repeat="timeBlock in day.times track by $index">
+							<li class="single-selection" data-ng-click="_clickUserField(timeBlock.datetime)"></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!---->
+		</div>
+	</div>
+	
 	<header>
-		<title>
-			Events
-		</title>
+		<a data-ng-click="SUPER.showScreen(SUPER.SCREENS.VOTE)" class="hasImage hasSubtitle" id="BackButton">
+			<div>
+				<i class="fa fa-chevron-left back_symbol"></i>
+				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
+				<div class="title">Billard</div>
+				<aside>Cafe Kö, Mundsburg</aside>
+			</div>
+		</a>
 		
 		<div class="icons">
+			<a data-ng-click="showOverview=!showOverview">
+				<i class="fa" data-ng-class="showOverview ? 'fa-expand' : 'fa-compress'"></i>
+			</a>
+			<!--
+			
 			<a>
-				<i class="fa fa-plus" data-ng-click="showScreen(SCREENS.EVENT_NEW)"></i>
+				<i class="fa fa-clock-o"></i>
+			</a>
+			<a>
+				<i class="fa fa-globe"></i>
+			</a>
+			<a>
+				<i class="fa fa-plus"></i>
+			</a>-->
+			<a>
+				<i class="fa fa-ellipsis-v"></i>
 			</a>
 		</div>
 	</header>
+	<div id="Logo">
+		<!--
+		<i class="fa fa-calendar winter"></i>
+		<i class="fa fa-leaf winter"></i>
+		<i class="fa fa-cloud spring"></i>
+		<i class="fa fa-sun-o summer"></i>
+		<i class="fa fa-asterisk autumn"></i>
+		<!---->
+		
+		<div id="Month" class="header_content logo_subtitle">
+			mm yy
+		</div>
+	</div>
+	<!--<div id="HeaderBar"><div class="header_content"></div></div>-->
 	
-	<link type="text/less" rel="stylesheet" href="css/index.css">
-
-	<ul id="Events">
-		<li data-ng-repeat="event in events track by $index">
-			<a data-ng-click="showScreen(SUPER.SCREENS.VOTE)">
-				<img data-ng-src="{{ event.img }}" />
-				<div class="text_container">
-					<div class="title">{{ event.title }}</div>
-					<div class="description">{{ event.description }}</div>
-					<aside>{{ event.time | date: 'H:mm' }}</aside>
-				</div>
-			</a>
-			<div class="separator_overview_list">&nbsp;</div>
-		</li>
-	</ul>
+	<!--
+	<div id="VotePanel"></div>
+	<!---->
+	
+	<div id="TimeContainer" class="time_container">
+		<div id="Days" class="days">
+			<ul>
+				<li data-ng-repeat="day in days track by $index" data-ng-class="day.isWeekend ? 'isWeekend' : ''" data-month="{{ day.date | date : 'MMM' }}" data-year="{{ day.date | date : 'yyyy' }}" data-date="{{ day.date.toISOString() }}">
+					<!--
+					<div data-ng-if="!day.isMonthSeparator" class="day" data-ng-class="day.times.length == 1 ? 'small' : ''">
+						<div>
+							{{ day.date | date : "EEE, d" }}
+						</div>
+					</div>
+					<!---->
+					
+					<ul data-ng-if="!day.isMonthSeparator" class="times">
+						<li data-ng-repeat="time in day.times">
+							<div>
+								<div class="day_name">
+									{{ time.date | date : "EEEE" }}
+								</div>
+								{{ time.date | date : "d MMM H:mm" }}
+							</div>
+							
+							<aside class="day_vote_count">
+								{{ time.positiveVoteCount }}
+								
+								<i class="fa fa-check"></i>
+							</aside>
+						</li>
+					</ul>
+					
+					<!--
+					<div data-ng-if="day.isMonthSeparator" class="month-separator" data-month="{{ day.date | date : 'MMM' }}" data-year="{{ day.date | date : 'yyyy' }}">
+						<div>
+							{{ day.date | date : "MMM yyyy" }}
+						</div>
+					</div>
+					<!---->
+					
+					<div style="clear:both;"></div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="SelectionContainer" class="selection_container count-{{ users.length }}" data-ng-class="showOverview ? 'overview' : ''">
+		<div id="HintForMoreUsers" data-ng-show="!showOverview">
+			<i class="fa fa-ellipsis-h"></i>
+			<i class="fa fa-ellipsis-h"></i>
+		</div>
+		
+		<div id="Users" class="users">
+			<div>
+				<ul class="time_scale_wrapper">
+					<!--
+					<li id="CurrentUser" class="single-selection">
+						<div>
+							<img />
+							
+							<title>You</title>
+						</div>
+					</li>
+					<!---->
+					
+					<li class="single-selection" data-ng-repeat="user in users track by $index">
+						<div>
+							<i data-ng-if="user.image == null" class="fa fa-user"></i>
+							<div class="img" data-ng-if="user.image != null"></div>
+							<img data-ng-if="user.image != null" data-ng-src="{{ user.image }}" />
+							
+							<title>{{ user.name }}</title>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="Selections" class="selections">
+			<div class="time_scale_wrapper" data-ng-repeat="day in selectionMap track by $index" data-ng-class="day.isWeekend ? 'isWeekend' : ''">
+				<!--
+				<div data-ng-if="day.isMonthSeparator" class="month-separator"></div>
+				<!---->
+				
+				<ul data-ng-if="!day.isMonthSeparator" data-ng-repeat="timeBlock in day.times">
+					<li class="single-selection" data-ng-class="vote" data-ng-switch="vote" ng-repeat="vote in timeBlock.votes track by $index">
+						<i class="fa fa-check" ng-switch-when="YES"></i>
+						<span ng-switch-when="MAYBE">(<i class="fa fa-check"></i>)</span>
+						<i class="fa fa-circle" ng-switch-when="NO"></i>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+	
+	<script>
+		(function() {
+			var body = $("body");
+			var daysElemContainer = $("#Days");
+			var daysElem = $("> ul", daysElemContainer);
+			var usersElemContainer = $("#Users");
+			var usersElem = $("> div", usersElemContainer);
+			var selectionsElem = $("#Selections");
+			var votePanel = $("#VotePanel");
+			
+			var scrollField = $("#ScrollField");
+			
+			//navigator.notification.alert("hii", function(){});
+			
+			/* Handlers for Scrolling */ {
+				/* Define size of scroll area */ {
+					// width for enough space for the selection overview
+					var scrollFieldNormalWidth;
+					
+					// width for enough space for the selection overview + vote panel
+					var scrollFieldExtendedWidth;
+					
+					window.setTimeout(function() {
+						var diffY = daysElem[0].scrollHeight - $(daysElemContainer).height();
+						var diffX = usersElem[0].scrollWidth - selectionsElem.width();
+						
+						scrollFieldNormalWidth = body.width() + diffX;
+						scrollFieldExtendedWidth = scrollFieldNormalWidth + body.width();
+						$(".dragger", scrollField)
+							.width(scrollFieldNormalWidth) //scrollFieldExtendedWidth for view with panel
+							.height(scrollField.height() + diffY);
+						
+						scrollField.scroll(function(){
+							daysElem.scrollTo({ top: scrollField.scrollTop(), left: 0 });
+							usersElem.scrollTo({ top: 0, left: scrollField.scrollLeft() });
+							selectionsElem.scrollTo({ top: scrollField.scrollTop(), left: scrollField.scrollLeft() });
+						});
+					}, 1000);
+				}
+				
+				/* Continuously find out which is the date at the top */ {
+					var interval = window.setInterval(setMonthInHead, 500);
+					var intervalLeft = window.setInterval(setParticipantArrows, 50);
+					
+					$(window).resize(function() {
+						setParticipantArrows(true);
+					});
+					
+					var lastScrollLeft;
+					var isRight, isLeft;
+					function setParticipantArrows(doIt) {
+						var scrollLeft = scrollField.scrollLeft();
+						if(scrollLeft != lastScrollLeft || doIt)
+						{
+							lastScrollLeft = scrollLeft;
+							var scrollRight = usersElem[0].scrollWidth - selectionsElem.width() - scrollLeft;
+							
+							isLeft = (scrollLeft <= 0);
+							isRight = (scrollRight <= 0);
+							
+							$("#HintForMoreUsers i:first-child").css("visibility", (isLeft ? "hidden" : "visible"));
+							$("#HintForMoreUsers i:last-child").css("visibility", (isRight ? "hidden" : "visible"));
+							
+							/* View Panel from the right
+							if(isRight)
+							{
+								$(".dragger", scrollField)
+									.width(scrollFieldExtendedWidth);
+								
+								var right = -votePanel.width() - scrollRight;
+								votePanel.css("right", right);
+							}
+							else votePanel.css("right", "-1000px");
+							//*/
+						}
+					}
+					
+					var lastScrollTop;
+					function setMonthInHead() {
+						var scrollTop = scrollField.scrollTop();
+						if(scrollTop != lastScrollTop)
+						{
+							lastScrollTop = scrollTop;
+							
+							// Detect
+							var lastElem;
+							var headerHeight = $("header").height() + $("#Logo").height();
+							var separators = $("#Days > ul > li");
+							var separatorsLength = separators.size();
+							separators.each(function(index, elem) {
+								elem = $(elem);
+								if(lastElem == null) lastElem = elem;
+								
+								var top = elem.offset().top - headerHeight;
+								var isLastElem = (index == (separatorsLength - 1));
+								if(top > 0 || isLastElem)
+								{
+									if(top < 0 && isLastElem) lastElem = elem;
+									
+									var month = lastElem.attr("data-month");
+									var year = lastElem.attr("data-year");
+									
+									// Replace month and year with new current
+									$("#Month").html(month + " " + year);
+									
+									/*
+									$("#Logo i").hide();
+									if(monthNr <= 2) $("#Logo i.winter").show();
+									else if(monthNr <= 4) $("#Logo i.spring").show();
+									else if(monthNr <= 8) $("#Logo i.summer").show();
+									else if(monthNr <= 11) $("#Logo i.autumn").show();
+									else $("#Logo i.winter").show();
+									//*/
+									
+									return false;
+								}
+								
+								lastElem = elem;
+							});
+						}
+					};
+					
+					setMonthInHead();
+				}
+			}
+		})();
+	</script>
 </div>

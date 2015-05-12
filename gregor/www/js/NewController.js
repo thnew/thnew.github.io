@@ -1,6 +1,6 @@
-function EventNewController($scope) {
+function NewController($scope) {
 	$scope.SUPER = $scope.$parent;
-	$scope.name = "EventNewController";
+	$scope.name = "NewController";
 	
 	$scope.name = "";
 	
@@ -37,8 +37,23 @@ function EventNewController($scope) {
 		$scope.members.splice(index, 1);
 	};
 	
-	$scope.step = 3;
+	$scope.step = 1;
 	$scope.nextStep = function() {
 		$scope.step++;
+	};
+	
+	$scope.previousStep = function() {
+		$scope.step--;
+	};
+	
+	$scope.back = function() {
+		if($scope.step <= 1)
+		{
+			$scope.SUPER.showScreen($scope.SUPER.SCREENS.EVENTS)
+		}
+		else
+		{
+			$scope.previousStep();
+		}
 	};
 };

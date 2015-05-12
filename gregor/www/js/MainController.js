@@ -3,20 +3,16 @@ function MainController($scope) {
 	
 	/* SCREENS */ {
 		$scope.SCREENS = {
-			BLANK: {
-				path:		"templates/blank.html",
-				controller:	OverviewController
+			EVENTS: {
+				path:		"templates/events.html",
+				controller:	EventsController
+			},
+			NEW: {
+				path:	"templates/new.html"
 			},
 			OVERVIEW: {
 				path:		"templates/overview.html",
 				controller:	OverviewController
-			},
-			EVENT_NEW: {
-				path:	"templates/event_new.html"
-			},
-			EVENT_OVERVIEW: {
-				path:		"templates/event_Overview.html",
-				controller:	VoteController
 			},
 			VOTE: {
 				path:		"templates/vote.html",
@@ -26,8 +22,8 @@ function MainController($scope) {
 		
 		$scope.isScreenA = true;
 		
-		$scope.screenA = $scope.SCREENS.EVENT_NEW;
-		$scope.screenB = $scope.SCREENS.BLANK;
+		$scope.screenA = $scope.SCREENS.EVENTS;
+		$scope.screenB = null;
 		
 		var _onLoaded = null;
 		
