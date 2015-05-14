@@ -8,12 +8,24 @@
 	</head>
 	
 	<body data-ng-controller="MainController">
+		<!--
 		<div id="ScreenA" class="screen" data-ng-class="isScreenA ? 'show' : ''" data-ng-include="screenA.path"></div>
 		<div id="ScreenB" class="screen" data-ng-class="!isScreenA ? 'show' : ''" data-ng-include="screenB.path"></div>
+		-->
+		
+		<div class="view-animate-container">
+			<div ng-view class="view-animate"></div>
+		</div>
 		
 		<script type="text/javascript" src="cordova.js"></script>
+		
 		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
+		
 		<script type="text/javascript" src="js/angular.js"></script>
+		<script type="text/javascript" src="js/angular-route.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.1/angular-animate.js"></script>
+		
 		<script type="text/javascript" src="js/MainController.js"></script>
 		<script type="text/javascript" src="js/EventsController.js"></script>
 		<script type="text/javascript" src="js/VoteController.js"></script>
@@ -21,11 +33,9 @@
 		<script type="text/javascript" src="js/NewController.js"></script>
 		<script type="text/javascript" src="js/init.js"></script>
 		
-		<script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
 		
-		<script>
-			$(document).ready(function() {
-			});
+		<script type="text/javascript">
+			angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '" />'));
 		</script>
 	</body>
 </html>

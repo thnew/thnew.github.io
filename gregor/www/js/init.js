@@ -1,5 +1,31 @@
 // Create angular app
-var app = angular.module('TimeUp', []);
+var app = angular.module('TimeUp', ['ngRoute', 'ngAnimate']);
+
+	app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+		$routeProvider
+			.when('/events', {
+				templateUrl:	'templates/events.html',
+				controller:		'EventsController',
+				controllerAs:	'events'
+			})
+			.when('/votes', {
+				templateUrl:	'templates/vote.html',
+				controller:		'VoteController',
+				controllerAs:	'vote'
+			})
+			.when('/new', {
+				templateUrl:	'templates/new.html',
+				controller:		'NewController',
+				controllerAs:	'new'
+			})
+			.when('/overview', {
+				templateUrl:	'templates/overview.html',
+				controller:		'OverviewController',
+				controllerAs:	'overview'
+			});
+		
+		//$locationProvider.html5Mode(true);
+	}]);
 
 app.controller('MainController', MainController);
 app.controller('EventsController', EventsController);

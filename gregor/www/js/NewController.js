@@ -14,19 +14,16 @@ function NewController($scope) {
 			name: 	"Thomas Heigl"
 		},
 		{
-			name: 	"Thomas Heigl"
+			name: 	"Lennart Hofstaeddter"
 		},
 		{
-			name: 	"Thomas Heigl"
+			name: 	"Michael Leyher"
 		},
 		{
-			name: 	"Thomas Heigl"
+			name: 	"Tilmann Huebel"
 		},
 		{
-			name: 	"Thomas Heigl"
-		},
-		{
-			name: 	"Thomas Heigl"
+			name: 	"Michael Schulz"
 		},
 		{
 			name: 	"Kevin Diekmann"
@@ -49,7 +46,7 @@ function NewController($scope) {
 	$scope.back = function() {
 		if($scope.step <= 1)
 		{
-			$scope.SUPER.showScreen($scope.SUPER.SCREENS.EVENTS)
+			window.location.href = "#events";
 		}
 		else
 		{

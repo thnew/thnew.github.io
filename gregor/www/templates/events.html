@@ -7,15 +7,15 @@
 		</title>
 		
 		<div class="icons">
-			<a>
-				<i class="fa fa-plus" data-ng-click="showScreen(SCREENS.NEW)"></i>
+			<a href="#new">
+				<i class="fa fa-plus"></i>
 			</a>
 		</div>
 	</header>
 
 	<ul id="Events">
 		<li data-ng-repeat="event in events track by $index">
-			<a data-ng-click="showScreen(SUPER.SCREENS.VOTE)">
+			<a href="#votes">
 				<img data-ng-src="{{ event.img }}" />
 				<div class="text_container">
 					<div class="title">{{ event.title }}</div>
