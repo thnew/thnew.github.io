@@ -34,7 +34,7 @@ function NewController($scope) {
 	$scope.back = function() {
 		if($scope.step <= 1)
 		{
-			window.location.href = "#events";
+			window.location.href = "#/";
 		}
 		else
 		{

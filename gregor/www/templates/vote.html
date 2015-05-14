@@ -2,7 +2,7 @@
 	<link type="text/less" rel="stylesheet" href="css/vote.css">
 	
 	<header>
-		<a href="#events" class="hasImage hasSubtitle" id="BackButton">
+		<a href="#/" class="hasImage hasSubtitle" id="BackButton">
 			<div>
 				<i class="fa fa-chevron-left back_symbol"></i>
 				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
@@ -20,12 +20,14 @@
 	
 	<content>
 		<ul id="Dates">
-			<li>
+			<li data-vote="time.vote" ng-repeat="time in times">
 				<div class="container">
 					<div class="slice">
 						<time>
-							Thursday, 29.9.<br />
-							20:00
+							<div class="day_name">
+								{{ time.date | date : "EEEE" }}
+							</div>
+							{{ time.date | date : "d MMM H:mm" }}
 						</time>
 						
 						<button class="YES">
@@ -42,22 +44,6 @@
 						DETAILS
 					</div>
 				</div>
-			</li>
-			<li data-vote="YES">
-				<time>
-					Friday, 30.9.<br />
-					20:00
-				</time>
-				
-				<button class="YES">
-					<i class="fa fa-smile-o"></i>
-				</button>
-				<button class="MAYBE">
-					<i class="fa fa-meh-o"></i>
-				</button>
-				<button class="NO">
-					<i class="fa fa-frown-o"></i>
-				</button>
 			</li>
 		</ul>
 	</content>

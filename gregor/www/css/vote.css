@@ -70,3 +70,8 @@
 #Dates .container .slice:last-child {
 	left:	100%;
 }
+
+#Dates .day_name {
+	text-transform:	uppercase;
+	color:			#7F8C8D;
+}

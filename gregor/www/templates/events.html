@@ -19,8 +19,8 @@
 				<img data-ng-src="{{ event.img }}" />
 				<div class="text_container">
 					<div class="title">{{ event.title }}</div>
-					<div class="description">{{ event.description }}</div>
-					<aside>{{ event.time | date: 'H:mm' }}</aside>
+					<div class="description">{{ event.lastEventText }}</div>
+					<aside>{{ event.lastEventTime | date: 'H:mm' }}</aside>
 				</div>
 			</a>
 			<div class="separator_overview_list">&nbsp;</div>

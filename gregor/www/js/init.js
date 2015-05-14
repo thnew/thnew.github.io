@@ -3,7 +3,7 @@ var app = angular.module('TimeUp', ['ngRoute', 'ngAnimate']);
 
 	app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 		$routeProvider
-			.when('/events', {
+			.when('/', {
 				templateUrl:	'templates/events.html',
 				controller:		'EventsController',
 				controllerAs:	'events',
