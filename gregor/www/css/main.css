@@ -40,7 +40,7 @@ body {
 		left:				0px;
 		height:				50px;
 		width:				100%;
-		background-color:	#356272;
+		background-color:	#16A085;
 		font-size:			150%;
 		box-shadow:			0px 0px 5px #252525;
 	}
@@ -68,11 +68,11 @@ body {
 			display:		inline-block;
 			width:			50px;
 			height:			50px;
-			color:			#BDC3C7;
+			color:			rgba(255,255,255,0.6);
 		}
 
 		.icons a:active {
-			background-color:	rgba(255,255,255,0.4);
+			background-color:	rgba(255,255,255,0.1);
 		}
 		
 		.icons a i {
@@ -122,7 +122,7 @@ body {
 		}
 
 		#BackButton:active, #BackButton:hover {
-			background:	#3A6F81;
+			background:	rgba(255,255,255,0.1);
 		}
 
 		#BackButton > div {
@@ -173,6 +173,7 @@ body {
 			font-weight:	normal;
 			font-size:		75%;
 			color:			#BDC3C7;
+			white-space:	nowrap;
 		}
 
 	/* Logo */
