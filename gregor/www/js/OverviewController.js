@@ -1,5 +1,23 @@
-function OverviewController($scope) {
+function OverviewController($scope, $routeParams) {
 	$scope.SUPER = $scope.$parent;
+	var eventId = $routeParams.eventId;
+	
+	$scope.event = {
+		id:	eventId
+	};
+	
+	/* Load event details */ {
+		$scope.SUPER.storage.events.get(eventId, function(resp) {
+			if(!resp.success)
+			{
+				$scope.SUPER.error(resp.error);
+				return;
+			}
+			
+			$scope.event = resp.data;
+			console.log($scope.event);
+		});
+	}
 	
 	var times = [
 		new Date(2015, 4, 7, 10, 30, 0),

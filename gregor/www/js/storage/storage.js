@@ -1,7 +1,9 @@
 var Storage = function() {
 	this.Response = function(data, success, error) {
+		if(success == null) success = true;
+		
 		return {
-			success:	success || true,
+			success:	success,
 			data:		data,
 			error:		error
 		};

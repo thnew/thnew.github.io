@@ -1,17 +1,35 @@
-function VoteController($scope) {
+function VoteController($scope, $routeParams) {
 	$scope.SUPER = $scope.$parent;
-	$scope.name = "VoteController";
-	$scope.isScreenController = true;
+	var eventId = $routeParams.eventId;
 	
-	$scope.VOTES = {
-		EMPTY:	"EMPTY",
-		
-		YES:	"YES",
-		MAYBE:	"MAYBE",
-		NO:		"NO"
+	$scope.event = {
+		id:	eventId
 	};
 	
-	$scope.options = [ $scope.VOTES.YES, $scope.VOTES.MAYBE, $scope.VOTES.NO ];
+	/* Set vote options */ {
+		$scope.VOTES = {
+			EMPTY:	"EMPTY",
+			
+			YES:	"YES",
+			MAYBE:	"MAYBE",
+			NO:		"NO"
+		};
+		
+		$scope.options = [ $scope.VOTES.YES, $scope.VOTES.MAYBE, $scope.VOTES.NO ];
+	}
+	
+	/* Load event details */ {
+		$scope.SUPER.storage.events.get(eventId, function(resp) {
+			if(!resp.success)
+			{
+				$scope.SUPER.error(resp.error);
+				return;
+			}
+			
+			$scope.event = resp.data;
+			console.log($scope.event);
+		});
+	}
 	
 	$scope.times = [
 		{

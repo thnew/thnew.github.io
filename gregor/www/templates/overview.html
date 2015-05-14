@@ -27,12 +27,12 @@
 	</div>
 	
 	<header>
-		<a href="#votes" class="hasImage hasSubtitle" id="BackButton">
+		<a href="#votes/{{ event.id }}" class="hasImage hasSubtitle" id="BackButton">
 			<div>
 				<i class="fa fa-chevron-left back_symbol"></i>
-				<img src="http://simg.jaludo.com/th/0/0/0/8/6/6/m_8669.jpg" />
-				<div class="title">Billard</div>
-				<aside>Cafe Kö, Mundsburg</aside>
+				<img ng-src="{{ event.img }}" />
+				<div class="title">{{ event.title }}</div>
+				<aside>{{ event.duration }}</aside>
 			</div>
 		</a>
 		

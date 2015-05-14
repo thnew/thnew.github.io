@@ -2,6 +2,7 @@ function MainController($scope, $route) {
 	$scope.storage = new Storage();
 	
 	$scope.error = function(error) {
+		alert("An error occured: " + error);
 		console.log("An error occured: ", error);
 		console.log("stacktrace", stacktrace);
 	};

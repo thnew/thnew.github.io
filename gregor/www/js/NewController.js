@@ -1,8 +1,5 @@
 function NewController($scope) {
 	$scope.SUPER = $scope.$parent;
-	$scope.name = "NewController";
-	
-	$scope.name = "";
 	
 	$scope.members = [];
 	

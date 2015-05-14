@@ -10,12 +10,15 @@
 			<a href="#new">
 				<i class="fa fa-plus"></i>
 			</a>
+			<a>
+				<i class="fa fa-ellipsis-v"></i>
+			</a>
 		</div>
 	</header>
 
 	<ul id="Events">
 		<li data-ng-repeat="event in events track by $index">
-			<a href="#votes">
+			<a href="#votes/{{ event.id }}">
 				<img data-ng-src="{{ event.img }}" />
 				<div class="text_container">
 					<div class="title">{{ event.title }}</div>
