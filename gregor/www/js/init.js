@@ -6,27 +6,31 @@ var app = angular.module('TimeUp', ['ngRoute', 'ngAnimate']);
 			.when('/events', {
 				templateUrl:	'templates/events.html',
 				controller:		'EventsController',
-				controllerAs:	'events'
+				controllerAs:	'events',
+				title:			"Events"
 			})
 			.when('/votes', {
 				templateUrl:	'templates/vote.html',
 				controller:		'VoteController',
-				controllerAs:	'vote'
+				controllerAs:	'vote',
+				title:			"Vote"
 			})
 			.when('/new', {
 				templateUrl:	'templates/new.html',
 				controller:		'NewController',
-				controllerAs:	'new'
+				controllerAs:	'new',
+				title:			"New Event"
 			})
 			.when('/overview', {
 				templateUrl:	'templates/overview.html',
 				controller:		'OverviewController',
-				controllerAs:	'overview'
+				controllerAs:	'overview',
+				title:			"Vote Overview"
 			});
 		
 		//$locationProvider.html5Mode(true);
 	}]);
-
+	
 app.controller('MainController', MainController);
 app.controller('EventsController', EventsController);
 app.controller('OverviewController', OverviewController);

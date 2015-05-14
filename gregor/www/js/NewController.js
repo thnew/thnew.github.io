@@ -6,29 +6,17 @@ function NewController($scope) {
 	
 	$scope.members = [];
 	
-	$scope.members.push(
+	/*
+	$scope.SUPER.storage.users.getAll(function(resp) {
+		if(!resp.success)
 		{
-			name: 	"Thomas Heigl"
-		},
-		{
-			name: 	"Thomas Heigl"
-		},
-		{
-			name: 	"Lennart Hofstaeddter"
-		},
-		{
-			name: 	"Michael Leyher"
-		},
-		{
-			name: 	"Tilmann Huebel"
-		},
-		{
-			name: 	"Michael Schulz"
-		},
-		{
-			name: 	"Kevin Diekmann"
+			$scope.SUPER.storage.error(resp.error);
+			return;
 		}
-	);
+		
+		$scope.members = resp.data;
+	});
+	//*/
 	
 	$scope.removeMember = function(index) {
 		$scope.members.splice(index, 1);
