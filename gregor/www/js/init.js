@@ -4,27 +4,23 @@ var app = angular.module('TimeUp', ['ngRoute', 'ngAnimate']);
 	app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 		$routeProvider
 			.when('/', {
+				templateUrl:	'templates/login.html',
+				title:			"Login"
+			})
+			.when('/events', {
 				templateUrl:	'templates/events.html',
-				controller:		'EventsController',
-				controllerAs:	'events',
 				title:			"Events"
 			})
 			.when('/new', {
 				templateUrl:	'templates/new.html',
-				controller:		'NewController',
-				controllerAs:	'new',
 				title:			"New Event"
 			})
 			.when('/votes/:eventId', {
 				templateUrl:	'templates/vote.html',
-				controller:		'VoteController',
-				controllerAs:	'vote',
 				title:			"Vote"
 			})
 			.when('/votes/:eventId/overview', {
 				templateUrl:	'templates/overview.html',
-				controller:		'OverviewController',
-				controllerAs:	'overview',
 				title:			"Vote Overview"
 			})
 		;
@@ -37,6 +33,7 @@ app.controller('EventsController', EventsController);
 app.controller('OverviewController', OverviewController);
 app.controller('VoteController', VoteController);
 app.controller('NewController', NewController);
+app.controller('LoginController', LoginController);
 
 /*
 var out = "";
