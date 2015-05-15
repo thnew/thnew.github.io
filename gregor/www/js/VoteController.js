@@ -27,7 +27,6 @@ function VoteController($scope, $routeParams) {
 			}
 			
 			$scope.event = resp.data;
-			console.log($scope.event);
 		});
 	}
 	

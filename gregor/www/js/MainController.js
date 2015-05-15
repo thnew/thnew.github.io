@@ -19,4 +19,8 @@ function MainController($scope, $route) {
 	$scope.$on('$routeChangeSuccess', function(event, current, previous) {
 		$scope.pageTitle = $route.current.title
 	});
+	
+	$scope.back = function() {
+		window.history.back();
+	};
 };
