@@ -1,13 +1,33 @@
 function LoginController($scope) {
 	$scope.SUPER = $scope.$parent;
 	
+	var search = {};
+	var parts = window.self.location.href.split("#")[0].split("?");
+	if(parts.length > 1)
+	{
+		parts = parts.pop().split("&");
+		
+		for(var f in parts)
+		{
+			var p = parts[f].split("=");
+			var name = p[0];
+			var value = true;
+			
+			if(p.length > 1) value = p.pop();
+			
+			search[name] = value;
+		}
+	}
+	
+	if(typeof(search.code) == "string") alert(search.code);
+	
 	$scope.login = {
 		facebook: function() {
 			console.log('connect');
 			var client_id = '533667306772515'; //YOUR App ID or API Key
 			var client_secret = '7a6ac81723d9b71bef5333fe0a224397'; //// YOUR App Secret
 			var redirect_uri = 'https://www.facebook.com/connect/login_success.html';  //// YOUR CALLBACK URL
-			redirect_uri = "http://localhost/";
+			redirect_uri = "http://localhost/#";
 			var display = 'touch';
 			
 			var authorize_url = "https://graph.facebook.com/v2.0/oauth/authorize?";
@@ -16,7 +36,7 @@ function LoginController($scope) {
 			authorize_url += "&display=" + display;
 			authorize_url += "&scope=user_friends";
 			
-			 var ref = window.open(authorize_url, '_blank', 'location=yes');
+			var ref = window.open(authorize_url, '_blank', 'location=yes');
 			ref.addEventListener('loadstart', function(event)
 			{
 				var loc = event.url;
