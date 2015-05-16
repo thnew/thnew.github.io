@@ -9,7 +9,7 @@
     </author>
 	
 	<access origin="*" />
-	<access origin="debug.build.phonegap.com" />
+	<access origin="localhost" />
 	
     <content src="index.html" />
     <preference name="permissions" value="none" />
