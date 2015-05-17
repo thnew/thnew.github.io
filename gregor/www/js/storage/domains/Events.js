@@ -1,19 +1,25 @@
 var Events = function(storage) {
 	this.model = function(attr) {
-		if(attr.id == null) throw "Error creating new User object: Attribute id is title is missing";
-		if(attr.lastEventTime == null) throw "Error creating new User object: Attribute lastEventTime is missing";
-		if(attr.lastEventText == null) throw "Error creating new User object: Attribute lastEventText is missing";
+		if(attr.title == null || attr.title.length == 0) throw "Error creating new User object: Attribute title is missing";
 		if(attr.place == null) throw "Error creating new User object: Attribute place is missing";
 		if(attr.duration == null) throw "Error creating new User object: Attribute duration is missing";
 		
-		this.id = attr.id;
+		if(attr.isNew !== true)
+		{
+			if(attr.id == null) throw "Error creating new User object: Attribute id is missing";
+			if(attr.lastEventTime == null) throw "Error creating new User object: Attribute lastEventTime is missing";
+			if(attr.lastEventText == null) throw "Error creating new User object: Attribute lastEventText is missing";
+			
+			this.id = attr.id;
+			this.lastEventTime = attr.lastEventTime;
+			this.lastEventText = attr.lastEventText;
+		}
+		
 		this.title = attr.title;
 		this.img = attr.img;
 		this.place = attr.place;
 		this.duration = attr.duration;
 		
-		this.lastEventTime = attr.lastEventTime;
-		this.lastEventText = attr.lastEventText;
 	};
 	
 	this.list = [];
