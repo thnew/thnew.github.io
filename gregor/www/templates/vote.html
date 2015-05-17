@@ -6,9 +6,11 @@
 			<div>
 				<i class="fa fa-arrow-left back_symbol"></i>
 				<img ng-src="{{ event.img }}" />
-				<div class="title">{{ event.title }}</div>
-				<aside>{{ event.duration }}</aside>
 			</div>
+		</a>
+		<a href="#details/{{ event.id }}" class="hasSubtitle" id="Title">
+			<div class="title">{{ event.title }}</div>
+			<aside>{{ event.duration }}</aside>
 		</a>
 		
 		<div class="icons">
