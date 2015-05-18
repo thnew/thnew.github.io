@@ -196,13 +196,18 @@ a {
 			left:			80px;
 			top:			-10px;
 			padding:		10px;
+			padding-top:	17px;
 			bottom:			0px;
 			color:			#ECF0F1;
 			line-height:	18px;
 		}
 
-		#Title:active, #Title:hover {
+		a#Title:active, a#Title:hover {
 			background:	rgba(255,255,255,0.1);
+		}
+		
+		#Title.hasSubtitle {
+			padding-top:	10px;
 		}
 		
 		/*Each Element inside the button has position absolute*/

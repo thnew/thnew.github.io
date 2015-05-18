@@ -19,6 +19,10 @@ var app = angular.module('TimeUp', ['ngRoute', 'ngAnimate']);
 				templateUrl:	'templates/vote.html',
 				title:			"Vote"
 			})
+			.when('/votes/:eventId/detail', {
+				templateUrl:	'templates/detail.html',
+				title:			"Detail"
+			})
 			.when('/votes/:eventId/overview', {
 				templateUrl:	'templates/overview.html',
 				title:			"Vote Overview"
@@ -34,6 +38,7 @@ app.controller('OverviewController', OverviewController);
 app.controller('VoteController', VoteController);
 app.controller('NewController', NewController);
 app.controller('LoginController', LoginController);
+app.controller('DetailController', DetailController);
 
 /*
 var out = "";

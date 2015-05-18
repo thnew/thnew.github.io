@@ -1,0 +1,65 @@
+﻿<div data-ng-controller="DetailController">
+	<link type="text/less" rel="stylesheet" href="css/detail.css">
+	
+	<header>
+		<a ng-click="SUPER.back()" class="hasImage hasSubtitle" id="BackButton">
+			<div>
+				<i class="fa fa-arrow-left back_symbol"></i>
+				<img ng-src="{{ event.img }}" />
+			</div>
+		</a>
+		<span id="Title" class="hasSubtitle">
+			<div class="title">{{ event.title }}</div>
+			<aside>Details</aside>
+		</span>
+		
+		<div class="icons">
+			<a href="#votes/{{ event.id }}/overview">
+				<i class="fa fa-table"></i>
+			</a>
+		</div>
+	</header>
+	
+	<content>
+		<img id="EventImage" ng-src="{{ event.img }}" />
+		
+		<div id="ScrollContainer">
+			<div class="scrollable">
+				<div id="EventTitle" ng-bind="event.title"></div>
+				
+				<div id="DetailContents">
+					<h2>Description</h2>
+					{{ event.description }}
+					
+					<h2>Duration</h2>
+					{{ event.duration }}
+					
+					<h2>Invited people</h2>
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+					Invited people<br />
+				</div>
+			</div>
+		</div>
+	</content>
+</div>
