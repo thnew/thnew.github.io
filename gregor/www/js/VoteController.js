@@ -1,4 +1,4 @@
-function VoteController($scope, $routeParams) {
+function VoteController($scope, $routeParams, Events) {
 	$scope.SUPER = $scope.$parent;
 	var eventId = $routeParams.eventId;
 	
@@ -19,7 +19,7 @@ function VoteController($scope, $routeParams) {
 	}
 	
 	/* Load event details */ {
-		$scope.SUPER.storage.events.get(eventId, function(resp) {
+		Events.get(eventId, function(resp) {
 			if(!resp.success)
 			{
 				$scope.SUPER.error(resp.error);

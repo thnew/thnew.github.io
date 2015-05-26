@@ -1,9 +1,9 @@
-function EventsController($scope) {
+function EventsController($scope, Events) {
 	$scope.SUPER = $scope.$parent;
 	
 	$scope.events = [];
 	
-	$scope.SUPER.storage.events.getAll(function(resp) {
+	Events.getAll(function(resp) {
 		$scope.events = resp.data;
 	});
 };

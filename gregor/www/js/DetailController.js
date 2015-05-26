@@ -1,4 +1,4 @@
-function DetailController($scope, $routeParams) {
+function DetailController($scope, $routeParams, EventMembers, Events, Users) {
 	$scope.SUPER = $scope.$parent;
 	var eventId = $routeParams.eventId;
 	
@@ -19,7 +19,7 @@ function DetailController($scope, $routeParams) {
 	}
 	
 	/* Load event details */ {
-		$scope.SUPER.storage.events.get(eventId, function(resp) {
+		Events.get(eventId, function(resp) {
 			if(!resp.success)
 			{
 				$scope.SUPER.error(resp.error);
@@ -27,6 +27,43 @@ function DetailController($scope, $routeParams) {
 			}
 			
 			$scope.event = resp.data;
+		});
+	}
+	
+	/* Load event members */ {
+		EventMembers.getForEvent(eventId, function(resp) {
+			if(!resp.success)
+			{
+				$scope.SUPER.error(resp.error);
+				return;
+			}
+			
+			var resolveNextUser = function(index) {
+				var eventMember = resp.data[index];
+				Users.get(eventMember.userId, function(resp) {
+					if(!resp.success)
+					{
+						$scope.SUPER.error(resp.error);
+						return;
+					}
+					
+					eventMember.user = resp.data;
+					
+					if(index < (resp.data.length - 1))
+					{
+						resolveNextUser(index);
+					}
+					else
+					{
+						$scope.eventMembers = resp.data;
+					}
+				});
+			};
+			
+			if(resp.data.length > 0)
+			{
+				resolveNextUser(0);
+			}
 		});
 	}
 	

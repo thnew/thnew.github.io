@@ -1,32 +1,8 @@
-var Events = function(storage) {
-	this.model = function(attr) {
-		if(attr.title == null || attr.title.length == 0) throw "Error creating new User object: Attribute title is missing";
-		if(attr.place == null) throw "Error creating new User object: Attribute place is missing";
-		if(attr.duration == null) throw "Error creating new User object: Attribute duration is missing";
-		
-		if(attr.isNew !== true)
-		{
-			if(attr.id == null) throw "Error creating new User object: Attribute id is missing";
-			if(attr.lastEventTime == null) throw "Error creating new User object: Attribute lastEventTime is missing";
-			if(attr.lastEventText == null) throw "Error creating new User object: Attribute lastEventText is missing";
-			
-			this.id = attr.id;
-			this.lastEventTime = attr.lastEventTime;
-			this.lastEventText = attr.lastEventText;
-		}
-		
-		this.title = attr.title;
-		this.description = attr.description;
-		this.img = attr.img;
-		this.place = attr.place;
-		this.duration = attr.duration;
-		
-	};
-	
+angular.module('TimeUp').factory("Events", [ "Storage", function EventFactory(Storage) {
 	this.list = [];
 	
 	/* Create test data */ {
-		this.list.push(new this.model({
+		this.list.push(new EventDTO({
 			id:				1,
 			title:			"Billard",
 			description:	"Lasst ma Billard spielen gehen",
@@ -38,7 +14,7 @@ var Events = function(storage) {
 			lastEventTime:	new Date(2015, 4, 3, 16, 0)
 		}));
 		
-		this.list.push(new this.model({
+		this.list.push(new EventDTO({
 			id:				2,
 			title:			"Fahrradtour",
 			description:	"Ne scheene Runde Fahrrad?",
@@ -50,7 +26,7 @@ var Events = function(storage) {
 			lastEventTime:	new Date(2015, 5, 3, 15, 13)
 		}));
 		
-		this.list.push(new this.model({
+		this.list.push(new EventDTO({
 			id:				3,
 			title:			"Projekt-Besprechung",
 			description:	"Grobplanung zum Projekt",
@@ -62,7 +38,7 @@ var Events = function(storage) {
 			lastEventTime:	new Date(2015, 5, 3, 9, 47)
 		}));
 		
-		this.list.push(new this.model({
+		this.list.push(new EventDTO({
 			id:				4,
 			title:			"Bissi shoppen gehen",
 			description:	"Money muss raus aus dem Haus",
@@ -76,7 +52,7 @@ var Events = function(storage) {
 	}
 	
 	this.getAll = function(callback) {
-		callback(new storage.Response(this.list));
+		callback(Storage.Response(this.list));
 	};
 	
 	this.get = function(id, callback) {
@@ -84,11 +60,37 @@ var Events = function(storage) {
 		{
 			if(this.list[f].id == id)
 			{
-				callback(new storage.Response(this.list[f]));
+				callback(Storage.Response(this.list[f]));
 				return;
 			}
 		}
 		
-		callback(new storage.Response(null, false, "Event with id '" + id + "' not found!"));
+		callback(Storage.Response(null, false, "Event with id '" + id + "' not found!"));
 	};
+	
+	return this;
+}]);
+
+function EventDTO(attr) {
+	if(attr.title == null || attr.title.length == 0) throw "Error creating new User object: Attribute title is missing";
+	if(attr.place == null) throw "Error creating new User object: Attribute place is missing";
+	if(attr.duration == null) throw "Error creating new User object: Attribute duration is missing";
+	
+	if(attr.isNew !== true)
+	{
+		if(attr.id == null) throw "Error creating new User object: Attribute id is missing";
+		if(attr.lastEventTime == null) throw "Error creating new User object: Attribute lastEventTime is missing";
+		if(attr.lastEventText == null) throw "Error creating new User object: Attribute lastEventText is missing";
+		
+		this.id = attr.id;
+		this.lastEventTime = attr.lastEventTime;
+		this.lastEventText = attr.lastEventText;
+	}
+	
+	this.title = attr.title;
+	this.description = attr.description;
+	this.img = attr.img;
+	this.place = attr.place;
+	this.duration = attr.duration;
+	
 };

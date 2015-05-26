@@ -8,16 +8,9 @@
 				<img ng-src="{{ event.img }}" />
 			</div>
 		</a>
-		<span id="Title" class="hasSubtitle">
+		<span id="Title">
 			<div class="title">{{ event.title }}</div>
-			<aside>Details</aside>
 		</span>
-		
-		<div class="icons">
-			<a href="#votes/{{ event.id }}/overview">
-				<i class="fa fa-table"></i>
-			</a>
-		</div>
 	</header>
 	
 	<content>
@@ -35,29 +28,11 @@
 					{{ event.duration }}
 					
 					<h2>Invited people</h2>
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
-					Invited people<br />
+					<ul>
+						<li data-ng-repeat="em in eventMembers">
+							{{ em.user }}
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-function NewController($scope) {
+function NewController($scope, Events) {
 	$scope.SUPER = $scope.$parent;
 	
 	$scope.members = [];
@@ -38,7 +38,8 @@ function NewController($scope) {
 		if($scope.step == $scope.finalStepNr)
 		{
 			$scope.newEvent.isNew = true;
-			var event = new $scope.SUPER.storage.events.model($scope.newEvent);
+			var event = new Events.model($scope.newEvent);
+			Events.save();
 		}
 	};
 	

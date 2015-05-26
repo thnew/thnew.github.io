@@ -1,4 +1,4 @@
-var Storage = function() {
+angular.module('TimeUp').factory("Storage", [ function StorageFactory() {
 	this.Response = function(data, success, error) {
 		if(success == null) success = true;
 		
@@ -9,6 +9,5 @@ var Storage = function() {
 		};
 	};
 	
-	this.users = new Users(this);
-	this.events = new Events(this);
-};
+	return this;
+}]);
