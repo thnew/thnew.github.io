@@ -1,0 +1,66 @@
+IN WELCHER SPRACHE WERDEN SIE IHR BRIEFING VERFASSEN?
+Englisch
+
+WÄHLEN SIE IHRE BRANCHE AUS
+Kommunikation
+
+BESCHREIBEN SIE KURZ, WAS IHRE APP MACHT
+Our app should be a mobile friendly Doodle. This is a survey tool to create an event then suggest a list of dates/times to people and the people vote on which dates they are able to join the event.
+
+WELCHEN STIL SOLL IHRE APP HABEN?
+We have no style guideline yet, but we want to focus on young people. We want young people to find common dates with theirs friends for their next workout session or their next holiday. So don't give it an old touch.
+But we don't want to scare business people to use our app for meeting appointments cause of a too youthful look, so don't make it as colorful as a unicorn ;)
+You will see sketches from us in the further description, don't feel bound to the structure or the colors we have in those sketches ;)
+
+WIE LAUTET DER NAME IHRER ANWENDUNG?
+TimeUp
+
+WIE VIELE SCREENS SOLLEN ENTWORFEN WERDEN?
+2
+(Event overview, Vote page)
+
+BESCHREIBEN SIE DIE SCREENS UND DIE WICHTIGSTEN ABLÄUFE IN IHRER APP
+First have a look at the original Doodle: https://www.google.de/search?es_sm=93&biw=1228&bih=874&tbm=isch&sa=1&btnG=Suche&q=doodle+dates
+We want to provide exact the same functionality, but we want to focus on mobile and on mobile the typical doodle view is not very good.
+
+SCREEN "Event Overview"
+On this screen all events will be listed. On this screen we have to differentiate between three states:
+- Events with no fixed date yet (e.g. "Bowling - 3 of 5 people voted")
+- Events with a fixed date (e.g. "Meeting - Fixed date: 12th May 2015 - 10:30 AM")
+- Events with a fixed date, but already lie in the past (so basically, finished events)
+
+We would like to have all events on one screens, as far as it's possible to unify those events. (Maybe finished events can be hidden and will only be shown by pressing a button?)
+
+We already have a screen for that, but it's just a WhatsApp like list. We didn't know how to differentiate between the states.
+http://prntscr.com/78jqz6
+
+Let this be just a brainstorming idea, but maybe a screen like that could be applicable?
+http://prntscr.com/78jrxu
+
+The page should also provide a button to get to screen for creating new events.
+
+
+SCREEN "Voting page"
+Have a look at doodle again. Doodle also has a mobile view of their page, but we think it's ugly. We want the full feature range of the desktop view on mobile.
+Those are the features of the screen:
+- See how the other people voted
+- Get an overview of which dates are most likely the final dates
+- a chat/comments to the events
+- Event informations*
+- Vote the dates (for each suggested date: yes, no, maybe)
+- The event creator should be able to choose a final date
+
+We tried to put those two features on one screen but we failed to be intuitive enough (also a chat is missing):
+http://prntscr.com/78jg4o
+
+So if you think it's better to split it up in two or more screens, do it. But please keep in mind: we prefer not too many screens to let the user have an overview over our app.
+
+
+* Besides thesuggested time, those are general informations we save for our events:
+- Event name
+- Event image
+- Duration of event
+- Description
+- Place of event
+
+Please think of how pretty your screens still look, if one of the informations is missing since everything is optionally beside the event name.

@@ -1,0 +1,25 @@
+NodeJS-Backend for App and Website
+
+Hi,
+
+We need a backend that provides same functionality like Doodle. So the backend will provide functionality to create events with several sugegsted dates/times, invite members to these events and let the members vote on which times they can join the event.
+The backend will provide the functionality for a website and for an app. You only have to develop the backend and not a frontend.
+We want you to use:
+- NodeJS
+- REST interface for interaction. Protocol will be given by us
+- MongoDB (or suggest another database in your offer, with a reason please)
+
+Everything else is up to you. We just need you to stay object-oriented and modular inside your code.
+
+We will provide a very simple frontend, using a REST interface with a communication protocol we defined.
+
+Here's a list of features the backend has to provide:
+- Login via Facebook
+- 
+
+REST INTERFACE
+
+SPECIFY MILESTONES
+We want you to define milestones in maximum 2-day steps. It's not a nogo for us if you notice during development that you need a little bit longer for a single milestone, but we want to see that you have a realistic plan for the development.
+We give you a 100$ initially for providing us milestones
+Please plan 25% of the costs on the final delivery milestone.
