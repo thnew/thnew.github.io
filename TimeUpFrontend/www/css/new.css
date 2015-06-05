@@ -1,0 +1,132 @@
+.event_new .img {
+	position:	relative;
+	height:		150px;
+	background:	#BDC3C7;
+}
+
+.event_new .img > div {
+	position:		absolute;
+	font-size:		125%;
+	font-weight:	bold;
+	top:			50%;
+	left:			50%;
+	margin-top:		-9px;
+	margin-left:	-150px;
+}
+
+.event_new .input {
+	position:	relative;
+	width:		100%;
+}
+
+.event_new .input > label {
+	display:		block;
+	height:			52px;
+	position:		relative;
+	background: 	#fff;
+	border-radius:	5px;
+	border:			1px solid #BDC3C7;
+	margin:			0px 10px 10px;
+	cursor:			text;
+}
+
+.event_new .input > label div:first-child {
+	position:	absolute;
+	top:		10px;
+	left:		12px;
+	right:		30px;
+}
+
+.event_new .input > label div:last-child {
+	position:		absolute;
+	bottom:			0px;
+	padding-top:	10px;
+	top:			0px;
+	right:			0px;
+	width:			30px;
+	text-align:		center;
+	font-size:		150%;
+	color:			#BDC3C7;
+}
+
+.event_new .input > label div:last-child:hover, .event_new .input > label div:last-child:active {
+	background-color:	#BDC3C7;
+	color:				#ECF0F1;
+}
+
+.event_new .input input {
+	display:		block;
+	width:			100%;
+	border:			0px;
+	background:		transparent;
+	outline:		none;
+	font-size:		125%;
+}
+
+.event_new .label {
+	padding:	15px 15px 0px;
+}
+
+#Members {
+	position:	absolute;
+	top:		80px;
+	bottom:		0px;
+	padding:	0px;
+	margin:		0px;
+	width:		100%;
+	overflow-y:	scroll;
+}
+
+#Members li {
+	position:	relative;
+	height:		60px;
+	font-size:	125%;
+}
+
+#Members li > div {
+	position:	absolute;
+	display:	inline-block;
+}
+
+#Members li .profile_img {
+	height:				40px;
+	width:				40px;
+	top:				0px;
+	left:				10px;
+	border-radius:		50px;
+	text-align:			center;
+	font-size:			35px;
+	background-color:	#BDC3C7;
+	color:				#ECF0F1;
+}
+
+#Members li .name {
+	left:		60px;
+	right:		55px;
+	top:		50%;
+	margin-top:	-18px;
+}
+
+#Members li .remove {
+	right:		0px;
+	width:		55px;
+	text-align:	center;
+	font-size:	125%;
+	top:		50%;
+	margin-top:	-18px;
+	color:		#BDC3C7;
+}
+
+#Members li .separator {
+	position:			absolute;
+	left:				10px;
+	right:				10px;
+	bottom:				10px;
+	height:				1px;
+	box-shadow:			0px 1px 1px #fff;
+	background-color:	#BDC3C7;
+}
+
+#Members li:last-child .separator {
+	display:	none;
+}

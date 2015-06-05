@@ -28,9 +28,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
+	.state('new', {
+		url: '/new',
+		views: {
+			'new': {
+				templateUrl: 'templates/new.html',
+				controller: 'NewCtrl'
+			}
+		}
+	})
 
   // setup an abstract state for the tabs directive
-    .state('tab', {
+  .state('tab', {
     url: "/tab",
     abstract: true,
     templateUrl: "templates/tabs.html"
@@ -38,21 +47,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   // Each tab has its own nav history stack:
 
-  .state('tab.dash', {
-    url: '/dash',
+  .state('tab.dated', {
+    url: '/event/dated',
     views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
+      'tab-event-dated': {
+        templateUrl: 'templates/tab-event-dated.html',
         controller: 'DashCtrl'
       }
     }
   })
 
-  .state('tab.chats', {
-      url: '/chats',
+  .state('tab.vote', {
+      url: '/event/vote',
       views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
+        'tab-event-vote': {
+          templateUrl: 'templates/tab-event-vote.html',
           controller: 'ChatsCtrl'
         }
       }
@@ -78,6 +87,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/tab/event/vote');
 
 });
