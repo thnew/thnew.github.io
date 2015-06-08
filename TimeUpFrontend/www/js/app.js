@@ -62,7 +62,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       views: {
         'tab-event-vote': {
           templateUrl: 'templates/tab-event-vote.html',
-          controller: 'ChatsCtrl'
+          controller: 'EventsController'
         }
       }
     })
