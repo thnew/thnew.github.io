@@ -11,6 +11,22 @@ app.listen(80);
 
 console.log("Server started :)");
 
+app.get("/api/models", function(req, res) {
+  var models = {
+    domains:
+    {
+      Event: Event.class
+    },
+    enums: {
+      EVENT_STATUS: Event.EVENT_STATUS
+    }
+  };
+
+  var returnMe = new SuccessResponse(models);
+  
+  res.json(200, returnMe);
+});
+
 app.get("/api/event", function(req, res) {
   Logger.restCall("Events.");
   

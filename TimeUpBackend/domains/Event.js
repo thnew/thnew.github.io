@@ -40,6 +40,15 @@ function Event(attr) {
     }
   };
 
+  this.fromDTO = function(eventDTO) {
+    this.title = eventDTO.title;
+    this.image = eventDTO.image;
+    this.description = eventDTO.description;
+    this.location = eventDTO.location;
+    this.duration = eventDTO.duration;
+    this.state = eventDTO.state;
+  };
+
   return new Domain(this);
 };
 
@@ -100,5 +109,7 @@ var get = function(eventId) {
 
 module.exports = {
   getAll: getAll,
-  get: get
+  get: get,
+  class: Event,
+  EVENT_STATUS: EVENT_STATUS
 };

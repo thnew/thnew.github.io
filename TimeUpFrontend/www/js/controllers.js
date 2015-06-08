@@ -1,7 +1,6 @@
 angular.module('starter.controllers', [])
   .controller('EventsController', EventsController)
 
-
   .controller('DashCtrl', function($scope) {})
 
   .controller('ChatsCtrl', function($scope, Chats) {
