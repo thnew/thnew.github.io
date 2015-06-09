@@ -3,6 +3,7 @@ var path = require('path');
 
 var Event = require('./domains/Event');
 var Logger = require('./helper/Logger');
+var RestResponse = require('./helper/RestResponse');
 
 var app = express();
 app.use(express.static(path.join(__dirname, "../TimeUpFrontend/www")));
@@ -22,7 +23,7 @@ app.get("/api/models", function(req, res) {
     }
   };
 
-  var returnMe = new SuccessResponse(models);
+  var returnMe = new RestResponse.SuccessResponse(models);
   
   res.json(200, returnMe);
 });
@@ -39,7 +40,7 @@ app.get("/api/event", function(req, res) {
     eventsToReturn.push(events[f].toDTO());
   }
 
-  var returnMe = new SuccessResponse(eventsToReturn);
+  var returnMe = new RestResponse.SuccessResponse(eventsToReturn);
   
   res.json(200, returnMe);
 });
@@ -63,47 +64,3 @@ app.get("/api/event/:eventId/image", function(req, res) {
 
   res.end(buf);
 });
-
-/*Response Interface*/ {
-  var Response = function(success, data, error){
-    this.success = success;
-    this.data = data;
-    this.error = error;
-  };
-
-  Response.prototype = {
-    success:  false,
-    error:    null,
-    data:   null
-  };
-
-  var SuccessResponse = function(data, furtherRootParams){
-    var response = new Response(true, data, null);
-    
-    for(var f in (furtherRootParams || {}))
-    {
-      response[f] = furtherRootParams[f];
-    }
-    
-    return response;
-  };
-
-  var ErrorResponse = function(message, notLoggedIn, stack){
-    var response = new Response(false, null, message);
-    response.notLoggedIn = notLoggedIn;
-    
-    console.log(("\tError occured and responded: " + message).error);
-    logger.error(message, stack);
-    
-    return response;
-  };
-  
-  function sendErrorResponse(res, exception) {
-    res.json(200, new ErrorResponse(exception + "", exception.notLoggedIn || false, exception.stack));
-  }
-}
-
-var NotLoggedInException = function(){
-  this.message = "Not logged in!";
-  this.notLoggedIn = true;
-};
