@@ -1,9 +1,10 @@
 {
-    "name": "Gregor",
+    "name": "TimeUpBackend",
     "version": "1.0.0",
-    "description": "gregor",
+    "description": "TimeUpBackend",
     "dependencies": {
-        "express":	"3.x",
+        "express":		"3.x",
+		"body-parser":	"1.6.0",
     },
 	"repository" :
 	{ 

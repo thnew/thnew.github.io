@@ -31,7 +31,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   		views: {
   			'new': {
   				templateUrl: 'templates/new.html',
-  				controller: 'NewCtrl'
+  				controller: 'NewController'
   			}
   		}
   	})

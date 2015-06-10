@@ -25,6 +25,17 @@ angular.module('starter').factory("Events", [ "Storage", "Models", "$http", func
     
     callback(Storage.Response(null, false, "Event with id '" + id + "' not found!"));
   };
+
+  this.save = function(event, callback) {
+    $http.put("/api/event", event)
+      .success(function(resp, status, headers, config) {
+        callback(new Storage.Response(resp.data));
+      })
+      .error(function(resp, status, headers, config) {
+        alert(resp.error);
+        //callback(new Storage.ErrorResponse(resp.error));
+      });
+  };
   
   return this;
 }]);

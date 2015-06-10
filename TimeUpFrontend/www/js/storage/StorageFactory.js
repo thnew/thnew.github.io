@@ -3,9 +3,16 @@ angular.module('starter').factory("Storage", [ function StorageFactory() {
     if(success == null) success = true;
     
     return {
-      success:  success,
-      data:   data,
-      error:    error
+      success: success,
+      data: data,
+      error: error
+    };
+  };
+
+  this.ErrorResponse = function(error) {
+    return {
+      success: false,
+      error: error
     };
   };
   

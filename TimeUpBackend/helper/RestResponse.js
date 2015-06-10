@@ -1,3 +1,5 @@
+var Logger = require('../helper/Logger');
+
 var Response = function(success, data, error){
   this.success = success;
   this.data = data;
@@ -26,13 +28,13 @@ var SuccessResponse = function(data, furtherRootParams){
   response.notLoggedIn = notLoggedIn;
 
   console.log(("\tError occured and responded: " + message).error);
-  logger.error(message, stack);
+  Logger.error(message, stack);
 
   return response;
 };
 
 function sendErrorResponse(res, exception) {
-  res.json(200, new ErrorResponse(exception + "", exception.notLoggedIn || false, exception.stack));
+  res.json(400, new ErrorResponse(exception + "", exception.notLoggedIn || false, exception.stack));
 }
 
 var NotLoggedInException = function(){

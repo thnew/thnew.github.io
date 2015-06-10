@@ -40,16 +40,19 @@ function Event(attr) {
     }
   };
 
-  this.fromDTO = function(eventDTO) {
-    this.title = eventDTO.title;
-    this.image = eventDTO.image;
-    this.description = eventDTO.description;
-    this.location = eventDTO.location;
-    this.duration = eventDTO.duration;
-    this.state = eventDTO.state;
-  };
-
   return new Domain(this);
+};
+
+function fromDTO(eventDTO) {
+  return new Event({
+    id: eventDTO.id,
+    title: eventDTO.title,
+    image: eventDTO.image,
+    description: eventDTO.description,
+    location: eventDTO.location,
+    duration: eventDTO.duration,
+    state: eventDTO.state
+  });
 };
 
 /* Events */ {
@@ -107,9 +110,17 @@ var get = function(eventId) {
   }
 };
 
+var save = function(eventDTO) {
+  var event = fromDTO(eventDTO);
+  events.push(event);
+};
+
 module.exports = {
   getAll: getAll,
   get: get,
+  save: save,
+
   class: Event,
+  fromDTO: fromDTO,
   EVENT_STATUS: EVENT_STATUS
 };
