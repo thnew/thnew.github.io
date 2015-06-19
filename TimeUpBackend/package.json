@@ -1,14 +1,10 @@
 {
-    "name": "Gregor",
-    "version": "1.0.0",
-    "description": "gregor",
+    "name":			"TimeUpBackend",
+    "version":		"0.0.1",
+    "description":	"Backend of TimeUp app",
     "dependencies": {
-        "express":	"3.x",
+        "express":			"3.x",
+		"url":				"0.10.2"
     },
-	"repository" :
-	{ 
-		"type" :	"git",
-		"url" :		""
-	},
-    "author": ""
+    "author":		"thomasheigl2@gmail.com"
 }
