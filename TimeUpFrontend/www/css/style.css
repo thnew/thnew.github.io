@@ -6,7 +6,7 @@ html, body {
 }
 
 /*Reset Ionics font sizes*/
-.item, div, h3 {
+.item, div {
   font-size: 100%;
 }
 
