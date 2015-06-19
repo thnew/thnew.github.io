@@ -1,6 +1,6 @@
 {
   "name": "TimeUp",
-  "app_id": "",
+  "app_id": "78ddadfa",
   "gulpStartupTasks": [
     "sass",
     "watch"

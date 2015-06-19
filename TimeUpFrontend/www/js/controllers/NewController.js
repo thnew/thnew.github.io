@@ -4,10 +4,10 @@ function NewController($scope) {
     $scope.members = [];
 
     $scope.newEvent = {
-        title:      "",
-        image:        "",
-        place:      "",
-        duration:   ""
+        title: "",
+        image: "",
+        place: "",
+        duration: ""
     };
     
     $scope.removeMember = function(index) {

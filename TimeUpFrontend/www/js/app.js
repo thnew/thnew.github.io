@@ -19,6 +19,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     });
   })
+  .config(['$ionicAppProvider', function($ionicAppProvider) {
+    // Identify app
+    $ionicAppProvider.identify({
+      // The App ID (from apps.ionic.io) for the server
+      app_id: '6509c3652764bac1a35bc3df91c3433c84e34965f7c8e681',
+      // The public API key all services will use for this app
+      api_key: '1c5402f1ca4adcb7a7d1498ab3c8dcce12c5eb722cc1ed61',
+      // The GCM project ID (project number) from your Google Developer Console (un-comment if used)
+      // gcm_id: 'YOUR_GCM_ID'
+    });
+  }])
   .config(function($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
@@ -82,7 +93,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/event/vote');
-
   });
 
 angular.module('starter').factory("Models", [ "$http", function($http) {
