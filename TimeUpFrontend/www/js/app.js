@@ -19,6 +19,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     });
   })
+  /*
   .config(['$ionicAppProvider', function($ionicAppProvider) {
     // Identify app
     $ionicAppProvider.identify({
@@ -30,6 +31,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // gcm_id: 'YOUR_GCM_ID'
     });
   }])
+  //*/
   .config(function($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
@@ -51,7 +53,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       })
 
       // Each tab has its own nav history stack:
-
+      .state('tab.vote', {
+        url: '/event/vote',
+        views: {
+          'tab-event-vote': {
+            templateUrl: 'templates/tab-event-vote.html',
+            controller: 'EventsController'
+          }
+        }
+      })
       .state('tab.dated', {
         url: '/event/dated',
         views: {
@@ -61,25 +71,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
           }
         }
       })
-        .state('tab.chat-detail', {
-          url: '/chats/:chatId',
-          views: {
-            'tab-chats': {
-              templateUrl: 'templates/chat-detail.html',
-              controller: 'ChatDetailCtrl'
-            }
-          }
-        })
-
-      .state('tab.finished', {
-        url: '/finished',
+      .state('tab.chat-detail', {
+        url: '/chats/:chatId',
         views: {
-          'tab-finished': {
-            templateUrl: 'templates/tab-finished.html',
-            controller: 'AccountCtrl'
+          'tab-chats': {
+            templateUrl: 'templates/chat-detail.html',
+            controller: 'ChatDetailCtrl'
           }
         }
-      });
+      })
+
+    .state('tab.finished', {
+      url: '/finished',
+      views: {
+        'tab-finished': {
+          templateUrl: 'templates/tab-finished.html',
+          controller: 'AccountCtrl'
+        }
+      }
+    });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/event/vote');
