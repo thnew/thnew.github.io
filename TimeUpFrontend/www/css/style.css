@@ -17,3 +17,16 @@ h1 {
 .bar button {
   font-size: 100% !important;
 }
+
+ion-content {
+  background-color: #ECF0F1;
+  padding: 15px !important;
+}
+
+ion-view {
+  background-color: #ECF0F1 !important;
+}
+
+.scroll {
+  height: 100%;
+}

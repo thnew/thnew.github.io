@@ -1,136 +1,102 @@
-#NewEvent ion-view {
-	margin-top: 43px;
+.event-new ion-view {
+  padding-top: 43px;
 }
 
-.event_new .img {
-	position:	relative;
-	height:		150px;
-	background:	#BDC3C7;
+.event-new__content {
+  padding: 15px;
 }
 
-.event_new .img > div {
-	position:		absolute;
-	font-size:		125%;
-	font-weight:	bold;
-	top:			50%;
-	left:			50%;
-	margin-top:		-9px;
-	margin-left:	-150px;
+.new-event-image {
+  position: relative;
+  height: 150px;
+  background: #BDC3C7;
 }
 
-.event_new .input {
-	position:	relative;
-	width:		100%;
+.new-event-image > div {
+  position: absolute;
+  font-size: 125%;
+  font-weight:  bold;
+  top: 50%;
+  left: 50%;
+  margin-top: -9px;
+  margin-left: -150px;
 }
 
-.event_new .input > label {
-	display:		block;
-	height:			52px;
-	position:		relative;
-	background: 	#fff;
-	border-radius:	5px;
-	border:			1px solid #BDC3C7;
-	margin:			0px 10px 10px;
-	cursor:			text;
+.input-with-btn {
+  position: relative;
+  width: 100%;
 }
 
-.event_new .input > label div:first-child {
-	position:	absolute;
-	top:		10px;
-	left:		12px;
-	right:		30px;
+.input-with-btn > label {
+  display: block;
+  height: 52px;
+  position: relative;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #BDC3C7;
+  cursor: text;
 }
 
-.event_new .input > label div:last-child {
-	position:		absolute;
-	bottom:			0px;
-	padding-top:	10px;
-	top:			0px;
-	right:			0px;
-	width:			30px;
-	text-align:		center;
-	font-size:		150%;
-	color:			#BDC3C7;
+.input-with-btn > label div:first-child {
+  position: absolute;
+  top: 3px;
+  left: 12px;
+  right: 30px;
 }
 
-.event_new .input > label div:last-child:hover, .event_new .input > label div:last-child:active {
-	background-color:	#BDC3C7;
-	color:				#ECF0F1;
+.input-with-btn__btn {
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  padding-top: 3px;
+  top: 0px;
+  right: 0px;
+  width: 40px;
+  text-align: center;
+  font-size: 150%;
+  border-radius: 0px;
 }
 
-.event_new .input input {
-	display:		block;
-	width:			100%;
-	border:			0px;
-	background:		transparent;
-	outline:		none;
-	font-size:		125%;
+.input-with-btn__input {
+  margin-top: 5px;
 }
 
-.event_new .label {
-	padding:	15px 15px 0px;
+.event-members {
+  position: absolute;
+  top: 210px;
+  left: 15px;
+  right: 15px;
+  bottom: 0px;
+  padding: 0px;
+  margin: 0px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
-#Members {
-	position:	absolute;
-	top:		80px;
-	bottom:		0px;
-	padding:	0px;
-	margin:		0px;
-	width:		100%;
-	overflow-y:	scroll;
+.input-with-btn-search__results {
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  right: 0px;
+  background: #fff;
+  border: 1px solid #BDC3C7;
+  z-index: 10;
 }
 
-#Members li {
-	position:	relative;
-	height:		60px;
-	font-size:	125%;
+table.contact-sources {
+  width: 100%;
 }
 
-#Members li > div {
-	position:	absolute;
-	display:	inline-block;
+.contact-sources td {
+  width: 16.666%;
+  text-align: center;
 }
 
-#Members li .profile_img {
-	height:				40px;
-	width:				40px;
-	top:				0px;
-	left:				10px;
-	border-radius:		50px;
-	text-align:			center;
-	font-size:			35px;
-	background-color:	#BDC3C7;
-	color:				#ECF0F1;
+.contact-sources button {
+  font-size: 50px;
+  opacity: 1;
 }
 
-#Members li .name {
-	left:		60px;
-	right:		55px;
-	top:		50%;
-	margin-top:	-18px;
-}
-
-#Members li .remove {
-	right:		0px;
-	width:		55px;
-	text-align:	center;
-	font-size:	125%;
-	top:		50%;
-	margin-top:	-18px;
-	color:		#BDC3C7;
-}
-
-#Members li .separator {
-	position:			absolute;
-	left:				10px;
-	right:				10px;
-	bottom:				10px;
-	height:				1px;
-	box-shadow:			0px 1px 1px #fff;
-	background-color:	#BDC3C7;
-}
-
-#Members li:last-child .separator {
-	display:	none;
+.contact-sources button[disabled=true] {
+  opacity: 0.1;
 }

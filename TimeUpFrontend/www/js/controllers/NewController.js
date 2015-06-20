@@ -1,7 +1,75 @@
 function NewController($scope) {
-    $scope.step = 1;
+    var SOURCES = {
+      FACEBOOK: "FACEBOOK",
+      GOOGLE: "GOOGLE",
+      TWITTER: "TWITTER",
+      LINKEDIN: "LINKEDIN",
+      MAIL: "MAIL",
+      PHONE: "PHONE",
+    };
 
-    $scope.members = [];
+    $scope.members = [
+      {
+        name: "Richtiger Kevin",
+        source: SOURCES.FACEBOOK,
+        button: "DELETE"
+      },
+      {
+        name: "Michael",
+        source: SOURCES.TWITTER,
+        button: "DELETE"
+      },
+      {
+        name: "Michael",
+        source: SOURCES.TWITTER,
+        button: "DELETE"
+      },
+      {
+        name: "Michael",
+        source: SOURCES.TWITTER,
+        button: "DELETE"
+      },
+      {
+        name: "Michael",
+        source: SOURCES.TWITTER,
+        button: "DELETE"
+      },
+      {
+        name: "Michael",
+        source: SOURCES.TWITTER,
+        button: "DELETE"
+      },
+      {
+        name: "Michael",
+        source: SOURCES.TWITTER,
+        button: "DELETE"
+      },
+      {
+        name: "Michael",
+        source: SOURCES.TWITTER,
+        button: "DELETE"
+      },
+      {
+        name: "Michael",
+        source: SOURCES.TWITTER,
+        button: "DELETE"
+      }
+    ];
+    
+    $scope.friendSearchResults = [
+      {
+        name: "Hans Wurst",
+        source: SOURCES.FACEBOOK,
+        button: "SELECT"
+      },
+      {
+        name: "Nina Hagen",
+        source: SOURCES.TWITTER,
+        button: "SELECT"
+      }
+    ];
+
+    $scope.searchName = "";
 
     $scope.newEvent = {
         title: "",
@@ -10,11 +78,11 @@ function NewController($scope) {
         duration: ""
     };
     
-    $scope.removeMember = function(index) {
+    $scope.removeUser = function(index) {
         $scope.members.splice(index, 1);
     };
     
-    $scope.step = 1;
+    $scope.step = 2;
     $scope.finalStepNr = 4;
     $scope.nextStep = function() {
         // Check for errors
