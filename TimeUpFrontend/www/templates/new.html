@@ -58,7 +58,7 @@
             
           <div class="input-with-btn-search__results" ng-show="searchName!=''">
             <ion-list>
-              <div ng-repeat="user in friendSearchResults" ng-include="'templates-parts/list-row-user.html'"></div>
+              <div ng-repeat="user in friendSearchResults" ng-include="'templates-parts/list-row-user.html'" ng-click="addMember(user)"></div>
             </ion-list>
           </div>
         </div>

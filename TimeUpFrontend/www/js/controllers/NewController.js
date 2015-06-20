@@ -23,46 +23,18 @@ function NewController($scope) {
         name: "Michael",
         source: SOURCES.TWITTER,
         button: "DELETE"
-      },
-      {
-        name: "Michael",
-        source: SOURCES.TWITTER,
-        button: "DELETE"
-      },
-      {
-        name: "Michael",
-        source: SOURCES.TWITTER,
-        button: "DELETE"
-      },
-      {
-        name: "Michael",
-        source: SOURCES.TWITTER,
-        button: "DELETE"
-      },
-      {
-        name: "Michael",
-        source: SOURCES.TWITTER,
-        button: "DELETE"
-      },
-      {
-        name: "Michael",
-        source: SOURCES.TWITTER,
-        button: "DELETE"
-      },
-      {
-        name: "Michael",
-        source: SOURCES.TWITTER,
-        button: "DELETE"
       }
     ];
     
     $scope.friendSearchResults = [
       {
+        id: 99,
         name: "Hans Wurst",
         source: SOURCES.FACEBOOK,
         button: "SELECT"
       },
       {
+        id: 100,
         name: "Nina Hagen",
         source: SOURCES.TWITTER,
         button: "SELECT"
@@ -76,6 +48,21 @@ function NewController($scope) {
         image: "",
         place: "",
         duration: ""
+    };
+
+    $scope.addMember = function(user) {
+      for(var f in $scope.friendSearchResults)
+      {
+        if($scope.friendSearchResults[f].id == user.id)
+        {
+          $scope.friendSearchResults.splice(f, 1);
+          break;
+        }
+      }
+
+      $scope.members.push(user);
+
+      $scope.searchName = "";
     };
     
     $scope.removeUser = function(index) {
