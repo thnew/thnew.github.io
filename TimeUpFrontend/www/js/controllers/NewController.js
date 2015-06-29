@@ -41,7 +41,9 @@ function NewController($scope) {
       }
     ];
 
-    $scope.searchName = "";
+    $scope.search = {
+      text: ""
+    };
 
     $scope.newEvent = {
         title: "",
@@ -50,7 +52,7 @@ function NewController($scope) {
         duration: ""
     };
 
-    $scope.addMember = function(user) {
+    $scope.addMember = function(user, searchName) {
       for(var f in $scope.friendSearchResults)
       {
         if($scope.friendSearchResults[f].id == user.id)
@@ -60,9 +62,10 @@ function NewController($scope) {
         }
       }
 
+      user.button = "DELETE";
       $scope.members.push(user);
 
-      $scope.searchName = "";
+      $scope.search.text = ""; // DOES NOT WORK YET
     };
     
     $scope.removeUser = function(index) {

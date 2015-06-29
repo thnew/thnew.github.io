@@ -50,15 +50,15 @@
           
           <label>
             <div>
-              <input class="input-with-btn__input" type="text" data-ng-model="searchName" placeholder="Type contact name..." />
+              <input class="input-with-btn__input" type="text" data-ng-model="search.text" placeholder="Type contact name..." />
             </div>
             
             <button class="button button-icon icon ion-plus input-with-btn__btn"></button>
           </label>
             
-          <div class="input-with-btn-search__results" ng-show="searchName!=''">
+          <div class="input-with-btn-search__results" ng-show="search.text!=''">
             <ion-list>
-              <div ng-repeat="user in friendSearchResults" ng-include="'templates-parts/list-row-user.html'" ng-click="addMember(user)"></div>
+              <div ng-repeat="user in friendSearchResults" ng-include="'templates-parts/list-row-user.html'" ng-click="addMember(user, search)"></div>
             </ion-list>
           </div>
         </div>
@@ -78,7 +78,6 @@
         <button>2h</button>
         
         What times do you want to suggest?
-        
         
         <ul id="Dates">
           <li data-ng-repeat="date in dates">
