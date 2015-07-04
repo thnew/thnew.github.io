@@ -1,5 +1,6 @@
-angular.module('TimeUp').factory("Users", [ "Storage", function UserFactory(Storage) {
+angular.module('starter').factory("Users", [ "Storage", "$timeout", function UserFactory(Storage, $timeout) {
 	this.list = [];
+	var superClass = this;
 	
 	/* Create test data */ {
 		this.list.push(new UserDTO({ id: 1, name: "Thomas Heigl" }));
@@ -8,6 +9,7 @@ angular.module('TimeUp').factory("Users", [ "Storage", function UserFactory(Stor
 		this.list.push(new UserDTO({ id: 4, name: "Tilmann Huebel" }));
 		this.list.push(new UserDTO({ id: 5, name: "Michael Schulz" }));
 		this.list.push(new UserDTO({ id: 6, name: "Kevin Diekmann" }));
+		this.list.push(new UserDTO({ id: 7, name: "Peter Horst" }));
 	}
 	
 	this.get = function(userId, callback) {
@@ -22,8 +24,10 @@ angular.module('TimeUp').factory("Users", [ "Storage", function UserFactory(Stor
 		}
 	};
 	
-	this.getAll = function(callback) {
-		callback(Storage.Response(this.list));
+	this.getAll = function(filters, callback) {
+		$timeout(function() {
+			callback(Storage.Response(superClass.list));
+		}, 500);
 	};
 	
 	return this;

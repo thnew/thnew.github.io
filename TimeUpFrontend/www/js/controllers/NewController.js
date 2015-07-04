@@ -1,4 +1,4 @@
-function NewController($scope) {
+function NewController($scope, Users) {
     var SOURCES = {
       FACEBOOK: "FACEBOOK",
       GOOGLE: "GOOGLE",
@@ -10,16 +10,19 @@ function NewController($scope) {
 
     $scope.members = [
       {
+        id: 1,
         name: "Richtiger Kevin",
         source: SOURCES.FACEBOOK,
         button: "DELETE"
       },
       {
+        id: 2,
         name: "Michael",
         source: SOURCES.TWITTER,
         button: "DELETE"
       },
       {
+        id: 3,
         name: "Michael",
         source: SOURCES.TWITTER,
         button: "DELETE"
@@ -28,21 +31,46 @@ function NewController($scope) {
     
     $scope.friendSearchResults = [
       {
+        id: 1,
+        name: "Richtiger Kevin",
+        source: SOURCES.FACEBOOK
+      },
+      {
+        id: 2,
+        name: "Michael",
+        source: SOURCES.TWITTER
+      },
+      {
+        id: 3,
+        name: "Michael",
+        source: SOURCES.TWITTER
+      },
+      {
         id: 99,
         name: "Hans Wurst",
-        source: SOURCES.FACEBOOK,
-        button: "SELECT"
+        source: SOURCES.FACEBOOK
       },
       {
         id: 100,
         name: "Nina Hagen",
-        source: SOURCES.TWITTER,
-        button: "SELECT"
+        source: SOURCES.TWITTER
       }
     ];
 
     $scope.search = {
-      text: ""
+      text: "",
+      search: function() {
+        var filters = {
+          name: $scope.searchName
+        };
+        
+        Users.getAll(filters, function(resp) {
+          if(resp.success)
+          {
+            $scope.friendSearchResults = resp.data;
+          }
+        });
+      }
     };
 
     $scope.newEvent = {
