@@ -11,6 +11,7 @@ var app = express();
 app.use(bodyParser.json({ limit: "50mb" }));
 
 app.use(express.static(path.join(__dirname, "../TimeUpFrontend/www")));
+app.use("/shared", express.static(path.join(__dirname, "../TimeUpShared")));
 
 app.listen(80);
 

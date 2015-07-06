@@ -95,13 +95,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     $urlRouterProvider.otherwise('/tab/event/vote');
   });
 
+/*
 angular.module('starter').factory("Models", [ "$http", function($http) {
   var Models = this;
 
   this.domains = {};
   this.enums = {};
 
-  /* Load models from backend */ {
+  /* Load models from backend * / {
     var _onInit = [];
     var isInitialized = false;
     var executeOnInitialized = function(executeMe) {
@@ -139,6 +140,7 @@ angular.module('starter').factory("Models", [ "$http", function($http) {
     }
   };
 }]);
+//*/
 
 /*Example Usage
 Models.domains.getEventDTO(function(eventDTO){
