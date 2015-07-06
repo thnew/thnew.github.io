@@ -45,20 +45,40 @@ var Event = require('../../TimeUpShared/models/Event');
   }));
 }
 
-var getAll = function() {
-  return events;
+var getAll = function(callback) {
+  setTimeout(function() {
+    callback({
+      success: true,
+      data: events
+    });
+  }, 200);
 };
 
-var get = function(eventId) {
-  for(var f in events)
-  {
-    if(events[f].id == eventId) return events[f];
-  }
+var get = function(eventId, callback) {
+  setTimeout(function() {
+    for(var f in events)
+    {
+      if(events[f].id == eventId)
+      {
+        callback({
+          success: true,
+          data: events[f]
+        });
+        return;
+      }
+    }
+  }, 200)
 };
 
-var save = function(eventDTO) {
-  var event = fromDTO(eventDTO);
-  events.push(event);
+var save = function(eventDTO, callback) {
+  setTimeout(function() {
+    var event = fromDTO(eventDTO);
+    events.push(event);
+
+    callback({
+      success: true
+    });
+  }, 200);
 };
 
 module.exports = {
