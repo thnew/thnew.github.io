@@ -1,7 +1,5 @@
-angular.module('starter').factory("Events", [ "Storage", "Models", "$http", function EventFactory(Storage, Models, $http) {
+angular.module('starter').factory("Events", [ "Storage", "$http", function EventFactory(Storage, $http) {
   this.list = [];
-  
-  console.log(Models);
 
   this.getAll = function(callback) {
     $http.get('/api/event')

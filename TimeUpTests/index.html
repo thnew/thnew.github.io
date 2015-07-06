@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>
+      Backend tests
+    </h1>
+
+    <button onclick="test_createAndRemoveEvent()">Start Event create test</button>
+
+    <ul id="Results"></ul>
+
+    <script src="jquery.js"></script>
+    <script>
+      var results = document.getElementById("Results");
+
+      var elem = document.createElement("div");
+      elem.innerHTML = "HELLOOO";
+
+      results.appendChild(elem);
+
+      function TestStep(params) {
+        var TEST_STEP = this;
+
+        // Check for common attributes
+        if(params.title == null) throw "Test title is missing!";
+        if(params.url == null) throw "Test url is missing!";
+        if(params.httpType == null) throw "Test http type is missing!";
+
+        // prepare attributes
+        params.httpType = params.httpType.toUpperCase();
+
+        // Check for special attributes
+        if(params.httpType == "POST")
+        {
+          if(params.parameters == null) throw "Test parameters are missing!";
+        }
+
+        this.execute = function(callback) {
+          console.log("Execute test '" + TEST_STEP.title + "'");
+
+          $.get(TEST_STEP.url, function() {
+            callback();
+          });
+        };
+      }
+
+      function TestExecuter(steps) {
+        function executeNextTest(stepNr) {
+          if(stepNr < (steps.length - 1))
+          {
+            executeNextTest(stepNr + 1);
+          }
+          else console.log("### Last test reached");
+        }
+
+        if(steps.length > 0)
+        {
+          console.log("### Start tests (" + steps.length + ")");
+          executeNextTest(0);
+        }
+        else
+        {
+          console.log("### No tests found!");
+        }
+      };
+
+      function test_createAndRemoveEvent() {
+        var steps = [
+          // Authenticate
+          new TestStep({
+            title: "Authenticate",
+            url: "",
+            httpType: "POST",
+            parameters: {}
+          }),
+
+          // Create an event
+          new TestStep({
+            title: "Create an event",
+            url: "",
+            httpType: "POST",
+            parameters: {}
+          }),
+
+          // Get all events and look for the new event
+          new TestStep({
+            title: "Get all events and look for the new event",
+            url: "/event",
+            httpType: "GET",
+            parameters: {}
+          }),
+
+          // Get especially the created event
+          new TestStep({
+            title: "Get especially the created event",
+            url: "/event",
+            httpType: "GET",
+            parameters: {}
+          }),
+
+          // Modify the event
+          new TestStep({
+            title: "Modify the event",
+            url: "/event",
+            httpType: "PUT",
+            parameters: {}
+          }),
+
+          // Get especially the event and control the params
+          new TestStep({
+            title: "Get especially the event and control the params",
+            url: "/event",
+            httpType: "GET",
+            parameters: {}
+          }),
+
+          // Delete the event
+          new TestStep({
+            title: "Delete the event",
+            url: "/event",
+            httpType: "DELETE",
+            parameters: {}
+          }),
+
+          // Get all events and look for the event
+          new TestStep({
+            title: "Get all events and look for the event",
+            url: "/event",
+            httpType: "GET",
+            parameters: {}
+          }),
+        ];
+
+        return new TestExecuter(steps);
+      };
+
+      $.get("/api/event", function(resp) {
+        console.log(resp);
+      });
+    </script>
+  </body>
+</html>

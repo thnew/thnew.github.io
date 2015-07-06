@@ -1,59 +1,5 @@
-var Domain = require('./Domain');
-var BASE_URLS = require('../config/base_urls');
-
-var EVENT_STATUS = {
-  NO_VOTE_YET: "NO_VOTE_YET",
-  NOT_ALL_VOTES_YET: "NOT_ALL_VOTES_YET",
-  ALL_VOTED: "ALL_VOTED",
-  DATE_FIXED: "DATE_FIXED"
-};
-
-function Event(attr) {
-  if(attr.title == null || attr.title.length == 0) throw "Error creating new User object: Attribute title is missing";
-  if(attr.location == null) throw "Error creating new User object: Attribute location is missing";
-  if(attr.duration == null) throw "Error creating new User object: Attribute duration is missing";
-  if(attr.state == null) throw "Error creating new User object: Attribute state is missing";
-  
-  if(attr.isNew !== true)
-  {
-    if(attr.id == null) throw "Error creating new User object: Attribute id is missing";
-    
-    this.id = attr.id;
-  }
-  
-  this.title = attr.title;
-  this.description = attr.description;
-  this.image = attr.image;
-  this.location = attr.location;
-  this.duration = attr.duration;
-  this.state = attr.state;
-
-  this.toDTO = function() {
-    return {
-      id: attr.id,
-      title: attr.title,
-      image: BASE_URLS.GET_EVENT_IMAGE_URL(attr.id),
-      description: attr.description,
-      location: attr.location,
-      duration: attr.duration,
-      state: attr.state
-    }
-  };
-
-  return new Domain(this);
-};
-
-function fromDTO(eventDTO) {
-  return new Event({
-    id: eventDTO.id,
-    title: eventDTO.title,
-    image: eventDTO.image,
-    description: eventDTO.description,
-    location: eventDTO.location,
-    duration: eventDTO.duration,
-    state: eventDTO.state
-  });
-};
+var EVENT_STATUS = require('../../TimeUpShared/enums/EVENT_STATUS');
+var Event = require('../../TimeUpShared/models/Event');
 
 /* Events */ {
   var events = [];
@@ -99,28 +45,44 @@ function fromDTO(eventDTO) {
   }));
 }
 
-var getAll = function() {
-  return events;
+var getAll = function(callback) {
+  setTimeout(function() {
+    callback({
+      success: true,
+      data: events
+    });
+  }, 200);
 };
 
-var get = function(eventId) {
-  for(var f in events)
-  {
-    if(events[f].id == eventId) return events[f];
-  }
+var get = function(eventId, callback) {
+  setTimeout(function() {
+    for(var f in events)
+    {
+      if(events[f].id == eventId)
+      {
+        callback({
+          success: true,
+          data: events[f]
+        });
+        return;
+      }
+    }
+  }, 200)
 };
 
-var save = function(eventDTO) {
-  var event = fromDTO(eventDTO);
-  events.push(event);
+var save = function(eventDTO, callback) {
+  setTimeout(function() {
+    var event = fromDTO(eventDTO);
+    events.push(event);
+
+    callback({
+      success: true
+    });
+  }, 200);
 };
 
 module.exports = {
   getAll: getAll,
   get: get,
-  save: save,
-
-  class: Event,
-  fromDTO: fromDTO,
-  EVENT_STATUS: EVENT_STATUS
+  save: save
 };
