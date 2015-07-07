@@ -1,0 +1,9 @@
+.profile-self__profile-img {
+  display: block;
+  width: 200px;
+  margin: 0px auto;
+}
+
+.profile-self h2, .profile-self h3 {
+  text-align: center;
+}

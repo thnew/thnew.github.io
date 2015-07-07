@@ -9,14 +9,6 @@ input, input:focus, input:active {
   outline: 0px !important;
 }
 
-h1, h2, h3 {
-  color: #7AA6BD;
-}
-
-h3 {
-  font-weight: lighter;
-}
-
 .btn {
   border-radius: 0px !important;
 }
@@ -67,7 +59,7 @@ h3 {
 
   .header_profile-img {
     height: 45px;
-    margin: 0px 16px;
+    margin: 0px 10px;
   }
 
 .content {

@@ -8,6 +8,7 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/profile-self.css" rel="stylesheet">
   </head>
   <body>
     <nav class="header navbar navbar-default">
@@ -25,7 +26,7 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active">
+            <li>
               <a href="index.html">
                 Home
               </a>
@@ -43,16 +44,14 @@
               </a>
             </li>
 
-            <li>
+            <li class="active">
               <a href="profile_self.html">
                 Profil
               </a>
             </li>
 
             <li>
-              <a href="#">
-                Login
-              </a>
+              <img class="header_profile-img img-circle" src="img/profile-dummy.png" />
             </li>
           </ul>
         </div>
@@ -62,40 +61,18 @@
     <div class="content">
 
       <!-- CONTENT -->
-        <div class="block-image-background">
-          <img class="block-image-background__image" src="img/landing-img.png" />
+        
+        <div class="profile-self">
+          <img class="img-circle profile-self__profile-img" src="img/profile-dummy.png" />
 
-          <div class="row-fluid">
-          <div class="block-image-background__content col-xs-12 col-sm-10 col-sm-offset-1">
-            <div class="block-image-background__title">
-              Gute Mitbewohner, einfaches Leben!<br />
-              Comate hilft dir deinen perfekten Mitbewohner zu finden.
-            </div>
+          <h2>
+            Hallo Marina!
+          </h2>
 
-             <form class="block-image-background__form">
-              <div class="block-image-background__input-wrapper">
-                <input type="text" name="user" class="form-control block-image-background__input" placeholder="E-Mail">
-                <input type="password" name="pass" class="form-control block-image-background__input" placeholder="Passwort">
-                <input type="submit" name="login" class="form-control btn-primary form-control block-image-background__btn" value="Login">
-
-                <br />
-                
-                <button name="login" class="form-control btn btn-facebook form-control block-image-background__btn">
-                  Einloggen mit Facebook
-                </button>
-
-                <aside class="block-image-background__btn-label-left">
-                  <span class="block-image-background__btn-label-left__text">
-                    oder
-                  </span>
-                </aside>
-              </div>
-            </form>
-          </div>
-          </div>
+          <h3>
+            Optimiere dein Profil um deine Chancen zu erhöhen.
+          </h3>
         </div>
-
-        <!-- Here is space for more content :) -->
 
       <!-- /CONTENT -->
     </div>
