@@ -1,0 +1,151 @@
+body {
+  color: #3A3637;
+  font-size: 16px;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+input, input:focus, input:active {
+  border-radius: 0px !important;
+  outline: 0px !important;
+}
+
+.btn {
+  border-radius: 0px !important;
+}
+
+.form-control {
+  border: 0px;
+  box-shadow: none;
+}
+
+.btn-primary {
+  background: #66C9B7 !important;
+}
+
+.btn-facebook {
+  background: #48629B;
+  color: #fff !important;
+}
+
+.btn-facebook:before {
+  content: "\f09a";
+  font-family: FontAwesome;
+}
+
+.header {
+  padding: 20px 0px 0px 0px;
+  text-transform: uppercase;
+}
+
+.header .navar-brand img {
+  height: 35px;
+  margin-top: 5px;
+}
+
+.header .navbar-toggle {
+  margin-top: 0px;
+}
+
+.navbar-default {
+  background: transparent;
+  border: 0px;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover {
+  color: #7AA6BD;
+  background: transparent;
+}
+
+.content {
+  margin-top: 35px;
+}
+
+/* .block-image-background */
+  .block-image-background {
+    position: relative;
+    overflow: hidden;
+    max-height: 600px;
+  }
+
+  .block-image-background__image {
+    width: 120%;
+    position: relative;
+    margin-left: -10%;
+
+  }
+
+  .block-image-background__content {
+    background: rgba(255,255,255,0.9);
+    position: absolute;
+    padding: 40px;
+    top: 80px;
+  }
+  
+  .block-image-background__title {
+    color: #7AA6BD;
+    text-align: center;
+    font-size: 33px;
+    font-weight: 100;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 992px) {
+    .block-image-background__title {
+      font-size: 25px;
+    }
+
+    .block-image-background__image {
+      width: 150%;
+      margin-left: -25%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .block-image-background__content {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
+    .block-image-background__image {
+      width: 250%;
+    margin-left: -75%;
+    }
+
+    .block-image-background__title {
+      font-size: 19px;
+    }
+  }
+  
+  .block-image-background__form {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .block-image-background__input-wrapper {
+    width: 300px;
+    margin: 30px auto 0px;
+    text-align: left;
+  }
+
+  .block-image-background__input {
+    background: #CFDEE6;
+  }
+
+  .block-image-background__input, .block-image-background__btn {
+    margin-top: 15px;
+    padding: 15px;
+    height: auto;
+  }
+
+  .block-image-background__btn-label-left {
+    position: relative;
+    display: inline-block;
+    top: -36px;
+  }
+
+  .block-image-background__btn-label-left__text {
+    position: relative;
+    left: -100%;
+    margin-right: 20px;
+    color: #7AA6BD;
+  }
