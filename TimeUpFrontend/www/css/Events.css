@@ -39,10 +39,6 @@
 	margin-bottom: 0px !important;
 }
 
-ion-content {
-  background-color: #ECF0F1;
-}
-
 .event-item .item-body {
   position:	absolute;
   top: 100px;
@@ -135,4 +131,9 @@ ion-content {
 .event-item-done h3, .event-item-done .item-body, .event-item-done .event-item__message,
 .event-item-todo h3, .event-item-todo .item-body, .event-item-todo .event-item__message {
 	color: #fff !important;
+}
+
+.event-members .item {
+  background: transparent;
+  border: 0px;
 }

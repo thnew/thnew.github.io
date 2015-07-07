@@ -1,0 +1,12 @@
+<ion-item class="item-remove-animate item-avatar item-icon-right" type="item-text-wrap">
+  <img ng-src="{{ user.icon }}">
+  <h2>{{user.name}}</h2>
+  <p ng-switch="user.source">
+    <span ng-switch-when="FACEBOOK">Facebook</span>
+    <span ng-switch-when="TWITTER">Twitter</span>
+  </p>
+  <div ng-switch="user.button">
+    <button class="button button-icon icon ion-chevron-right icon-accessory" ng-switch-when="SELECT"></button>
+    <button class="button button-icon icon ion-android-close icon-accessory" ng-switch-when="DELETE" data-ng-click="removeUser($index)"></button>
+  </div>
+</ion-item>

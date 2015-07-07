@@ -1,105 +1,104 @@
-<div id="NewEvent">
+<div class="event-new">
   <div class="bar bar-header bar-balanced">
     <button class="button button-icon icon ion-arrow-left-c" ng-click="back()"></button>
     <div class="h1 title ">Create New Event</div>
     <button class="button button-icon" ng-click="nextStep()" ng-hide="step >= finalStepNr" ng-disabled="!isValid()">
-      <i class="fa fa-check"></i>
       {{ step < 3 ? "NEXT" : "CREATE" }}
     </button>
   </div>
 
   <ion-view view-title="Create new event">
-    <ion-content>
-      <div data-ng-switch="step" class="event_new">
-        <content data-ng-switch-when="1">
-          <div class="img">
+    <div data-ng-switch="step" class="event-new__content">
+      <content data-ng-switch-when="1">
+        <div class="new-event-image">
+          <div>
+            Optionally give your event an image
+          </div>
+        </div>
+        
+        <div class="input input-with-btn">
+          <div class="label"></div>
+          
+          <label>
             <div>
-              Optionally give your event an image
-            </div>
-          </div>
-          
-          <div class="input">
-            <div class="label"></div>
-            
-            <label>
-              <div>
-                <input type="text" data-ng-model="newEvent.title" placeholder="Type event subject here..." />
-              </div>
-              
-              <div>
-                <i class="fa fa-smile-o"></i>
-              </div>
-            </label>
-          </div>
-        </content>
-        
-        <content data-ng-switch-when="2">
-          <div class="input">
-            <div class="label">
-              Add friends to your event
+              <input type="text" data-ng-model="newEvent.title" placeholder="Type event subject here..." />
             </div>
             
-            <label>
-              <div>
-                <input type="text" data-ng-model="name" placeholder="Type contact name..." />
-              </div>
-              
-              <div>
-                <i class="fa fa-plus"></i>
-              </div>
-            </label>
+            <div>
+              <i class="fa fa-smile-o"></i>
+            </div>
+          </label>
+        </div>
+      </content>
+      
+      <content data-ng-switch-when="2">
+        <table class="contact-sources">
+          <tr>
+            <td><button class="button button-icon icon ion-social-facebook"></button></td>
+            <td><button class="button button-icon icon ion-social-google" disabled="true"></button></td>
+            <td><button class="button button-icon icon ion-social-twitter" disabled="true"></button></td>
+            <td><button class="button button-icon icon ion-social-linkedin" disabled="true"></button></td>
+            <td><button class="button button-icon icon ion-android-mail" disabled="true"></button></td>
+            <td><button class="button button-icon icon ion-android-phone-portrait" disabled="true"></button></td>
+          </tr>
+        </table>
+
+        <br />
+
+        <div class="input input-with-btn">
+          Add friends to your event
+          
+          <label>
+            <div>
+              <input class="input-with-btn__input" type="text" data-ng-model="search.text" data-ng-change="search.search()" placeholder="Type contact name..." />
+            </div>
+            
+            <button class="button button-icon icon ion-plus input-with-btn__btn"></button>
+          </label>
+            
+          <div class="input-with-btn-search__results" ng-show="search.text!=''">
+            <ion-list>
+              <div ng-repeat="user in friendSearchResults" ng-include="'templates-parts/list-row-user.html'" ng-click="addMember(user, search)"></div>
+            </ion-list>
           </div>
-          
-          <ul id="Members">
-            <li data-ng-repeat="member in members track by $index">
-              <div class="profile_img">
-                <i class="fa fa-user"></i>
-              </div>
-              <div class="name">
-                {{ member.name }}
-              </div>
-              <div class="remove" data-ng-click="removeMember($index)">
-                <i class="fa fa-close"></i>
-              </div>
-              
-              <div class="separator"></div>
-            </li>
-          </ul>
-        </content>
+        </div>
         
-        <content data-ng-switch-when="3">
-          How long will your event take?
-          <button>15min</button>
-          <button>30min</button>
-          <button>45min</button>
-          <button>60min</button>
-          <button>90min</button>
-          <button>2h</button>
-          
-          What times do you want to suggest?
-          
-          
-          <ul id="Dates">
-            <li data-ng-repeat="date in dates">
-              <div class="date">
-                <button></button>
-              </div>
-              <div class="time">
-                <button></button>
-              </div>
-              <div class="remove" data-ng-click="removeMember($index)">
-                <i class="fa fa-close"></i>
-              </div>
-            <li>
-          </ul>
-        </content>
+        <ion-list class="event-members">
+          <div ng-repeat="user in members track by $index" ng-include="'templates-parts/list-row-user.html'"></div>
+        </ion-list>
+      </content>
+      
+      <content data-ng-switch-when="3">
+        How long will your event take?
+        <button>15min</button>
+        <button>30min</button>
+        <button>45min</button>
+        <button>60min</button>
+        <button>90min</button>
+        <button>2h</button>
         
-        <content data-ng-switch-when="4">
-          Yayy, your event got created :)
-          
-          
-        </content>
-      </div>
-    </ion-content>
+        What times do you want to suggest?
+        
+        <ul id="Dates">
+          <li data-ng-repeat="date in dates">
+            <div class="date">
+              <button></button>
+            </div>
+            <div class="time">
+              <button></button>
+            </div>
+            <div class="remove" data-ng-click="removeMember($index)">
+              <i class="fa fa-close"></i>
+            </div>
+          <li>
+        </ul>
+      </content>
+      
+      <content data-ng-switch-when="4">
+        Yayy, your event got created :)
+        
+        
+      </content>
+    </div>
   </ion-view>
 </div>
