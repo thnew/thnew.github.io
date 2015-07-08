@@ -4,9 +4,13 @@ body {
   font-family: 'Segoe UI', Tahoma, sans-serif;
 }
 
-input, input:focus, input:active {
+.form-control, .form-control:focus, .form-control:active {
   border-radius: 0px !important;
   outline: 0px !important;
+}
+
+textarea {
+  border: 1px solid #8B8989;
 }
 
 h1, h2, h3 {
@@ -19,11 +23,6 @@ h3 {
 
 .btn {
   border-radius: 0px !important;
-}
-
-.form-control {
-  border: 0px;
-  box-shadow: none;
 }
 
 .btn-primary {
@@ -122,6 +121,8 @@ h3 {
     margin-top: 15px;
     padding: 15px;
     height: auto;
+    border: 0px;
+    box-shadow: none;
   }
 
   .block-image-background__btn-label-left {
