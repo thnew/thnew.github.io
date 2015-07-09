@@ -39,6 +39,10 @@ h5 {
   font-weight: normal;
 }
 
+.nowrap {
+  white-space: nowrap;
+}
+
 .text-center-absolute {
   position: absolute;
   left: 0px;
@@ -112,12 +116,13 @@ h5 {
   border-width: 3px;
   border-color: #7AA6BD;
   width: 70px;
-  height:70px;
+  height: 70px;
 }
 
 .btn-circle:hover {
   border-color: #96CCE8;
   background-color: #96CCE8 !important;
+  color: #fff;
 }
 
 .btn-circle.btn-circle-active {

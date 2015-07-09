@@ -121,7 +121,7 @@
   /* .matching-vote-content__answers */
     .matching-vote-content__answers {
       position: absolute;
-      top: 200px;
+      top: 220px;
     }
 
     .matching-vote-content__answers__table {
@@ -134,4 +134,11 @@
     
     .matching-vote-content__answers__table tr {
       height: 40px;
+    }
+
+
+    @media (max-width: 768px) {
+      .pull-down-on-small {
+        margin-top: 35px;
+      }
     }
