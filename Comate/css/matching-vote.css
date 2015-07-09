@@ -1,0 +1,137 @@
+.image-stripe {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.image-stripe__img {
+  position: absolute;
+  width: 100%;
+  right: 0px;
+  margin-left: 50%;
+  opacity: 0.5;
+}
+
+.image-stripe__label {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  text-transform: uppercase;
+  font-size: 200px;
+  text-align: center;
+  line-height: 180px;
+  color: #7AA6BD;
+}
+
+@media (max-width: 992px) {
+  .image-stripe {
+    height: 150px;
+  }
+
+  .image-stripe__label {
+    font-size: 150px;
+    line-height: 135px;
+  }
+}
+
+@media (max-width: 768px) {
+  .image-stripe {
+    height: 100px;
+  }
+
+  .image-stripe__label {
+    font-size: 100px;
+    line-height: 90px;
+  }
+}
+
+/* .matching-vote-content */
+  .matching-vote-content {
+    position: relative;
+  }
+
+  .progress-line {
+    position: absolute;
+    top: 80px;
+    left: 0px;
+    right: 0px;
+    height: 3px;
+    background: #A8A9AD;
+    white-space: nowrap;
+  }
+
+  .progress-line.progress-line-finished {
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: -2000px;
+    right: 50%;
+    height: 3px;
+    background: #7AA6BD;
+    white-space: nowrap;
+    z-index: 49;
+  }
+
+  .progress-line__step {
+    display: inline-block;
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    margin-top: -15px;
+    background: #A8A9AD;
+    border-radius: 50%;
+    color: #fff;
+    z-index: 50;
+  }
+
+  .progress-line__separator-completed .progress-line__step {
+    background-color: #7AA6BD;
+  }
+
+  .progress-line__separator-completed .progress-line.progress-line-finished {
+    display: block;
+  }
+
+  .progress-line__step_number {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 50%;
+    margin-top: -11px;
+    text-align: center;
+  }
+
+  .progress-line__separator {
+    text-align: center;
+    display: inline-block;
+    height: 30px;
+    position: relative;
+  }
+
+  .progress-line__separator-4 {
+    width: 25%;
+  }
+
+  .matching-vote-content__question {
+    position: absolute;
+    top: 140px;
+  }
+
+  /* .matching-vote-content__answers */
+    .matching-vote-content__answers {
+      position: absolute;
+      top: 200px;
+    }
+
+    .matching-vote-content__answers__table {
+      width: 100%;
+    }
+
+    .matching-vote-content__answers__table th {
+      font-weight: normal;
+    }
+    
+    .matching-vote-content__answers__table tr {
+      height: 40px;
+    }

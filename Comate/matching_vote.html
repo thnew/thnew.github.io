@@ -1,1 +1,197 @@
-Matching
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>comate.me</title>
+
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/matching-vote.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="header navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="fa fa-bars"></span>
+          </button>
+
+          <a class="navar-brand" href="#">
+            <img src="img/brand.png" alt="comate.me" />
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="index.html">
+                Home
+              </a>
+            </li>
+
+            <li class="active">
+              <a href="matching_overview.html">
+                Matching
+              </a>
+            </li>
+
+            <li>
+              <a href="#">
+                Deine Mitbewohner
+              </a>
+            </li>
+
+            <li>
+              <a href="profile_self.html">
+                Profil
+              </a>
+            </li>
+
+            <li>
+              <img class="header_profile-img img-circle" src="img/profile-dummy.png" />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="content">
+
+      <!-- CONTENT -->
+        
+        <div class="image-stripe">
+        	<img class="image-stripe__img" src="img/matching/kitchen.png" />
+        	<div class="image-stripe__label">
+        		Küche
+        	</div>
+        </div>
+
+        <br />
+
+        <div class="matching-vote-content">
+		    <div class="col-sm-10 col-sm-offset-1">
+		        <div class="text-center-absolute">
+			        Beantworte die Frage oder überspringe sie.
+			    </div>
+
+			    <button class="btn btn-default pull-left">
+			    	<div class="btn__back"></div>
+
+			    	zurück zur Übersicht
+			    </button>
+		    </div>
+
+		    <div class="progress-line">
+		    	<div class="col-sm-10 col-sm-offset-1">
+		    		<div class="progress-line__separator progress-line__separator-completed progress-line__separator-4">
+				    	<div class="progress-line__step">
+				    		<div class="progress-line__step_number">
+				    			1
+				    		</div>
+				    	</div>
+
+				    	<div class="progress-line progress-line-finished"></div>
+				    </div>
+		    		<div class="progress-line__separator progress-line__separator-completed progress-line__separator-4">
+				    	<div class="progress-line__step">
+				    		<div class="progress-line__step_number">
+				    			2
+				    		</div>
+				    	</div>
+
+				    	<div class="progress-line progress-line-finished"></div>
+				    </div>
+		    		<div class="progress-line__separator progress-line__separator-4">
+				    	<div class="progress-line__step">
+				    		<div class="progress-line__step_number">
+				    			3
+				    		</div>
+				    	</div>
+
+				    	<div class="progress-line progress-line-finished"></div>
+				    </div>
+		    		<div class="progress-line__separator progress-line__separator-4">
+				    	<div class="progress-line__step">
+				    		<div class="progress-line__step_number">
+				    			4
+				    		</div>
+				    	</div>
+
+				    	<div class="progress-line progress-line-finished"></div>
+				    </div>
+			    </div>
+		    </div>
+
+
+		    <div class="col-sm-10 col-sm-offset-1 matching-vote-content__question">
+		        <div class="text-center-absolute">
+		        	Sauberkeit in der Küche…
+		        </div>
+
+			    <button class="btn btn-default pull-right">
+			    	<div class="btn__next"></div>
+
+			    	überspringen
+			    </button>
+	       	</div>
+
+		    <div class="col-sm-10 col-sm-offset-1 matching-vote-content__answers">
+		    	<table class="matching-vote-content__answers__table">
+		    		<thead>
+		    			<th></th>
+		    			<th class="text-center">ICH</th>
+		    			<th class="text-center">MITBEWOHNER/IN</th>
+		    			<th class="text-center">Wichtigkeit der Frage:</th>
+		    		</thead>
+		    		<tr>
+		    			<td>
+		    				Alles wird nach Benutzung abgewaschen.
+		    			</td>
+		    			<td class="text-center">
+		    				<input type="checkbox">
+		    			</td>
+		    			<td class="text-center">
+		    				<input type="checkbox">
+		    			</td>
+		    			<td rowspan="100" class="text-center">
+		    				<button class="btn btn-circle">wenig</button>
+		    				<button class="btn btn-circle">etwas</button>
+		    				<button class="btn btn-circle btn-circle-active">sehr</button>
+		    			</td>
+		    		</tr>
+		    		<tr>
+		    			<td>
+		    				Geschirr in der Spüle über Nacht ok, aber morgens ist das weg!
+		    			</td>
+		    			<td class="text-center">
+		    				<input type="checkbox">
+		    			</td>
+		    			<td class="text-center">
+		    				<input type="checkbox">
+		    			</td>
+		    		</tr>
+		    		<tr>
+		    			<td>
+		    				Benutze Sachen können schon mal ein paar Tage liegen.
+		    			</td>
+		    			<td class="text-center">
+		    				<input type="checkbox">
+		    			</td>
+		    			<td class="text-center">
+		    				<input type="checkbox">
+		    			</td>
+		    		</tr>
+		    	</table>
+		    </div>
+	    </div>
+
+      <!-- /CONTENT -->
+    </div>
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  </body>
+</html>

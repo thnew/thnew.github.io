@@ -39,6 +39,13 @@ h5 {
   font-weight: normal;
 }
 
+.text-center-absolute {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  text-align: center;
+}
+
 .btn {
   border-radius: 0px !important;
   background: transparent;
@@ -48,6 +55,74 @@ h5 {
 
 .btn-primary {
   background: #66C9B7 !important;
+}
+
+.btn-default {
+  position: relative;
+  border: 0px;
+  color: #fff;
+  background: #7AA6BD !important;
+}
+
+.btn-default:hover {
+  color: #fff;
+  background: #96CCE8 !important;
+}
+
+.btn__back {
+  position: absolute;
+  top: 0px;
+  left: -20px;
+  width: 0;
+  height: 0;
+  border-right: 16px solid #000;
+  border-top: 16px solid transparent;
+  border-bottom: 16px solid transparent;
+}
+
+.btn-default .btn__back {
+  border-right-color: #7AA6BD;
+}
+
+.btn-default:hover .btn__back {
+  border-right-color: #96CCE8;
+}
+
+.btn__next {
+  position: absolute;
+  top: 0px;
+  right: -20px;
+  width: 0;
+  height: 0;
+  border-left: 16px solid #000;
+  border-bottom: 16px solid transparent;
+  border-top: 16px solid transparent;
+}
+
+.btn-default .btn__next {
+  border-left-color: #7AA6BD;
+}
+
+.btn-default:hover .btn__next {
+  border-left-color: #96CCE8;
+}
+
+.btn-circle {
+  border-radius: 50% !important;
+  border-width: 3px;
+  border-color: #7AA6BD;
+  width: 70px;
+  height:70px;
+}
+
+.btn-circle:hover {
+  border-color: #96CCE8;
+  background-color: #96CCE8 !important;
+}
+
+.btn-circle.btn-circle-active {
+  background-color: #7AA6BD;
+  color: #fff;
 }
 
 .btn-facebook {
