@@ -12,3 +12,8 @@
   width: 530px;
   margin: 0px auto;
 }
+
+.profile-self__informations dt {
+  text-align: left;
+  font-weight: normal;
+}

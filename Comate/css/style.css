@@ -10,19 +10,34 @@ body {
 }
 
 textarea {
-  border: 1px solid #8B8989;
+  border: 1px solid #9D9B9C;
+  border-color: #9D9B9C !important;
 }
 
 h1, h2, h3 {
   color: #7AA6BD;
 }
 
+h2 {
+  font-size: 250%;
+  margin-bottom: 0px;
+}
+
 h3 {
+  font-size: 150%;
   font-weight: lighter;
+}
+
+h4 {
+  font-size: 125%;
+  font-weight: normal;
 }
 
 .btn {
   border-radius: 0px !important;
+  background: transparent;
+  border: 1px solid #9D9B9C;
+
 }
 
 .btn-primary {
