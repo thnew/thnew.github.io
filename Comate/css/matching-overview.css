@@ -20,10 +20,13 @@
 }
 
 .matching-overview__item-wrapper.matching-overview__item-wrapper-half-finished .matching-overview__item__overlay {
-  border-left: 150px solid transparent;
-  border-right: 0px solid transparent;
-  border-bottom: 150px solid rgba(0,0,0,0.5);
-  background: transparent;
+  position: absolute;
+  top: -100%;
+  bottom: -100%;
+  left: 50%;
+  right: 0px;
+  transform: rotate(45deg);
+  transform-origin: left;
 }
 
 .matching-overview__item-wrapper.matching-overview__item-wrapper-half-finished .matching-overview__item__overlay-half {
@@ -32,16 +35,11 @@
 
 .matching-overview__item__overlay-half {
   display: none;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 0px;
-  height: 0px;
-  border-left: 0px solid transparent !important;
-  border-right: 150px solid transparent !important;
-  border-top: 150px solid rgba(122,166,189,0.7);
-  border-bottom: 0px;
-  background: transparent;
+  left: 0px !important;
+  right: 50% !important;
+  transform-origin: right !important;
+  
+  background: rgba(122,166,189,0.7) !important;
 }
 
 .matching-overview__item-wrapper.matching-overview__item-wrapper-finished .matching-overview__item__overlay {
