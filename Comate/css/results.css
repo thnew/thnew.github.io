@@ -1,0 +1,45 @@
+.match__title {
+  color: #7AA6BD;
+  font-size: 150%;
+  text-align: center;
+}
+
+.match__img {
+  position: relative;
+  margin: 0px 15px 20px;
+}
+
+.match__img img {
+  position: relative;
+  border-radius: 50%;
+  width: 100%;
+  z-index: 50;
+}
+
+.match__img__background-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  top: -15px;
+  bottom: -15px;
+  left: -15px;
+  right: -15px;
+  z-index: 49;
+}
+
+.match__percent {
+  text-align: center;
+  color: #80A9C0;
+  font-size: 300%;
+  margin-bottom: 30px;
+}
+
+.match-filters {
+  background-color: #A7DAD1;
+  border: 1px solid #BCBDBE;
+}
+
+.match-filters__title {
+  font-size: 125%;
+  text-transform: uppercase;
+}
