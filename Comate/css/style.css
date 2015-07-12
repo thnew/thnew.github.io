@@ -365,3 +365,14 @@ h5 {
       left: 0px;
     }
   }
+
+/* .side-panel */
+  .side-panel {
+    background-color: #A7DAD1;
+    border: 1px solid #BCBDBE;
+  }
+
+  .side-panel__title {
+    font-size: 125%;
+    text-transform: uppercase;
+  }

@@ -33,13 +33,3 @@
   font-size: 300%;
   margin-bottom: 30px;
 }
-
-.match-filters {
-  background-color: #A7DAD1;
-  border: 1px solid #BCBDBE;
-}
-
-.match-filters__title {
-  font-size: 125%;
-  text-transform: uppercase;
-}
