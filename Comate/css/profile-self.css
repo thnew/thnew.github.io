@@ -13,3 +13,11 @@
   text-align: left;
   font-weight: normal;
 }
+
+
+@media (max-width: 768px) {
+  .profile-self__content-wrapper {
+    width: auto;
+    margin: 0px 15px 0px;
+  }
+}
