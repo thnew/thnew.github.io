@@ -30,7 +30,7 @@ input[type="checkbox"]:checked + label span {
     background-image: url(../img/checkbox/checked.png);
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
   color: #7AA6BD;
 }
 
@@ -46,11 +46,16 @@ h3 {
 }
 
 h4 {
+  font-size: 250%;
+  font-weight: lighter;
+}
+
+h5 {
   font-size: 150%;
   font-weight: normal;
 }
 
-h5 {
+h6 {
   font-size: 125%;
   font-weight: normal;
 }
@@ -375,4 +380,42 @@ h5 {
   .side-panel__title {
     font-size: 125%;
     text-transform: uppercase;
+  }
+
+/* .match */
+  .match__title {
+    color: #7AA6BD;
+    font-size: 150%;
+    text-align: center;
+  }
+
+  .match__img {
+    display: block;
+    position: relative;
+    margin: 0px 15px 20px;
+  }
+
+  .match__img img {
+    position: relative;
+    border-radius: 50%;
+    width: 100%;
+    z-index: 50;
+  }
+
+  .match__img__background-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    top: -15px;
+    bottom: -15px;
+    left: -15px;
+    right: -15px;
+    z-index: 49;
+  }
+
+  .match__percent {
+    text-align: center;
+    color: #80A9C0;
+    font-size: 300%;
+    margin-bottom: 30px;
   }
