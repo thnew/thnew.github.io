@@ -5,6 +5,7 @@
 }
 
 .match__img {
+  display: block;
   position: relative;
   margin: 0px 15px 20px;
 }
