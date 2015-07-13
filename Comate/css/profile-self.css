@@ -9,11 +9,6 @@
   margin: 0px auto;
 }
 
-.profile-self__informations dt {
-  text-align: left;
-  font-weight: normal;
-}
-
 
 @media (max-width: 768px) {
   .profile-self__content-wrapper {

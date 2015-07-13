@@ -25,34 +25,32 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active">
-              <a href="#">
-                Home <span class="sr-only">(current)</span>
+            <li>
+              <a href="index.html">
+                Home
               </a>
             </li>
 
             <li>
-              <a href="#">
+              <a href="matching_overview.html">
                 Matching
               </a>
             </li>
 
-            <li>
+            <li class="active">
               <a href="results.html">
                 Deine Mitbewohner
               </a>
             </li>
 
             <li>
-              <a href="#">
+              <a href="profile_self.html">
                 Profil
               </a>
             </li>
 
             <li>
-              <a href="#">
-                Login
-              </a>
+              <img class="header_profile-img img-circle" src="img/people/marina.png" />
             </li>
           </ul>
         </div>
@@ -62,45 +60,107 @@
     <div class="content">
 
       <!-- CONTENT -->
-        <div class="block-image-background">
-          <img class="block-image-background__image" src="img/landing-img.png" />
 
-          <div class="row-fluid">
-          <div class="block-image-background__content col-xs-12 col-sm-10 col-sm-offset-1">
-            <div class="block-image-background__title">
-              Gute Mitbewohner, einfaches Leben!<br />
-              Comate hilft dir deinen perfekten Mitbewohner zu finden.
+        <div class="matching-overview col-xs-12 col-sm-10 col-xs-offset-0 col-sm-offset-1">
+            <h4 class="text-center">
+              Oli's Profil
+            </h4>
+
+            <br />
+            <br />
+
+            <div class="col-xs-12 col-sm-3 text-center">
+              <div class="match__img">
+                <div class="match__img__background-circle match__img__background-circle-blue" data-percent="83"></div>
+                <img src="img/people/oliver.png" />
+              </div>
+              <div class="match__percent">
+                83%
+              </div>
+
+              <button class="btn btn-lg">Detailmatching</button>
             </div>
+            
+            <div class="col-xs-12 col-sm-6">
+              Profil:
+              <br />
+              <br />
 
-             <form class="block-image-background__form">
-              <div class="block-image-background__input-wrapper">
-                <input type="text" name="user" class="form-control block-image-background__input" placeholder="E-Mail">
-                <input type="password" name="pass" class="form-control block-image-background__input" placeholder="Passwort">
-                <input type="submit" name="login" class="form-control btn-primary form-control block-image-background__btn" value="Login">
+              <dl class="dl-horizontal profile-self__informations">
+                <dt>Alter</dt>
+                <dd>32</dd>
+
+                <dt>WG-Erfahrung</dt>
+                <dd>10 Jahre</dd>
+
+                <dt>Mitbewohneranzahl</dt>
+                <dd>12</dd>
+
+                <dt>Aktueller Wohnort</dt>
+                <dd>Hamburg</dd>
+
+                <br />
+
+                <dt>Über Oli</dt>
+                <dd>reiselustig, Freunde treffen, Startups</dd>
 
                 <br />
                 
-                <button name="login" class="form-control btn btn-facebook form-control block-image-background__btn">
-                  Einloggen mit Facebook
-                </button>
+                <dt>Interessen</dt>
+                <dd></dd>
 
-                <aside class="block-image-background__btn-label-left">
-                  <span class="block-image-background__btn-label-left__text">
-                    oder
-                  </span>
-                </aside>
+                <br />
+                
+                <dt>Gemeinsame Freunde</dt>
+                <dd></dd>
+
+                <br />
+                
+                <dt>Gemeinsame Interessen</dt>
+                <dd></dd>
+
+                <br />
+
+                <dt>Kontaktiere Oli</dt>
+                <dd>
+                  <button class="btn btn-lg btn-default">
+                    <i class="fa fa-envelope-o"></i>
+                    comail
+                  </button>
+                </dd>
+              </dl>
+            </div>
+
+            <div class="col-xs-12 col-sm-3 side-panel">
+              <br />
+
+              <div class="side-panel__title">
+                  Dein Comate:
               </div>
-            </form>
-          </div>
-          </div>
-        </div>
 
-        <!-- Here is space for more content :) -->
+              <br />
+              <br />
+
+              <i class="fa fa-envelope-o"></i> comails
+              <br />
+
+              <i class="fa fa-cog"></i> Profileinstellungen
+              <br />
+
+              <i class="fa fa-file-o"></i> Matching-Archiv
+
+              <br />
+              <br />
+              <br />
+            </div>
+        </div>
 
       <!-- /CONTENT -->
     </div>
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="js/transformImagePercentageToCircle.js"></script>
   </body>
 </html>

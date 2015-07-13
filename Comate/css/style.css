@@ -142,6 +142,11 @@ h6 {
   font-family: FontAwesome;
 }
 
+dt {
+  text-align: left !important;
+  font-weight: normal;
+}
+
 /*.radio-circle*/
   input[type="radio"].radio-circle {
     display: none;
