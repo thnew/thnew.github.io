@@ -147,6 +147,12 @@ dt {
   font-weight: normal;
 }
 
+@media (max-width: 768px) {
+  .pull-down-on-small {
+    margin-top: 35px;
+  }
+}
+
 /*.radio-circle*/
   input[type="radio"].radio-circle {
     display: none;
@@ -378,8 +384,13 @@ dt {
 
 /* .side-panel */
   .side-panel {
-    background-color: #A7DAD1;
-    border: 1px solid #BCBDBE;
+    background: -webkit-linear-gradient(top, #A7DAD1, #8BCABB); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom, #A7DAD1, #8BCABB); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom, #A7DAD1, #8BCABB); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom, #A7DAD1 , #8BCABB); /* Standard syntax */
+
+    border: 1px solid #818284;
+
   }
 
   .side-panel__title {
