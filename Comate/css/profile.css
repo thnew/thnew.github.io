@@ -1,0 +1,14 @@
+.profile-header {
+	position: relative;
+	height: 70px;
+}
+
+.profile-header__back-btn {
+	position: absolute;
+	top: 50%;
+	margin-top: -16px;
+}
+
+.profile__icon-list img {
+	height: 50px;
+}

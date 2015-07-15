@@ -8,6 +8,8 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    
+    <link href="css/profile.css" rel="stylesheet">
   </head>
   <body>
     <nav class="header navbar navbar-default">
@@ -62,15 +64,17 @@
       <!-- CONTENT -->
 
         <div class="matching-overview col-xs-12 col-sm-10 col-xs-offset-0 col-sm-offset-1">
-            <button class="btn btn-default pull-left">
-              <div class="btn__back"></div>
-              
-              zurück zur Übersicht
-            </button>
+            <div class="profile-header">
+              <h4 class="text-center-absolute pull-down-on-small">
+                Oliver's Profil
+              </h4>
 
-            <h4 class="text-center-absolute pull-down-on-small">
-              Oliver's Profil
-            </h4>
+              <a href="results.html" class="profile-header__back-btn btn btn-default pull-left">
+                <div class="btn__back"></div>
+                
+                zurück zur Übersicht
+              </a>
+            </div>
 
             <br />
             <br />
@@ -107,21 +111,50 @@
                 <br />
 
                 <dt>Über Oliver</dt>
-                <dd>reiselustig, Freunde treffen, Startups</dd>
+                <dd>
+                  <div class="profile__icon-list">
+                    <img src="img/interests/music.png" />
+                    <img src="img/interests/non-smoker.png" />
+                    <img src="img/interests/food.png" />
+                    <img src="img/interests/sports.png" />
+                    <img src="img/interests/animals.png" />
+                  </div>
+                  <br />
+                  reiselustig, Freunde treffen, Startups
+                </dd>
 
+                <br />
                 <br />
                 
                 <dt>Gemeinsame Freunde</dt>
-                <dd></dd>
+                <dd>
+                  <div class="profile__icon-list">
+                    <img src="img/people-icons/1.png" />
+                    <img src="img/people-icons/2.png" />
+                    <img src="img/people-icons/3.png" />
+                    <img src="img/people-icons/4.png" />
+                    <img src="img/people-icons/5.png" />
+                  </div>
+                </dd>
 
+                <br />
                 <br />
                 
                 <dt>Gemeinsame Interessen</dt>
-                <dd></dd>
+                <dd>
+                  <div class="profile__icon-list">
+                    <img src="img/interests-pages/1.png" />
+                    <img src="img/interests-pages/2.png" />
+                    <img src="img/interests-pages/3.png" />
+                    <img src="img/interests-pages/4.png" />
+                    <img src="img/interests-pages/5.png" />
+                  </div>
+                </dd>
 
                 <br />
+                <br />
 
-                <dt>Kontaktiere Oli</dt>
+                <dt>Kontaktiere Oliver</dt>
                 <dd>
                   <button class="btn btn-lg btn-default">
                     <i class="fa fa-envelope-o"></i>
@@ -141,13 +174,22 @@
               <br />
               <br />
 
-              <i class="fa fa-envelope-o"></i> comails
-              <br />
-
-              <i class="fa fa-cog"></i> Profileinstellungen
-              <br />
-
-              <i class="fa fa-file-o"></i> Matching-Archiv
+              <ul class="fa-ul side-panel__navigation">
+                <li>
+                  <a href="#">
+                    <i class="fa-li fa fa-lg fa-envelope-o"></i>comails</li>
+                  </a>
+                <li>
+                  <a href="#">
+                    <i class="fa-li fa fa-lg fa-cog"></i>Profileinstellungen
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fa-li fa fa-lg fa-file-o"></i>Matching-Archiv
+                  </a>
+                </li>
+              </ul>
 
               <br />
               <br />

@@ -260,6 +260,7 @@ dt {
   .header {
     padding: 20px 0px 0px 0px;
     text-transform: uppercase;
+    font-weight: bold;
   }
 
   .header .navar-brand img {
@@ -396,6 +397,18 @@ dt {
   .side-panel__title {
     font-size: 125%;
     text-transform: uppercase;
+  }
+
+  .side-panel__navigation li {
+    margin-bottom: 20px;
+  }
+
+  .side-panel__navigation i {
+    color: #fff;
+  }
+
+  .side-panel__navigation a {
+    color: #000;
   }
 
 /* .match */
