@@ -1,6 +1,7 @@
 .profile-header {
 	position: relative;
 	height: 70px;
+	padding: 0px 20px 0px;
 }
 
 .profile-header__back-btn {

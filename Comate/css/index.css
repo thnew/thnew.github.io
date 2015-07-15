@@ -1,76 +1,9 @@
-body {
-  color: #3A3637;
-  font-size: 16px;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-}
-
-input, input:focus, input:active {
-  border-radius: 0px !important;
-  outline: 0px !important;
-}
-
-.btn {
-  border-radius: 0px !important;
-}
-
-.form-control {
-  border: 0px;
-  box-shadow: none;
-}
-
-.btn-primary {
-  background: #66C9B7 !important;
-}
-
-.btn-facebook {
-  background: #48629B;
-  color: #fff !important;
-}
-
-.btn-facebook:before {
-  content: "\f09a";
-  font-family: FontAwesome;
-}
-
-.navbar-default {
-  background: transparent;
-  border: 0px;
-}
-
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover {
-  color: #7AA6BD;
-  background: transparent;
-}
-
-/* .header */
-  .header {
-    padding: 20px 0px 0px 0px;
-    text-transform: uppercase;
-  }
-
-  .header .navar-brand img {
-    height: 35px;
-    margin-top: 5px;
-  }
-
-  .header .navbar-toggle {
-    margin-top: 0px;
-  }
-
-  .header_profile-img {
-    height: 45px;
-    margin: 0px 10px;
-  }
-
-.content {
-  margin-top: 35px;
-}
 
 /* .block-image-background */
   .block-image-background {
     position: relative;
     overflow: hidden;
-    max-height: 600px;
+    max-height: 650px;
   }
 
   .block-image-background__image {
@@ -114,6 +47,8 @@ input, input:focus, input:active {
     margin-top: 15px;
     padding: 15px;
     height: auto;
+    border: 0px;
+    box-shadow: none;
   }
 
   .block-image-background__btn-label-left {
