@@ -151,6 +151,10 @@ dt {
   .pull-down-on-small {
     margin-top: 35px;
   }
+
+  .pull-down-on-small-md {
+    margin-top: 50px;
+  }
 }
 
 /*.radio-circle*/

@@ -8,7 +8,8 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/profile-self.css" rel="stylesheet">
+    
+    <link href="css/profile.css" rel="stylesheet">
   </head>
   <body>
     <nav class="header navbar navbar-default">
@@ -61,48 +62,87 @@
     <div class="content">
 
       <!-- CONTENT -->
-        
-        <div class="profile-self">
-          <img class="img-circle profile-self__profile-img" src="img/people/marina.png" />
 
-          <h2 class="text-center">
-            Hallo Marina!
-          </h2>
+        <div class="matching-overview col-xs-12 col-lg-10 col-xs-offset-0 col-lg-offset-1">
+            <div class="profile-header">
+              <h4 class="text-center-absolute pull-down-on-small">
+                Hallo Marina!
+              </h4>
+            </div>
 
-          <h5 class="text-center">
-            Optimiere dein Profil um deine Chancen zu erhöhen.
-          </h5>
-
-          <br />
-
-          <div class="profile-self__content-wrapper">
-            <h5>PROFIL:</h5>
+            <br />
             <br />
 
-            <dl class="dl-horizontal profile-self__informations">
-              <dt>Alter</dt>
-              <dd>28</dd>
-              
-              <dt>WG-Erfahrung</dt>
-              <dd>4 Jahre</dd>
-              
-              <dt>Mitbewohneranzahl</dt>
-              <dd>7</dd>
+            <div class="col-xs-12 col-sm-3 text-center">
+              <div class="match__img">
+                <img src="img/people/marina.png" />
+              </div>
+            </div>
+            
+            <div class="col-xs-12 col-sm-6">
+              <div class="text-right">
+                <button class="btn">ändern</button>
+              </div>
 
-              <dt>Aktueller Wohnort</dt>
-              <dd>
-                Hamburg
-                <button class="btn pull-right">ändern</button>
-              </dd>
+              <dl class="dl-horizontal">
+                <dt>Alter</dt>
+                <dd>28</dd>
 
+                <dt>WG-Erfahrung</dt>
+                <dd>4 Jahre</dd>
+
+                <dt>Mitbewohneranzahl</dt>
+                <dd>7</dd>
+
+                <dt>Aktueller Wohnort</dt>
+                <dd>Hamburg</dd>
+
+                <br />
+
+                <dt>Über mich</dt>
+                <dd>
+                  <div class="profile__icon-list">
+                    <img src="img/interests/non-smoker.png" />
+                    <img src="img/interests/food.png" />
+                    <img src="img/interests/sports.png" />
+                  </div>
+                  <br />
+                  Ich bin super aktiv, sei es Sport, Konzerte oder Veranstaltungen - ich mache eiegntlich immer irgend etwas. Ich bin in der WG sozial - habe häufig Leute zum Essen zu Besuch und freue mich auf eine/n Mitbewohner/in, der/die auch gerne mal bei einem Glas Wein in der Küche zusammensitzt.
+                </dd>
+              </dl>
+            </div>
+
+            <div class="col-xs-12 col-sm-3 side-panel">
               <br />
 
-              <dt>Über mich</dt>
-              <dd>
-                <textarea class="form-control" rows="7"></textarea>
-              </dd>
-            </dl>
-          </div>
+              <div class="side-panel__title">
+                  Dein Comate:
+              </div>
+
+              <br />
+              <br />
+
+              <ul class="fa-ul side-panel__navigation">
+                <li>
+                  <a href="#">
+                    <i class="fa-li fa fa-lg fa-envelope-o"></i>comails</li>
+                  </a>
+                <li>
+                  <a href="#">
+                    <i class="fa-li fa fa-lg fa-cog"></i>Profileinstellungen
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <i class="fa-li fa fa-lg fa-file-o"></i>Matching-Archiv
+                  </a>
+                </li>
+              </ul>
+
+              <br />
+              <br />
+              <br />
+            </div>
         </div>
 
       <!-- /CONTENT -->
@@ -110,5 +150,7 @@
 
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="js/transformImagePercentageToCircle.js"></script>
   </body>
 </html>
