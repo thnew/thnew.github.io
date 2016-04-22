@@ -1,0 +1,9 @@
+{
+    "name":			"insta-buddy",
+    "version":		"0.0.1",
+    "description":	"Insta Buddyy",
+    "dependencies": {
+        "express":			"4.4.4"
+    },
+    "author":		"thnew2@gmail.com"
+}
