@@ -295,54 +295,54 @@
 					var getMilliseconds = function() {
 						return Date.UTC(0,0,0,0,new Date().getMinutes(),new Date().getSeconds());
 					};
-					
-					var callback = function() {
-						alert("Found users:" + amountOfUsers);
-					};
-					
+
 					/*Scroll down as long as new followers appear or the wanted amount is reached*/
-					/*Amount of users that should be followed*/
-					var usersToLoad = 50;
-					
-					var amountOfUsers = getUsers().length;
-					if(amountOfUsers < usersToLoad)
-					{
-						var maxWaitingTime = 2000;
-						
-						var lastSuccessTime = getMilliseconds();
-						
-						var interval = window.setInterval(function(){
-							console.log("Check");
+					function loadUsers(usersToLoad, updateCallback, successCallback) {
+						var amountOfUsers = 0;
+						if(amountOfUsers < usersToLoad)
+						{
+							var maxWaitingTime = 2000;
 							
-							var timeSinceLastSuccess = getMilliseconds() - lastSuccessTime;
+							var lastSuccessTime = getMilliseconds();
 							
-							if(getUsers().length > amountOfUsers) {
-								var timeSinceLastSuccess = getMilliseconds();
-								amountOfUsers = getUsers().length;
+							/* Watch */
+							var interval = window.setInterval(function(){
+								console.log("Check");
 								
-								if(amountOfUsers >= usersToLoad) {
-									window.clearInterval(interval);
-									callback();
+								var timeSinceLastSuccess = getMilliseconds() - lastSuccessTime;
+								
+								if(getUsers().length > amountOfUsers) {
+									lastSuccessTime = getMilliseconds();
+									amountOfUsers = getUsers().length;
+
+									updateCallback(amountOfUsers);
+									
+									if(amountOfUsers >= usersToLoad) {
+										window.clearInterval(interval);
+										successCallback(amountOfUsers);
+										return;
+									}
+									
+									console.log("Too less users: " + amountOfUsers + ". Try to load more users.");
+									loadMoreUsers();
 									return;
 								}
 								
-								console.log("Too less users: " + amountOfUsers + ". Try to load more users.");
-								loadMoreUsers();
-								return;
-							}
-							
-							if(timeSinceLastSuccess > maxWaitingTime) {
-								window.clearInterval(interval);
-								callback();
-								return;
-							}
-						}, 50);
-						
-						loadMoreUsers();
-					}
-					
-					/*Follow buttons* /
-					//*/
+								if(timeSinceLastSuccess > maxWaitingTime) {
+									window.clearInterval(interval);
+									successCallback(amountOfUsers);
+									return;
+								}
+							}, 50);
+						}
+					};
+
+					loadUsers(Math.pow(2,32), function(usersLoaded) {
+						$("._q44m8 span").remove();
+						$("._q44m8").append($("<span>").text(usersLoaded + " users loaded."));
+					}, function(usersLoaded) {
+						alert("Found users:" + usersLoaded);
+					});
 				};
 				// TEMPORARY
 				
