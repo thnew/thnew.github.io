@@ -76,7 +76,7 @@ ScalePerformanceBarClass.prototype = {
 		styleElem.id = "PerfBookmarkletStyle";
 		
 		var style = "#PerfBar * { flex-direction: initial; }";
-		var style = "#PerfBar, #ToolsActiveBar { line-height: 20px !important; font-family: Arial !important; font-size: 14px !important; z-index: 1000000; color: #ECF0F1; position: fixed; top: 0px; left: 0px; width: 100%; background-color: #2B2B2B; box-shadow: 0px 0px 5px #000; }";
+		style += "#PerfBar, #ToolsActiveBar { line-height: 20px !important; font-family: Arial !important; font-size: 14px !important; z-index: 1000000; color: #ECF0F1; position: fixed; top: 0px; left: 0px; width: 100%; background-color: #2B2B2B; box-shadow: 0px 0px 5px #000; }";
 		style += "#PerfBar a, #ToolsActiveBar a { display: inline-block; cursor: pointer; text-decoration: none !important; color: #ECF0F1 !important; display: inline-block; padding: 5px; }";
 		style += "#PerfBar a:hover, #ToolsActiveBar a:hover { background-color: #16A085 !important; }";
 		style += "#PerfBar a.danger:hover, #ToolsActiveBar a.danger:hover { background-color: #C0392B !important; }";
