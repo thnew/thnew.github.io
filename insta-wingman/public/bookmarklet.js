@@ -833,8 +833,15 @@ else
 		scalePerformanceBar.addTool({
 			name:					"Follow Users",
 			file:					"followUsers.js",
-			requiresPerformanceApi:	true,
+			requiresPerformanceApi:	false,
 			className:				"FollowUsers"
+		});
+		
+		scalePerformanceBar.addTool({
+			name:					"Console",
+			file:					"instaConsole.js",
+			requiresPerformanceApi:	false,
+			className:				"InstaConsole"
 		});
 	}
 }

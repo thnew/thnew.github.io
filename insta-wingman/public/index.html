@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<title>
-			Scale-Perf
+			INSTA Wingman
 		</title>
 		
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -125,7 +125,7 @@
 				<br />
 				<br />
 				
-				<a href="https://github.com/SCALE-Team/scale-perf/" class="btn-primary">
+				<a href="https://github.com/thnew/insta-wingman/" class="btn-primary">
 					<i class="fa fa-github"></i> View on GitHub
 				</a>
 			</div>
@@ -251,7 +251,7 @@
 					{
 						scriptPath = (isLocal ?
 							"bookmarklet.js"
-							: "https://scale-team.github.io/scale-perf/bookmarklet.js");
+							: "https://thnew.github.io/insta-wingman/public/bookmarklet.js");
 					}
 					
 					var body = document.getElementsByTagName("body")[0];
@@ -782,14 +782,9 @@
 						};
 					}
 				};
-				
-				var scriptLoadFunction = function() {
-					/*scriptLoadFunctionConsole();*/
-					scriptLoadFunctionLoader();
-				};
 				// /TEMPORARY
 				
-				setJsLinks('javascript:(' + scriptLoadFunctionConsole+ ')();');
+				setJsLinks('javascript:(' + scriptLoadFunction + ')();');
 				
 				(function() {
 					/*Get GET-parameters*/ {
@@ -814,7 +809,7 @@
 					// If developer set, modify bookmarklet URL
 					if(_GET["developer"] != null)
 					{
-						setJsLinks('javascript:var isDevelopmentMode=true; ' + scriptLoadFunction + '; scriptLoadFunction("https://scale-team.github.io/scale-perf-dev/bookmarklet.js");');
+						setJsLinks('javascript:var isDevelopmentMode=true; ' + scriptLoadFunction + '; scriptLoadFunction("https://thnew.github.io/insta-wingman/public/bookmarklet.js");');
 						
 						document.querySelector("#DesktopLink").innerHTML += " DEV";
 						
