@@ -152,6 +152,7 @@ ScalePerformanceBarClass.prototype = {
 			/* Build the scaffold for the bar */ {
 				// Container for the tool links
 				menu.toolsMenu = document.createElement("div");
+				menu.toolsMenu.style["flexDirection"] = "initial !important";
 				menu.bar.appendChild(menu.toolsMenu);
 				
 				// Separator between tools and symbols in mobile view
