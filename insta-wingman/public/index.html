@@ -389,7 +389,7 @@
 								return;
 							}
 
-							var task = tasks.pop();
+							var task = tasks.splice(0, 1);
 
 							task.user.PerformAction(task.action, function() {
 								console.log(tasks.length + " tasks remaining.");
@@ -438,96 +438,97 @@
 							this.Url = "https://www.instagram.com/" + attr.Name;
 						};
 
-					  User.prototype = {
-						Name: null,
-						Url: null,
+						User.prototype = {
+							Name: null,
+							Url: null,
 
-						Posts: null,
-						Followers: null,
-						Follows: null,
+							Posts: null,
+							Followers: null,
+							Follows: null,
 
-						MostLikesOnFirstPage: null,
-						TotalLikesOnFirstPage: null,
+							MostLikesOnFirstPage: null,
+							TotalLikesOnFirstPage: null,
 
-						GetHeaderAttributes: function() {
-						  return [
-							"Name",
-							"Url",
-							"Posts",
-							"Followers",
-							"Follows",
-							"MostLikesOnFirstPage",
-							"TotalLikesOnFirstPage"
-						  ];
-						},
-						
-						PerformAction: function(action, callback) {
-							console.log("Perform action '" + action + "' on " + this.Url);
-							performAction(this.Url, action, callback);
-						},
+							GetHeaderAttributes: function() {
+								return [
+									"Name",
+									"Url",
+									"Posts",
+									"Followers",
+									"Follows",
+									"MostLikesOnFirstPage",
+									"TotalLikesOnFirstPage"
+								];
+							},
 
-						LoadInfo: function(callback) {
-						  var me = this;
+							PerformAction: function(action, callback) {
+								console.log("Perform action '" + action + "' on " + this.Url);
+								performAction(this.Url, action, callback);
+							},
 
-						  $.get(me.Url, function(resp) {
-							var sharedData = resp.split("window._sharedData =");
-							sharedData = sharedData.pop();
-							sharedData = sharedData.split(";<\/script>")[0];
-							sharedData = sharedData.trim();
+							LoadInfo: function(callback) {
+								var me = this;
 
-							try {
-							  sharedData = JSON.parse(sharedData);
+								$.get(me.Url, function(resp) {
+									var sharedData = resp.split("window._sharedData =");
+									sharedData = sharedData.pop();
+									sharedData = sharedData.split(";<\/script>")[0];
+									sharedData = sharedData.trim();
+
+									try {
+										sharedData = JSON.parse(sharedData);
+									}
+									catch(e) {
+										console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
+
+										callback({
+											success: false,
+											data: me
+										});
+									}
+
+									var user = sharedData.entry_data.ProfilePage[0].user;
+
+									console.log(sharedData);
+
+									resp = $(resp);
+
+									me.Posts = user.media.count;
+									me.Followers = user.followed_by.count;
+									me.Follows = user.follows.count;
+
+									var mostLikes = 0;
+									var totalLikes = 0;
+									for(var f in user.media.nodes) {
+										var media = user.media.nodes[f];
+										if(media.likes.count > mostLikes) {
+											mostLikes = media.likes.count;
+										}
+
+										totalLikes += media.likes.count;
+									}
+
+									me.MostLikesOnFirstPage = mostLikes;
+									me.TotalLikesOnFirstPage = totalLikes;
+
+									callback({
+										success: true,
+										data: me
+									});
+								})
+								.fail(function() {
+									callback({
+										success: false,
+										data: null
+									});
+								});
 							}
-							catch(e) {
-							  console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
-
-							  callback({
-								success: false,
-								data: me
-							  });
-							}
-
-							var user = sharedData.entry_data.ProfilePage[0].user;
-
-							console.log(sharedData);
-
-							resp = $(resp);
-
-							me.Posts = user.media.count;
-							me.Followers = user.followed_by.count;
-							me.Follows = user.follows.count;
-
-							var mostLikes = 0;
-							var totalLikes = 0;
-							for(var f in user.media.nodes) {
-							  var media = user.media.nodes[f];
-							  if(media.likes.count > mostLikes) {
-								mostLikes = media.likes.count;
-							  }
-
-							  totalLikes += media.likes.count;
-							}
-
-							me.MostLikesOnFirstPage = mostLikes;
-							me.TotalLikesOnFirstPage = totalLikes;
-
-							callback({
-							  success: true,
-							  data: me
-							});
-						  }).fail(function() {
-							callback({
-							  success: false,
-							  data: null
-							});
-						  });
-						}
-					  };
+						};
 					}
 				};
 				
 				// TEMPORARY
-				function scriptLoadFunction() {
+				function scriptLoadFunctionLoader() {
 					/* wrapper */
 					$("._n3cp9");
 					
@@ -553,8 +554,7 @@
 							var name = elem.text();
 							
 							users.push(new User({
-								Name: name,
-								Url: url
+								Name: name
 							}));
 						});
 						
@@ -562,6 +562,7 @@
 					};
 					
 					var loadMoreUsers = function() {
+						console.log("loadMoreUsers()");
 						scrollContainer.scrollTop(Math.pow(2,32));
 					};
 					
@@ -696,7 +697,7 @@
 								this[f] = attr[f];
 							}
 							
-							this.Url = "https://www.instagram.com" + attr.Name;
+							this.Url = "https://www.instagram.com/" + attr.Name;
 						};
 						
 						User.prototype = {
@@ -781,9 +782,14 @@
 						};
 					}
 				};
+				
+				var scriptLoadFunction = function() {
+					/*scriptLoadFunctionConsole();*/
+					scriptLoadFunctionLoader();
+				};
 				// /TEMPORARY
 				
-				setJsLinks('javascript:' + scriptLoadFunction + '; scriptLoadFunction();');
+				setJsLinks('javascript:(' + scriptLoadFunctionConsole+ ')();');
 				
 				(function() {
 					/*Get GET-parameters*/ {
