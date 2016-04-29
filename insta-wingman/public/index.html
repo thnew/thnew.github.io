@@ -271,8 +271,8 @@
 					body.appendChild(loadingElem).appendChild(jselem);
 				};
 				
-				function scriptLoadFunction() {
-					function performAction(url, action) {
+				function scriptLoadFunctionConsole() {
+					function performAction(url, action, callback) {
 						var iFrame = $("<iframe>")
 						.attr("Id", "InstaWindow")
 						.attr("src", url)
@@ -281,51 +281,253 @@
 						.height("100%")
 						.width("100%")
 						.load(function(){
-						  var iframe = $("#InstaWindow").contents();
-						  $("img", iframe).remove();
-						  
-						  switch(action) {
-							case "Follow":
-								$("._csba8[data-reactid='.0.1.0.0:0.1.0.2.0']").click();
-								break;
-							case "Unfollow":
-								$("._988x3[data-reactid='.0.1.0.0:0.1.0.2.0']").click();
-								break;
-						  }
+							window.setTimeout(function() {
+								var iframe = $("#InstaWindow");
+
+								try {
+									var iFrameContent = iframe.contents();
+
+									/*Remove images to make loading faster*/
+									$("img", iFrameContent).remove();
+
+									switch(action.toLowerCase()) {
+										case "follow":
+											var btn = $("._csba8[data-reactid='.0.1.0.0:0.1.0.2.0']", iFrameContent);
+											
+											if(btn.length == 0) {
+												alert("Unfollow button not found");
+											}
+											
+											btn.click();
+											break;
+										case "unfollow":
+											var btn = $("._988x3[data-reactid='.0.1.0.0:0.1.0.2.0']", iFrameContent);
+											
+											if(btn.length == 0) {
+												console.log("Unfollow button not found");
+											}
+											
+											$("._988x3[data-reactid='.0.1.0.0:0.1.0.2.0']", iframe.contents()).click();
+											break;
+										default:
+											console.log("Action " + action.toLowerCase() + " not found");
+									}
+								}
+								catch(e) {}
+
+								window.setTimeout(function() {
+									wrapper.remove();
+
+									callback();
+								}, 1000);
+							}, 1000);
 						});
 					  
-					  var overlay = $("<div>")
-						.css("position", "absolute")
-						.css("top", "0px")
-						.css("left", "0px")
-						.css("right", "0px")
-						.css("bottom", "0px")
-						.css("z-index", 11)
-						.css("text-align", "center")
-						.css("color", "rgba(0,0,0,0,8)")
-						.css("padding-top", "70px")
-						.css("font-family", "Arial")
-						.text(action.toLowerCase())
-						.css("background-color", "rgba(255,255,255,0.8)");
+						var overlay = $("<div>")
+							.css("position", "absolute")
+							.css("top", "0px")
+							.css("left", "0px")
+							.css("right", "0px")
+							.css("bottom", "0px")
+							.css("z-index", 11)
+							.css("text-align", "center")
+							.css("color", "rgba(0,0,0,0,8)")
+							.css("padding-top", "70px")
+							.css("font-family", "Arial")
+							.text(action.toLowerCase())
+							.css("background-color", "rgba(255,255,255,0.8)");
 						
-					  var wrapper = $("<div>")
-						.append(iFrame)
-						.append(overlay)
-						.width(150)
-						.height(150)
-						.css("position", "relative")
-						.css("display", "inline-block");
+						var wrapper = $("<div>")
+							.append(iFrame)
+							.append(overlay)
+							.css("position", "fixed")
+							.css("top", "0px")
+							.css("right", "0px")
+							.width(550)
+							.height(550);
 						
 						$("body").append(wrapper);
-					};
+					}
+					
+					function executeCommands() {
+						var textarea = $("#Commands");
+						var commands = textarea.val().split("\n");
+						
+						console.log(commands.length + " text commands found.");
+						
+						var actionsToBePerformed = [];
+						
+						for(var f in commands) {
+							var command = commands[f];
+							var parts = command.split(" ");
 
-					/*performAction("https://fiddle.jshell.net", "Unfollow");*/
-					
-					
+							var action = parts[0].toLowerCase();
+
+							switch(action) {
+								case "unfollow":
+									var username = parts.length > 1 ? parts[1] : null;
+									
+									if(username == null) {
+										alert("Command '" + command + "' not recognized!");
+										break;
+									}
+									
+									actionsToBePerformed.push({
+										user: new User({
+											Name: username
+										}),
+										action: action
+									});
+									break;
+								default:
+									alert("Command '" + command + "' not recognized!");
+							}
+						}
+
+						var executeStepByStep = function(tasks) {
+							if(tasks.length == 0) {
+								return;
+							}
+
+							var task = tasks.pop();
+
+							task.user.PerformAction(task.action, function() {
+								console.log(tasks.length + " tasks remaining.");
+								
+								/*Execute the remaining tasks*/
+								executeStepByStep(tasks);
+							});
+						};
+
+						console.log("Execute " + actionsToBePerformed.length + " tasks.");
+						
+						executeStepByStep(actionsToBePerformed);
+					}
+
+					var textarea = $("<textarea>")
+						.attr("Id", "Commands")
+						.css("height", "100px")
+						.width("100%")
+						.keyup(function(e){
+							if(e.keyCode == 13 && e.ctrlKey) {
+								executeCommands();
+							}
+						});
+					  
+					var btn = $("<button>")
+						.text("Execute")
+					  .click(executeCommands);
+					  
+					$("<div>")
+						.css("position", "fixed")
+						.css("top", "0px")
+						.css("left", "0px")
+						.height(130)
+						.width(300)
+						.append(textarea)
+						.append(btn)
+						.appendTo("body");
+					  
+					  
+					/* Class User */ {
+						function User(attr) {
+							for(var f in attr) {
+								this[f] = attr[f];
+							}
+
+							this.Url = "https://www.instagram.com/" + attr.Name;
+						};
+
+					  User.prototype = {
+						Name: null,
+						Url: null,
+
+						Posts: null,
+						Followers: null,
+						Follows: null,
+
+						MostLikesOnFirstPage: null,
+						TotalLikesOnFirstPage: null,
+
+						GetHeaderAttributes: function() {
+						  return [
+							"Name",
+							"Url",
+							"Posts",
+							"Followers",
+							"Follows",
+							"MostLikesOnFirstPage",
+							"TotalLikesOnFirstPage"
+						  ];
+						},
+						
+						PerformAction: function(action, callback) {
+							console.log("Perform action '" + action + "' on " + this.Url);
+							performAction(this.Url, action, callback);
+						},
+
+						LoadInfo: function(callback) {
+						  var me = this;
+
+						  $.get(me.Url, function(resp) {
+							var sharedData = resp.split("window._sharedData =");
+							sharedData = sharedData.pop();
+							sharedData = sharedData.split(";<\/script>")[0];
+							sharedData = sharedData.trim();
+
+							try {
+							  sharedData = JSON.parse(sharedData);
+							}
+							catch(e) {
+							  console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
+
+							  callback({
+								success: false,
+								data: me
+							  });
+							}
+
+							var user = sharedData.entry_data.ProfilePage[0].user;
+
+							console.log(sharedData);
+
+							resp = $(resp);
+
+							me.Posts = user.media.count;
+							me.Followers = user.followed_by.count;
+							me.Follows = user.follows.count;
+
+							var mostLikes = 0;
+							var totalLikes = 0;
+							for(var f in user.media.nodes) {
+							  var media = user.media.nodes[f];
+							  if(media.likes.count > mostLikes) {
+								mostLikes = media.likes.count;
+							  }
+
+							  totalLikes += media.likes.count;
+							}
+
+							me.MostLikesOnFirstPage = mostLikes;
+							me.TotalLikesOnFirstPage = totalLikes;
+
+							callback({
+							  success: true,
+							  data: me
+							});
+						  }).fail(function() {
+							callback({
+							  success: false,
+							  data: null
+							});
+						  });
+						}
+					  };
+					}
 				};
 				
 				// TEMPORARY
-				function scriptLoadFunctionX() {
+				function scriptLoadFunction() {
 					/* wrapper */
 					$("._n3cp9");
 					
@@ -348,7 +550,6 @@
 						/* Go through the list and grab all the user names */
 						$("._4zhc5", userListElem).each(function(index, value){
 							var elem = $(value);
-							var url = "https://www.instagram.com" + elem.attr("href");
 							var name = elem.text();
 							
 							users.push(new User({
@@ -494,6 +695,8 @@
 							for(var f in attr) {
 								this[f] = attr[f];
 							}
+							
+							this.Url = "https://www.instagram.com" + attr.Name;
 						};
 						
 						User.prototype = {
