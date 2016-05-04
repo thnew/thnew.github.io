@@ -1,0 +1,9 @@
+{
+    "name":			"insta-buddy",
+    "version":		"0.0.1",
+    "description":	"Insta Buddyy",
+    "dependencies": {
+        "webdriverio":			"3.4.0"
+    },
+    "author":		"thnew2@gmail.com"
+}
