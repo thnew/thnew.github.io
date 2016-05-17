@@ -272,57 +272,62 @@
 				};
 				
 				function scriptLoadFunctionConsole() {
-					function performAction(url, action, callback) {
-						var iFrame = $("<iframe>")
-						.attr("Id", "InstaWindow")
-						.attr("src", url)
-						.css("z-index", 10)
-						.css("border", "0px")
-						.height("100%")
-						.width("100%")
-						.load(function(){
-							window.setTimeout(function() {
-								var iframe = $("#InstaWindow");
+					$("body").children().remove();
+					
+					/* Perform an console action */
+					function performAction(value, action, callback) {
+						if(["follow", "unfollow"].indexOf(action.toLowerCase()) != -1) {
+							var iFrame = $("<iframe>")
+								.attr("Id", "InstaWindow")
+								.attr("src", value)
+								.css("z-index", 10)
+								.css("border", "0px")
+								.height("100%")
+								.width("100%")
+								.load(function(){
+									window.setTimeout(function() {
+										var iframe = $("#InstaWindow");
 
-								try {
-									var iFrameContent = iframe.contents();
+										try {
+											var iFrameContent = iframe.contents();
 
-									/*Remove images to make loading faster*/
-									$("img", iFrameContent).remove();
+											/*Remove images to make loading faster*/
+											$("img", iFrameContent).remove();
 
-									switch(action.toLowerCase()) {
-										case "follow":
-											var btn = $("._csba8[data-reactid='.0.1.0.0:0.1.0.2.0']", iFrameContent);
-											
-											if(btn.length == 0) {
-												alert("Unfollow button not found");
+											switch(action.toLowerCase()) {
+												case "follow":
+													var btn = $("._2hpcs[data-reactid='.0.1.0.0:0.1.0.2.0']", iFrameContent);
+													
+													if(btn.length == 0) {
+														alert("Unfollow button not found");
+													}
+													
+													btn.click();
+													break;
+												case "unfollow":
+													var btn = $("._r4e4p[data-reactid='.0.1.0.0:0.1.0.2.0']", iFrameContent);
+													
+													if(btn.length == 0) {
+														console.log("Unfollow button not found");
+													}
+													
+													btn.click();
+													break;
+												default:
+													console.log("Action " + action.toLowerCase() + " not found");
 											}
-											
-											btn.click();
-											break;
-										case "unfollow":
-											var btn = $("._988x3[data-reactid='.0.1.0.0:0.1.0.2.0']", iFrameContent);
-											
-											if(btn.length == 0) {
-												console.log("Unfollow button not found");
-											}
-											
-											$("._988x3[data-reactid='.0.1.0.0:0.1.0.2.0']", iframe.contents()).click();
-											break;
-										default:
-											console.log("Action " + action.toLowerCase() + " not found");
-									}
-								}
-								catch(e) {}
+										}
+										catch(e) {}
 
-								window.setTimeout(function() {
-									wrapper.remove();
+										window.setTimeout(function() {
+											wrapper.remove();
 
-									callback();
-								}, 1000);
-							}, 1000);
-						});
-					  
+											callback();
+										}, 1000);
+									}, 1000);
+								});
+						}
+						
 						var overlay = $("<div>")
 							.css("position", "absolute")
 							.css("top", "0px")
@@ -347,6 +352,26 @@
 							.height(550);
 						
 						$("body").append(wrapper);
+						
+						/* If the console should wait */
+						if(action.toLowerCase() == "wait") {
+							var startTime = new Date().getTime();
+							var waitInterval = window.setInterval(function() {
+								var executeTime = new Date().getTime() - startTime;
+								var remaining = value - executeTime;
+								
+								if(remaining < 0) {
+									window.clearInterval(waitInterval);
+									
+									wrapper.remove();
+
+									callback();
+								}
+								else {
+									overlay.text(action.toLowerCase() + " " + (Math.round(remaining / 1000)) + "s");
+								}
+							}, 100);
+						}
 					}
 					
 					function executeCommands() {
@@ -379,25 +404,51 @@
 										action: action
 									});
 									break;
+								case "wait":
+									var waittime = parts.length > 1 ? parts[1] : null;
+									
+									if(waittime == null) {
+										alert("Command '" + command + "' not recognized!");
+										break;
+									}
+									
+									actionsToBePerformed.push({
+										waittime: waittime,
+										action: action
+									});
+									break;
 								default:
 									alert("Command '" + command + "' not recognized!");
 							}
 						}
-
+						
 						var executeStepByStep = function(tasks) {
 							if(tasks.length == 0) {
 								return;
 							}
 
-							var task = tasks.pop();
-							/*var task = tasks.splice(0, 1);*/
-
-							task.user.PerformAction(task.action, function() {
-								console.log(tasks.length + " tasks remaining.");
-								
-								/*Execute the remaining tasks*/
-								executeStepByStep(tasks);
-							});
+							/*var task = tasks.pop();*/
+							/*Take first*/
+							var task = tasks[0];
+							/*Remove first*/
+							tasks.splice(0, 1);
+							
+							if(task.action.toLowerCase() == "wait") {
+								performAction(task.waittime, task.action, function() {
+									console.log(tasks.length + " tasks remaining.");
+									
+									/*Execute the remaining tasks*/
+									executeStepByStep(tasks);
+								});
+							}
+							else if(["follow", "unfollow"].indexOf(task.action.toLowerCase()) > 0) {
+								task.user.PerformAction(task.action, function() {
+									console.log(tasks.length + " tasks remaining.");
+									
+									/*Execute the remaining tasks*/
+									executeStepByStep(tasks);
+								});
+							}
 						};
 
 						console.log("Execute " + actionsToBePerformed.length + " tasks.");
@@ -864,7 +915,7 @@
 				};
 				// /TEMPORARY
 				
-				setJsLinks('javascript:(' + scriptLoadFunctionLoader + ')();');
+				setJsLinks('javascript:(' + scriptLoadFunctionConsole + ')();');
 				
 				(function() {
 					/*Get GET-parameters*/ {
