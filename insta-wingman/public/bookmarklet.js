@@ -63,7 +63,7 @@ ScalePerformanceBarClass.prototype = {
 		this.toolConfig.push(script);
 		
 		// hide the tool form the results
-		this.performanceApi.hideFileFromPerformanceApi("tools/" + script.file);
+		this.performanceApi.hideFileFromPerformanceApi("tools/public/" + script.file);
 		
 		this.menu.addMenuLink(script);
 	},
@@ -312,15 +312,15 @@ ScalePerformanceBarClass.prototype = {
 			// Decide whether to load local, dev or public script
 			if(superClass.helpers.isLocal())
 			{
-				jselem.src = "/tools/" + script.file;
+				jselem.src = "/tools/public/" + script.file;
 			}
 			else if(superClass.helpers.isDev())
 			{
-				jselem.src = "localhost:8080/tools/" + script.file;
+				jselem.src = "localhost:8080/tools/public/" + script.file;
 			}
 			else
 			{
-				jselem.src = "https://scale-team.github.io/scale-perf/tools/" + script.file;
+				jselem.src = "https://scale-team.github.io/scale-perf/tools/public/" + script.file;
 			}
 			
 			jselem.onload = function() {
