@@ -73,7 +73,7 @@ BookmarkletClass.prototype = {
 		var head = document.head || document.getElementsByTagName('head')[0];
 		
 		var styleElem = document.createElement("style");
-		styleElem.id = "PerfBookmarkletStyle";
+		styleElem.id = "InstaWingmanStyle";
 		
 		var style = "#InstaWingmanBar * { flex-direction: initial; }";
 		style += "#InstaWingmanBar, #ToolsActiveBar { line-height: 20px !important; font-family: Arial !important; font-size: 14px !important; z-index: 1000000; color: #ECF0F1; position: fixed; top: 0px; left: 0px; width: 100%; background-color: #2B2B2B; box-shadow: 0px 0px 5px #000; }";
