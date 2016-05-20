@@ -320,7 +320,7 @@ BookmarkletClass.prototype = {
 			}
 			else
 			{
-				jselem.src = "http://thnew.github.io/insta-wingman/public/tools/" + script.file;
+				jselem.src = "https://thnew.github.io/insta-wingman/public/tools/" + script.file;
 			}
 			
 			jselem.onload = function() {
