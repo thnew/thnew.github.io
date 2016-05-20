@@ -43,7 +43,7 @@ var InstaConsole = function(performanceApi, toolContainer, popup) {
 		*/
 		display.appendChild(execButton);
 		
-		document.getElementById("ScalePageContent").style.opacity = 0.1;
+		document.getElementById("InstaWingmanPageContent").style.opacity = 0.1;
 	
 	return {
 		/* This is the destructor. It should remove all the things you append to the screen. Implement it!
@@ -57,7 +57,7 @@ var InstaConsole = function(performanceApi, toolContainer, popup) {
 		- Visual styles you appended to elements on the website (like borders to highlight elements of the website)
 		*/
 		destructor: function() {
-			document.getElementById("ScalePageContent").style.opacity = 1;
+			document.getElementById("InstaWingmanPageContent").style.opacity = 1;
 		}
 	};
 };
