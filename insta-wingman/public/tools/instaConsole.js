@@ -1,4 +1,4 @@
-var FollowUsers = function(performanceApi, toolContainer, popup) {
+var InstaConsole = function(performanceApi, toolContainer, popup) {
 	/* Here in the constructor you initialize your whole class
 	and append your tools elements to the display */
 	
@@ -22,10 +22,28 @@ var FollowUsers = function(performanceApi, toolContainer, popup) {
 		
 		var display = document.createElement("div");
 		display.id = "InstaFollowUsers";
-		display.innerHTML = "Hello";
-		//display.style.cssText = "color:#fff;position:absolute;top:0;left:0;background-color:#000;padding:5;box-shadow:0 0 5px #000;";
-		
+		display.innerHTML = "Type in the commands to execute (Execute with Strg + Enter)";
+		display.style.padding = 10;
+		display.style.backgroundColor = "#7F8C8D";
+		display.style.color = "#ECF0F1";
 		this.toolContainer.appendChild(display);
+		
+		this.consoleTextarea = document.createElement("textarea");
+		this.consoleTextarea.style.width = "100%";
+		this.consoleTextarea.style.color = "#2B2B2B";
+		this.consoleTextarea.rows = 5;
+		display.appendChild(this.consoleTextarea);
+
+		var execButton = document.createElement("button");
+		execButton.innerText = "Execute";
+		execButton.style.color = "#2B2B2B";
+		/*
+		execButton.style.textAlign = "right";
+		execButton.style.backgroundColor = "#1ABC9C";
+		*/
+		display.appendChild(execButton);
+		
+		document.getElementById("ScalePageContent").style.opacity = 0.1;
 	
 	return {
 		/* This is the destructor. It should remove all the things you append to the screen. Implement it!
@@ -38,6 +56,8 @@ var FollowUsers = function(performanceApi, toolContainer, popup) {
 		- Style tags you added to the document (better: just append <style> tags directly to the conf.container)
 		- Visual styles you appended to elements on the website (like borders to highlight elements of the website)
 		*/
-		destructor: function() {}
+		destructor: function() {
+			document.getElementById("ScalePageContent").style.opacity = 1;
+		}
 	};
 };

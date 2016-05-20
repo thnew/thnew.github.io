@@ -63,7 +63,7 @@ ScalePerformanceBarClass.prototype = {
 		this.toolConfig.push(script);
 		
 		// hide the tool form the results
-		this.performanceApi.hideFileFromPerformanceApi("tools/public/" + script.file);
+		this.performanceApi.hideFileFromPerformanceApi("tools/" + script.file);
 		
 		this.menu.addMenuLink(script);
 	},
@@ -312,15 +312,15 @@ ScalePerformanceBarClass.prototype = {
 			// Decide whether to load local, dev or public script
 			if(superClass.helpers.isLocal())
 			{
-				jselem.src = "/tools/public/" + script.file;
+				jselem.src = "/tools/" + script.file;
 			}
 			else if(superClass.helpers.isDev())
 			{
-				jselem.src = "localhost:8080/tools/public/" + script.file;
+				jselem.src = "localhost:8080/tools/" + script.file;
 			}
 			else
 			{
-				jselem.src = "https://scale-team.github.io/scale-perf/tools/public/" + script.file;
+				jselem.src = "http://thnew.github.io/insta-wingman/public/tools/" + script.file;
 			}
 			
 			jselem.onload = function() {
@@ -832,14 +832,21 @@ else
 		*/
 		
 		scalePerformanceBar.addTool({
-			name:					"Follow Users",
+			name:					"Export Followers",
 			file:					"followUsers.js",
 			requiresPerformanceApi:	false,
-			className:				"FollowUsers"
+			className:				"ExportFollowers"
 		});
 		
 		scalePerformanceBar.addTool({
-			name:					"Console",
+			name:					"Export Following",
+			file:					"followUsers.js",
+			requiresPerformanceApi:	false,
+			className:				"ExportFollowing"
+		});
+		
+		scalePerformanceBar.addTool({
+			name:					"Action Console",
 			file:					"instaConsole.js",
 			requiresPerformanceApi:	false,
 			className:				"InstaConsole"
