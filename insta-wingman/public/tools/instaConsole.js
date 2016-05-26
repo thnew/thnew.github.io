@@ -35,18 +35,18 @@ var InstaConsole = function(performanceApi, toolContainer, popup) {
 		this.consoleTextarea.onkeyup = this._textareaOnClick;
 		display.appendChild(this.consoleTextarea);
 
-		var execButton = document.createElement("button");
-		execButton.innerText = "Execute";
-		execButton.style.color = "#2B2B2B";
-		/*
-		execButton.style.textAlign = "right";
-		execButton.style.backgroundColor = "#1ABC9C";
-		*/
-		display.appendChild(execButton);
+		var actionButtons = document.createElement("div");
+		actionButtons.style.textAlign = "right";
+		actionButtons.style.paddingTop = "5px";
+			var execButton = document.createElement("button");
+			execButton.innerText = "Execute";
+			execButton.style.color = "#2B2B2B";
+			actionButtons.appendChild(execButton);
+		display.appendChild(actionButtons);
 		
 		// Hide the normal page
 		this.darkScreen = document.createElement("div");
-		this.darkScreen.id = "InstaWinfmanDarkScreen";
+		this.darkScreen.id = "InstaWingmanDarkScreen";
 		this.darkScreen.style.position = "absolute";
 		this.darkScreen.style.left = "0px";
 		this.darkScreen.style.top = "0px";
@@ -83,7 +83,7 @@ var InstaConsole = function(performanceApi, toolContainer, popup) {
 		- Visual styles you appended to elements on the website (like borders to highlight elements of the website)
 		*/
 		destructor: function() {
-			var darkScreen = document.getElementById("InstaWinfmanDarkScreen");
+			var darkScreen = document.getElementById("InstaWingmanDarkScreen");
 			document.getElementById("InstaWingmanPageContent").removeChild(darkScreen);
 		}
 	};

@@ -276,9 +276,12 @@
 				function scriptLoadFunctionConsole() {
 					$("body").children().hide();
 					
+					var actionsToBePerformed = [];
+					
 					/* Perform an console action */
 					function performAction(value, action, callback) {
-						if(["follow", "unfollow"].indexOf(action.toLowerCase()) != -1) {
+						/* In those cases the value will be an URL */
+						if(["giveloveto", "follow", "unfollow", "like"].indexOf(action.toLowerCase()) != -1) {
 							var iFrame = $("<iframe>")
 								.attr("Id", "InstaWindow")
 								.attr("src", value)
@@ -295,8 +298,46 @@
 
 											/*Remove images to make loading faster*/
 											$("img", iFrameContent).remove();
-
+											
 											switch(action.toLowerCase()) {
+												case "giveloveto":
+													var media = $("._8mlbc", iFrameContent);
+													
+													var potentialTasks = [];
+													
+													media.each(function(key, value){
+														href = $(value).attr("href");
+														
+														potentialTasks.push({
+															action:		"like",
+															imageUrl:	"https://www.instagram.com" + href
+														});
+													});
+													
+													actionsToBePerformed.push({
+														action:		"wait",
+														waittime:	Math.round(Math.random() * 130 + 50) * 1000 /* Wait time between 50s and 3min */
+													});
+													
+													/* Between 2 and 4 */
+													var amountOfImagesToLike = Math.round(Math.random()*2 + 2);
+													var stepSize = Math.round(potentialTasks.length / amountOfImagesToLike);
+													
+													for(var i=0; i<potentialTasks.length; i+=stepSize) {
+														actionsToBePerformed.push(potentialTasks[i]);
+													}
+													
+													console.log("actionsToBePerformed.length: " + actionsToBePerformed.length);
+													break;
+												case "like":
+													var likeBtn = $("._1tv0k[data-reactid='.0.1.0.0.0.2.2.0'] > span[class~='whiteoutSpriteHeartOpen']", iFrameContent);
+													
+													if(likeBtn.length == 0) {
+														alert("Like button not found");
+													}
+													
+													likeBtn.click();
+													break;
 												case "follow":
 													var btn = $("._2hpcs[data-reactid='.0.1.0.0:0.1.0.2.0']", iFrameContent);
 													
@@ -307,7 +348,7 @@
 													btn.click();
 													break;
 												case "unfollow":
-													var btn = $("._r4e4p[data-reactid='.0.1.0.0:0.1.0.2.0']", iFrameContent);
+													var btn = $("._r4e4p[data-reactid='.0.1.0.0:0.1.2.0.0']", iFrameContent);
 													
 													if(btn.length == 0) {
 														console.log("Unfollow button not found");
@@ -382,7 +423,7 @@
 						
 						console.log(commands.length + " text commands found.");
 						
-						var actionsToBePerformed = [];
+						actionsToBePerformed = actionsToBePerformed || [];
 						
 						for(var f in commands) {
 							var command = commands[f];
@@ -392,6 +433,21 @@
 
 							switch(action) {
 								case "unfollow":
+									var username = parts.length > 1 ? parts[1] : null;
+									
+									if(username == null) {
+										alert("Command '" + command + "' not recognized!");
+										break;
+									}
+									
+									actionsToBePerformed.push({
+										user: new User({
+											Name: username
+										}),
+										action: action
+									});
+									break;
+								case "giveloveto":
 									var username = parts.length > 1 ? parts[1] : null;
 									
 									if(username == null) {
@@ -443,7 +499,15 @@
 									executeStepByStep(tasks);
 								});
 							}
-							else if(["follow", "unfollow"].indexOf(task.action.toLowerCase()) > 0) {
+							else if(task.action.toLowerCase() == "like") {
+								performAction(task.imageUrl, task.action, function() {
+									console.log(tasks.length + " tasks remaining.");
+									
+									/*Execute the remaining tasks*/
+									executeStepByStep(tasks);
+								});
+							}
+							else if(["follow", "unfollow", "giveloveto"].indexOf(task.action.toLowerCase()) > 0) {
 								task.user.PerformAction(task.action, function() {
 									console.log(tasks.length + " tasks remaining.");
 									
@@ -581,8 +645,268 @@
 					}
 				};
 				
+				function scriptLoadFunctionExcelFromFeed() {
+					window.setTimeout(function(){
+						var allUsers = [];
+						
+						var feedMedia = window._sharedData.entry_data.FeedPage.pop().feed.media.nodes;
+						
+						/* Go through the own feed */
+						for(var f in feedMedia) {
+							var media = feedMedia[f];
+							allUsers.push(new User({
+								Name: media.owner.username
+							}));
+							
+							/* Go through the likes of the media */
+							for(var g in media.likes.nodes) {
+								var like = media.likes.nodes[g];
+								
+								allUsers.push(new User({
+									Name: like.user.username
+								}));
+							}
+						}
+						
+						loadAllUserInfos(allUsers, function(users) {
+							console.log("Users", users);
+							alert("Finished loading users. Downlaod starts now.");
+							
+							/* Start download */
+							downloadUsersAsCsv(users);
+						})
+					}, 0);
+					
+					function loadAllUserInfos(userList, callback) {
+						var usersToLoad = userList.length;
+						
+						for(var f in userList) {
+							var user = userList[f];
+							
+							user.LoadInfo(function(resp) {
+								if(--usersToLoad == 0) {
+									console.log("loadAllUserInfos() - All users loaded!");
+									callback(userList);
+									return;
+								}
+								
+								console.log("loadAllUserInfos() - Load " + usersToLoad + " more users.");
+							});
+						}
+					};
+					
+					function downloadUsersAsCsv(users) {
+						if(users.length == 0) {
+							alert("No users found to download!");
+							return;
+						}
+						
+						var header = users[0].GetHeaderAttributes();
+						
+						var usersArray = [];
+						
+						for(var f in users) {
+							var user = users[f];
+							var userAsAnArray = [];
+							
+							for(var g in header) {
+								attrName = header[g];
+								userAsAnArray.push(user[attrName]);
+							}
+							
+							usersArray.push(userAsAnArray);
+						}
+						
+						var csvContent = header.join(";") + "\n";
+						usersArray.forEach(function(infoArray, index){
+							dataString = infoArray.join(";");
+							csvContent += dataString+ "\n";
+						});
+
+						var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+						var link = document.createElement("a");
+						var url = URL.createObjectURL(blob);
+						link.setAttribute("href", url);
+						link.setAttribute("download", 'data.csv');
+						link.style.visibility = 'hidden';
+						document.body.appendChild(link);
+						link.click();
+						document.body.removeChild(link);
+					};
+					
+					
+					
+					/* Semaphore */ {
+						function Semaphore(capacity) {
+							var semaphore = {
+								capacity: capacity || 1,
+								current: 0,		
+								queue: [],
+
+								take: function() {
+									var item = { n: 1 };
+
+									if (typeof arguments[0] == 'function') item.task = arguments[0];
+									else if (typeof arguments[0] == 'object') item.args = arguments[0];
+									else item.n = arguments[0];
+
+									if (arguments.length == 2)  {
+										if (typeof arguments[1] == 'function') item.task = arguments[1];
+										else if (typeof arguments[1] == 'object') item.args = arguments[1];
+										else item.n = arguments[1];
+									}
+									
+									if (arguments.length == 3)  {
+										if (typeof arguments[2] == 'function') item.task = arguments[2];
+										else if (typeof arguments[2] == 'object') item.args = arguments[2];
+										else item.n = arguments[2];
+									}
+
+									if (semaphore.current + item.n > semaphore.capacity) {
+										return semaphore.queue.push(item);
+									}
+
+									semaphore.current += item.n;
+									item.task(item.args);
+								},
+
+								leave: function(n) {
+									n = n || 1;
+
+									semaphore.current -= n;
+									
+									if (!semaphore.queue.length) {
+										if (semaphore.current < 0) {
+											throw new Error('leave called too many times.');
+										}
+
+										return;
+									}
+
+									var item = semaphore.queue[0];
+
+									if (item.n + semaphore.current > semaphore.capacity) {
+										return;
+									}
+
+									semaphore.queue = semaphore.queue.splice(1);
+									semaphore.current += item.n;
+									
+									item.task(item.args);
+								}
+							};
+
+							return semaphore
+						};
+					}
+					
+					/* Class User */ {
+						function User(attr) {
+							for(var f in attr) {
+								this[f] = attr[f];
+							}
+							
+							this.Url = "https://www.instagram.com/" + attr.Name;
+						};
+						
+						User.prototype = {
+							Name: null,
+							Url: null,
+							IsPrivate: null,
+							
+							Posts: null,
+							Followers: null,
+							Follows: null,
+							
+							MostLikesOnFirstPage: null,
+							TotalLikesOnFirstPage: null,
+							
+							Semaphore: new Semaphore(1),
+							
+							GetHeaderAttributes: function() {
+								return [
+									"Name",
+									"Url",
+									"Posts",
+									"Followers",
+									"Follows",
+									"IsPrivate",
+									"MostLikesOnFirstPage",
+									"TotalLikesOnFirstPage"
+								];
+							},
+							
+							LoadInfo: function(callback) {
+								var me = this;
+								
+								me.Semaphore.take(function() {
+									$.get(me.Url, function(resp) {
+										console.log("Analyze " + me.Name);
+										
+										var sharedData = resp.split("window._sharedData =");
+										sharedData = sharedData.pop();
+										sharedData = sharedData.split(";<\/script>")[0];
+										sharedData = sharedData.trim();
+										
+										try {
+											sharedData = JSON.parse(sharedData);
+										}
+										catch(e) {
+											console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
+											
+											callback({
+												success: false,
+												data: me
+											});
+										}
+										
+										var user = sharedData.entry_data.ProfilePage[0].user;
+										
+										resp = $(resp);
+										
+										me.Posts = user.media.count;
+										me.Followers = user.followed_by.count;
+										me.Follows = user.follows.count;
+										me.IsPrivate = user.is_private;
+										
+										if(!me.IsPrivate) {
+											var mostLikes = 0;
+											var totalLikes = 0;
+											for(var f in user.media.nodes) {
+												var media = user.media.nodes[f];
+												if(media.likes.count > mostLikes) {
+													mostLikes = media.likes.count;
+												}
+												
+												totalLikes += media.likes.count;
+											}
+											
+											me.MostLikesOnFirstPage = mostLikes;
+											me.TotalLikesOnFirstPage = totalLikes;
+										}
+										
+										callback({
+											success: true,
+											data: me
+										});
+										
+										me.Semaphore.leave();
+									}).fail(function() {
+										callback({
+											success: false,
+											data: null
+										});
+										
+										me.Semaphore.leave();
+									});
+								});
+							}
+						};
+					}
+				};
+				
 				// TEMPORARY
-				function scriptLoadFunctionLoader() {
+				function scriptLoadFunctionExcel() {
 					/* wrapper */
 					$("._n3cp9");
 					
@@ -830,7 +1154,7 @@
 							MostLikesOnFirstPage: null,
 							TotalLikesOnFirstPage: null,
 							
-							Semaphore: new Semaphore(2),
+							Semaphore: new Semaphore(1),
 							
 							GetHeaderAttributes: function() {
 								return [
@@ -870,8 +1194,6 @@
 										}
 										
 										var user = sharedData.entry_data.ProfilePage[0].user;
-										
-										console.log("Shared data of users page: ", sharedData);
 										
 										resp = $(resp);
 										
@@ -917,7 +1239,7 @@
 				};
 				// /TEMPORARY
 				
-				setJsLinks('javascript:(' + scriptLoadFunction + ')();');
+				setJsLinks('javascript:(' + scriptLoadFunctionConsole + ')();');
 				
 				(function() {
 					/*Get GET-parameters*/ {
