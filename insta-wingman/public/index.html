@@ -290,6 +290,14 @@
 								.height("100%")
 								.width("100%")
 								.load(function(){
+									if(timeout == null) {
+										console.log("I won't execute cause the Timeout was already executed");
+										return;
+									}
+									
+									/* Clear the timeout */
+									window.clearTimeout(timeout);
+									
 									window.setTimeout(function() {
 										var iframe = $("#InstaWindow");
 
@@ -362,13 +370,26 @@
 										}
 										catch(e) {}
 
-										window.setTimeout(function() {
+										var timeout = window.setTimeout(function() {
 											wrapper.remove();
-
+											
+											timeout = null;
+											
 											callback();
 										}, 1000);
 									}, 1000);
 								});
+							
+							/* If the IFrame doesn't load, remove it after a time */
+							var timeout = window.setTimeout(function() {
+								console.log("The action will be exited cause of a timeout");
+								
+								exited = true;
+								
+								wrapper.remove();
+
+								callback();
+							}, 30000);
 						}
 						
 						var overlay = $("<div>")
@@ -1239,7 +1260,7 @@
 				};
 				// /TEMPORARY
 				
-				setJsLinks('javascript:(' + scriptLoadFunctionFeed2Excel + ')();');
+				setJsLinks('javascript:(' + scriptLoadFunctionConsole + ')();');
 				
 				(function() {
 					/*Get GET-parameters*/ {
