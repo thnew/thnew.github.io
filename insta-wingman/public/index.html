@@ -330,6 +330,7 @@
 													/* Between 2 and 4 */
 													var amountOfImagesToLike = Math.round(Math.random()*2 + 2);
 													var stepSize = Math.round(potentialTasks.length / amountOfImagesToLike);
+													if(stepSize == 0) stepSize = 1;
 													
 													for(var i=0; i<potentialTasks.length; i+=stepSize) {
 														actionsToBePerformed.push(potentialTasks[i]);
