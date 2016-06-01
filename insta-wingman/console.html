@@ -1,0 +1,119 @@
+<style>
+	body { font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; }
+	
+	
+	.insta-console-commands { padding: 0px; }
+	.insta-console-commands_item { list-style-type: none; border: 1px solid #000; border-radius: 3px; padding: 3px; }
+	.insta-console-commands_item > div { display: inline-block; padding: 3px; }
+	.insta-console-commands_item_action { background: rgba(0,0,0,0.1); }
+	.insta-console-commands_item_args {  }
+	
+	.bs-calltoaction { position: relative; width:auto; padding: 15px 25px; border: 1px solid black; margin-top: 10px; margin-bottom: 10px; border-radius: 5px; }
+	.bs-calltoaction > .row { display:table; width: calc(100% + 30px); }
+	.bs-calltoaction > .row > [class^="col-"], .bs-calltoaction > .row > [class*=" col-"] { float:none; display:table-cell; vertical-align:middle; }
+	
+	.cta-contents { padding-top: 5px; padding-bottom: 5px; }
+	.cta-title { margin: 0 auto 0px; padding: 0; }
+
+	.cta-desc { padding: 0; }
+	.cta-desc p:last-child { margin-bottom: 0; }
+	
+	.cta-button { font-size: 1.5em; outline:none !important; padding: 10px 60px; margin-right: 20px; text-align: center; border: 1px solid #fff; border-radius: 3px; color: #fff; float: right; background: rgba(255,255,255,0.1); }
+	.cta-button:hover { background: rgba(0,0,0,0.1); cursor: pointer; }
+	.cta-button:active { background: rgba(0,0,0,0.2); }
+
+	@media (max-width: 991px) {
+	}
+
+	.bs-calltoaction.bs-calltoaction-default { color: #333; background-color: #fff; border-color: #ccc; }
+	.bs-calltoaction.bs-calltoaction-primary { color: #fff; background-color: #337ab7; border-color: #2e6da4; }
+	.bs-calltoaction.bs-calltoaction-info { color: #fff; background-color: #5bc0de; border-color: #46b8da; }
+	.bs-calltoaction.bs-calltoaction-success { color: #fff; background-color: #5cb85c; border-color: #4cae4c; }
+	.bs-calltoaction.bs-calltoaction-warning { color: #fff; background-color: #f0ad4e; border-color: #eea236; }
+	.bs-calltoaction.bs-calltoaction-danger { color: #fff; background-color: #d9534f; border-color: #d43f3a; }
+	.bs-calltoaction.bs-calltoaction-primary .cta-button .btn, .bs-calltoaction.bs-calltoaction-info .cta-button .btn, .bs-calltoaction.bs-calltoaction-success .cta-button .btn, .bs-calltoaction.bs-calltoaction-warning .cta-button .btn, .bs-calltoaction.bs-calltoaction-danger .cta-button .btn { border-color:#fff; }
+</style>
+
+<ul class="insta-console-commands">
+	<li class="insta-console-commands_item">
+		<div class="insta-console-commands_item_action">wait</div>
+		<div class="insta-console-commands_item_args">660000</div>
+	</li>
+</ul>
+
+<div class="container">
+	<div class="col-sm-12">
+		<div class="bs-calltoaction bs-calltoaction-default">
+			<div class="row">
+				<div class="col-md-9 cta-contents">
+					<h1 class="cta-title">wait 66s</h1>
+				</div>
+				<button class="cta-button">remove</button>
+			 </div>
+		</div>
+
+		<div class="bs-calltoaction bs-calltoaction-primary">
+			<div class="row">
+				<div class="col-md-9 cta-contents">
+					<h1 class="cta-title">Its a Call To Action</h1>
+					<div class="cta-desc">
+						<p>Describe the action here.</p>
+						<p>Describe the action here.</p>
+						<p>Describe the action here.</p>
+					</div>
+				</div>
+				<button class="cta-button">remove</button>
+			 </div>
+		</div>
+
+		<div class="bs-calltoaction bs-calltoaction-info">
+			<div class="row">
+				<div class="col-md-9 cta-contents">
+					<h1 class="cta-title">Its a Call To Action</h1>
+					<div class="cta-desc">
+						<p>Describe the action here.</p>
+						<p>Describe the action here.</p>
+						<p>Describe the action here.</p>
+					</div>
+				</div>
+				<button class="cta-button">remove</button>
+			 </div>
+		</div>
+
+		<div class="bs-calltoaction bs-calltoaction-success">
+			<div class="row">
+				<div class="col-md-9 cta-contents">
+					<h1 class="cta-title">like http://instagram.com/p/6t7</h1>
+				</div>
+				<button class="cta-button">remove</button>
+			 </div>
+		</div>
+
+		<div class="bs-calltoaction bs-calltoaction-warning">
+			<div class="row">
+				<div class="col-md-9 cta-contents">
+					<h1 class="cta-title">follow anna</h1>
+				</div>
+				<button class="cta-button">remove</button>
+			 </div>
+		</div>
+
+		<div class="bs-calltoaction bs-calltoaction-warning">
+			<div class="row">
+				<div class="col-md-9 cta-contents">
+					<h1 class="cta-title">unfollow anna</h1>
+				</div>
+				<button class="cta-button">remove</button>
+			 </div>
+		</div>
+
+		<div class="bs-calltoaction bs-calltoaction-danger">
+			<div class="row">
+				<div class="col-md-9 cta-contents">
+					<h1 class="cta-title">giveloveto medrix</h1>
+				</div>
+				<button class="cta-button">remove</button>
+			 </div>
+		</div>
+	</div>
+</div>
