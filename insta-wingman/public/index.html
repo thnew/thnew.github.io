@@ -246,7 +246,7 @@
 					document.querySelector("#MobileLink").href = "#" + content;
 				};
 				
-				function scriptLoadFunction(scriptPath){
+				function scriptLoadFunctionBar(scriptPath){
 					var isLocal = ((self.location+"").split("http://").pop().split("/")[0] == "localhost:8080");
 					
 					if(scriptPath == null)
@@ -275,8 +275,6 @@
 				
 				function scriptLoadFunctionConsole() {
 					$("body").children().hide();
-					
-					var actionsToBePerformed = [];
 					
 					/* Perform an console action */
 					function performAction(value, action, callback) {
@@ -321,16 +319,6 @@
 															imageUrl:	"https://www.instagram.com" + href
 														});
 													});
-
-													var waittime = Math.round(Math.random() * 21 + 5) * 1000;
-
-													if(waittime == 25) waittime = Math.round(Math.random() * 20 + 50) * 1000;
-													
-													actionsToBePerformed.unshift({
-														action:		"wait",
-														waittime:	waittime /* Wait time between 50s and 3min */
-														/*waittime:	Math.round(Math.random() * 130 + 50) * 1000 /* Wait time between 50s and 3min */
-													});
 													
 													/* Between 2 and 4 */
 													var amountOfImagesToLike = Math.round(Math.random()*2 + 2);
@@ -339,13 +327,17 @@
 													stepSize = 999; /*Make it temporarily big to let just one photo be liked*/
 
 													for(var i=0; i<potentialTasks.length; i+=stepSize) {
-														actionsToBePerformed.unshift(potentialTasks[i]);
+														var task = potentialTasks[i];
+														addCommand(task.action, task.imageUrl, { imageUrl: "https://www.instagram.com" + href }, true);
 													}
 													
-													console.log("actionsToBePerformed.length: " + actionsToBePerformed.length);
+													/*Add waiting time*/
+													var waitTime = Math.round(Math.random() * 21 + 5);
+													if(waitTime == 25) waitTime = Math.round(Math.random() * 20 + 50);
+													addCommand("wait", waitTime + "s", { waitTime: waitTime * 1000 }, true);
 													break;
 												case "like":
-													var likeBtn = $("._1tv0k[data-reactid='.0.1.0.0.0.2.2.0'] > span[class~='whiteoutSpriteHeartOpen']", iFrameContent);
+													var likeBtn = $("._1tv0k > span[class~='whiteoutSpriteHeartOpen']", iFrameContent);
 													
 													if(likeBtn.length == 0) {
 														console.log("Like button not found");
@@ -445,13 +437,14 @@
 						}
 					}
 					
-					function executeCommands() {
+					function addCommandsFromTextArea() {
 						var textarea = $("#Commands");
 						var commands = textarea.val().split("\n");
 						
 						console.log(commands.length + " text commands found.");
 						
-						actionsToBePerformed = actionsToBePerformed || [];
+						/*Clear the textarea*/
+						textarea.val("");
 						
 						for(var f in commands) {
 							var command = commands[f];
@@ -468,12 +461,7 @@
 										break;
 									}
 									
-									actionsToBePerformed.push({
-										user: new User({
-											Name: username
-										}),
-										action: action
-									});
+									addCommand(action, username, { user: new User({ Name: username }) });
 									break;
 								case "giveloveto":
 									var username = parts.length > 1 ? parts[1] : null;
@@ -483,97 +471,218 @@
 										break;
 									}
 									
-									actionsToBePerformed.push({
-										user: new User({
-											Name: username
-										}),
-										action: action
-									});
+									addCommand(action, username, { user: new User({ Name: username }) } );
 									break;
 								case "wait":
-									var waittime = parts.length > 1 ? parts[1] : null;
+									var waitTime = parts.length > 1 ? parts[1] * 1.0 : null;
 									
-									if(waittime == null) {
-										alert("Command '" + command + "' not recognized!");
+									if(!$.isNumeric(waitTime) || waitTime == null) {
+										console.log("Command '" + command + "' not recognized!");
 										break;
 									}
 									
-									actionsToBePerformed.push({
-										waittime: waittime,
-										action: action
-									});
+									addCommand(action, waitTime + "s", { waitTime: waitTime * 1000 });
 									break;
 								default:
-									alert("Command '" + command + "' not recognized!");
+									console.log("Command '" + command + "' not recognized!");
 							}
 						}
-						
-						var executeStepByStep = function(tasks) {
-							if(tasks.length == 0) {
-								return;
-							}
-
-							/*var task = tasks.pop();*/
-							/*Take first*/
-							var task = tasks[0];
-							/*Remove first*/
-							tasks.splice(0, 1);
-							
-							if(task.action.toLowerCase() == "wait") {
-								performAction(task.waittime, task.action, function() {
-									console.log(tasks.length + " tasks remaining.");
-									
-									/*Execute the remaining tasks*/
-									executeStepByStep(tasks);
-								});
-							}
-							else if(task.action.toLowerCase() == "like") {
-								performAction(task.imageUrl, task.action, function() {
-									console.log(tasks.length + " tasks remaining.");
-									
-									/*Execute the remaining tasks*/
-									executeStepByStep(tasks);
-								});
-							}
-							else if(["follow", "unfollow", "giveloveto"].indexOf(task.action.toLowerCase()) > 0) {
-								task.user.PerformAction(task.action, function() {
-									console.log(tasks.length + " tasks remaining.");
-									
-									/*Execute the remaining tasks*/
-									executeStepByStep(tasks);
-								});
-							}
-						};
-
-						console.log("Execute " + actionsToBePerformed.length + " tasks.");
-						
-						executeStepByStep(actionsToBePerformed);
 					}
 
-					var textarea = $("<textarea>")
-						.attr("Id", "Commands")
-						.css("height", "100px")
-						.width("100%")
-						.keyup(function(e){
-							if(e.keyCode == 13 && e.ctrlKey) {
-								executeCommands();
+					/*UI*/ {
+						/*Style*/ {
+							var styleElem = document.createElement("style");
+							styleElem.id = "instaConsoleStyle";
+							
+							var style = ".insta-console-wrapper { position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; overflow-y: scroll; padding: 10px; color: #2B2B2B; }";
+							
+							style += ".insta-console_textarea { outline: none !important; min-height: 100px; width: 100%; border-radius: 3px; color: #2B2B2B; border-color: #2B2B2B; }";
+							style += ".insta-console_execute { cursor: pointer; width: 100%; padding: 10px; background: transparent; border: 1px solid #2B2B2B; outline: 0px !important; border-radius: 3px; margin-top: 5px; min-height: 35px; }";
+							style += ".insta-console_execute:hover { background: #2B2B2B; color: #fff; }";
+							style += ".insta-console_execute:active { opacity: 0.9; }";
+							
+							style += ".insta-console_item { border: 1px solid rgba(0,0,0,0.1); border-radius: 3px; padding: 15px; margin-top: 10px }";
+							style += ".insta-console_item.isActive { border-color: #2ECC71; }";
+							style += ".insta-console_item.isActive .insta-console_item_remove { display: none !important; }";
+							style += ".insta-console_item_remove { display: inline-block; float: right; cursor: pointer; }";
+							style += ".insta-console_item_remove:before { content: 'remove'; }";
+							
+							styleElem.innerHTML = style;
+							document.head.appendChild(styleElem);
+						}
+						
+						var textarea = $("<textarea>")
+							.attr("Id", "Commands")
+							.addClass("insta-console_textarea")
+							.keyup(function(e){
+								if(e.keyCode == 13 && e.ctrlKey) {
+									addCommandsFromTextArea();
+								}
+							});
+						  
+						var btn = $("<button>")
+							.addClass("insta-console_execute")
+							.text("Execute")
+							.click(addCommandsFromTextArea);
+						  
+						var commandList = $("<div>")
+							.attr("id", "CommandList")
+							.width("100%")
+							.css("padding", 0)
+							.css("list-style-type", "none");
+						
+						$("<div>")
+							.addClass("insta-console-wrapper")
+							.append(textarea)
+							.append(btn)
+							.append(commandList)
+							.appendTo("body");
+						
+						function getAmountOfRemainingCommands() {
+							return commandList.children().length;
+						}
+						
+						function getNextCommand() {
+							var item = $("#CommandList").children().first();
+							
+							if(item.length == 0) {
+								return null;
 							}
-						});
-					  
-					var btn = $("<button>")
-						.text("Execute")
-					  .click(executeCommands);
-					  
-					$("<div>")
-						.css("position", "fixed")
-						.css("top", "0px")
-						.css("left", "0px")
-						.height(130)
-						.width(300)
-						.append(textarea)
-						.append(btn)
-						.appendTo("body");
-					  
+							
+							return {
+								setAction: function(action) {
+									item.data("action", action);
+									$(".item_action", item).text(action);
+								},
+								setArgs: function(args) {
+									item.data("args", args);
+									$(".item_args", item).text(args);
+								},
+								setActive: function(isActive) {
+									$(item).toggleClass("isActive", isActive);
+								},
+								
+								getAction: function() {
+									return $(".item_action", item).text();
+								},
+								getArgs: function() {
+									return $(".item_args", item).text();
+								},
+								getParam: function() {
+									return item.data("param");
+								},
+								
+								remove: function() {
+									item.remove();
+								}
+							};
+						}
+						
+						/*Add test commands to command list*/
+						function addCommand(action, args, param, prepend) {
+							var item = $("<li>")
+								.data("action", action)
+								.data("args", args)
+								.data("param", param)
+								.addClass("insta-console_item");
+							
+							if(prepend) {
+								item.prependTo(commandList);
+							}
+							else {
+								item.appendTo(commandList);
+							}
+							
+							var title = $("<h1>")
+								.css("font-size", "inherit")
+								.css("display", "inline-block")
+								.css("margin", "0px")
+								.css("font-weight", "inherit")
+								.appendTo(item);
+							
+							var actionSpan = $("<span>")
+								.addClass("item_action")
+								.text(action)
+								.appendTo(title);
+							
+							$("<span>")
+								.text(" ")
+								.appendTo(title);
+							
+							var argsSpan = $("<span>")
+								.addClass("item_args")
+								.text(args)
+								.appendTo(title);
+							
+							var removeBtn = $("<aside>")
+								.addClass("insta-console_item_remove")
+								.click(function() {
+									item.remove();
+								})
+								.appendTo(item);
+							
+							return getNextCommand();
+						};
+					}
+					
+					/* Start listening for new commands */
+					var taskActive = false;
+					
+					window.setInterval(function() {
+						if(taskActive) return;
+						
+						var command = getNextCommand();
+						
+						if(command == null) {
+							return;
+						}
+						
+						taskActive = true;
+						
+						/*Flag item as active*/
+						command.setActive(true);
+						
+						switch(command.getAction().toLowerCase()) {
+							case "wait":
+								var startTime = new Date().getTime();
+								var waitInterval = window.setInterval(function() {
+									var executeTime = new Date().getTime() - startTime;
+									var remaining = command.getParam().waitTime - executeTime;
+									
+									if(remaining < 0) {
+										window.clearInterval(waitInterval);
+										command.remove();
+										taskActive = false;
+									}
+									else {
+										command.setArgs((Math.round(remaining / 1000)) + "s");
+									}
+								}, 100);
+								break;
+							case "like":
+								performAction(command.getParam().imageUrl, command.getAction(), function() {
+									command.remove();
+									
+									taskActive = false;
+								});
+								break;
+							case "follow":
+							case "unfollow":
+							case "giveloveto":
+								var user = command.getParam().user;
+								user.PerformAction(command.getAction(), function() {
+									command.remove();
+									
+									taskActive = false;
+								});
+								break;
+							default:
+								console.log("Command '" + command.getAction() + "' not recognized!");
+								command.remove();
+								taskActive = false;
+								
+						}
+					}, 10);
 					
 					/* Semaphore */ {
 						function Semaphore(capacity) {
@@ -1040,7 +1149,6 @@
 					}
 				};
 				
-				// TEMPORARY
 				function scriptLoadFunctionExcel() {
 					/* wrapper */
 					$("._n3cp9");
@@ -1390,7 +1498,6 @@
 						};
 					}
 				};
-				// /TEMPORARY
 				
 				setJsLinks('javascript:(' + scriptLoadFunctionConsole + ')();');
 				
