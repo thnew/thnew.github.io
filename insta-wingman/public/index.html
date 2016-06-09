@@ -246,43 +246,324 @@
 					document.querySelector("#MobileLink").href = "#" + content;
 				};
 				
-				function scriptLoadFunctionBar(scriptPath){
-					var isLocal = ((self.location+"").split("http://").pop().split("/")[0] == "localhost:8080");
-					
-					if(scriptPath == null)
-					{
-						scriptPath = (isLocal ?
-							"bookmarklet.js"
-							: "https://thnew.github.io/insta-wingman/public/bookmarklet.js");
-					}
-					
-					var body = document.getElementsByTagName("body")[0];
-					
-					var loadingElem = document.createElement("div");
-					loadingElem.id = "InstaWingmanLoadingHint";
-					loadingElem.innerHTML = "Wingman is coming to you...";
-					loadingElem.style.cssText = "color:#fff;position:absolute;top:0;left:0;background-color:#000;padding:5;box-shadow:0 0 5px #000;";
-					
-					var jselem = document.createElement("script");
-					jselem.type = "text/javascript";
-					jselem.src = scriptPath;
-					jselem.onload = function() {
-						body.removeChild(loadingElem);
-					};
-					
-					body.appendChild(loadingElem).appendChild(jselem);
-				};
-				
 				function scriptLoadFunctionConsole() {
-					$("body").children().hide();
+					window.setTimeout(function(){
+						/*UI*/ {
+							/*Style*/ {
+								var styleElem = document.createElement("style");
+								styleElem.id = "instaConsoleStyle";
+								
+								var style = ".insta-console-wrapper { position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; overflow-y: scroll; padding: 10px; color: #2B2B2B; display: none; background:#fff; z-index: 100; }";
+								
+								style += ".insta-console_textarea { outline: none !important; min-height: 100px; width: 100%; border-radius: 3px; color: #2B2B2B; border-color: #2B2B2B; }";
+								style += ".insta-console_execute { cursor: pointer; width: 100%; padding: 10px; background: transparent; border: 1px solid #2B2B2B; outline: 0px !important; border-radius: 3px; margin-top: 5px; min-height: 35px; }";
+								style += ".insta-console_execute:hover { background: #2B2B2B; color: #fff; }";
+								style += ".insta-console_execute:active { opacity: 0.9; }";
+								
+								style += ".insta-console_item { border: 1px solid rgba(0,0,0,0.1); border-radius: 3px; padding: 15px; margin-top: 10px }";
+								style += ".insta-console_item.isActive { border-color: #2ECC71; }";
+								style += ".insta-console_item.isActive .insta-console_item_remove { display: none !important; }";
+								style += ".insta-console_item_remove { display: inline-block; float: right; cursor: pointer; }";
+								style += ".insta-console_item_remove:before { content: 'remove'; }";
+								
+								style += ".insta-console-hide { position: absolute; top: 5px; right: 24px; z-index: 999; background: rgba(0,0,0,0.9); border-radius: 3px; cursor: pointer; color: #fff; padding: 5px; }";
+								style += ".insta-console-hide:hover { background: rgba(0,0,0,0.5); }";
+								style += ".insta-console-hide:after { content: 'hide' }";
+								
+								style += "body.show-insta-console { overflow: hidden; }";
+								style += "body.show-insta-console .insta-console-wrapper { display: block; }";
+								style += "body.show-insta-console .insta-console-hide:after { content: 'show console' }";
+								
+								styleElem.innerHTML = style;
+								document.head.appendChild(styleElem);
+							}
+							
+							var textarea = $("<textarea>")
+								.attr("Id", "Commands")
+								.addClass("insta-console_textarea")
+								.keyup(function(e){
+									if(e.keyCode == 13 && e.ctrlKey) {
+										addCommandsFromTextArea();
+									}
+								});
+							  
+							var btn = $("<button>")
+								.addClass("insta-console_execute")
+								.text("Execute")
+								.click(addCommandsFromTextArea);
+							  
+							var commandList = $("<div>")
+								.attr("id", "CommandList")
+								.width("100%")
+								.css("padding", 0)
+								.css("list-style-type", "none");
+							
+							$("<div>")
+								.addClass("insta-console-wrapper")
+								.append(textarea)
+								.append(btn)
+								.append(commandList)
+								.appendTo("body");
+							
+							$("<div>")
+								.addClass("insta-console-hide")
+								.click(function() {
+									$("body").toggleClass("show-insta-console");
+								})
+								.appendTo("body");
+							
+							$("body").addClass("show-insta-console");
+						}
+						
+						/* Start listening for new commands */ {
+							var taskActive = false;
+							
+							window.setInterval(function() {
+								if(taskActive) return;
+								
+								var command = getNextCommand();
+								
+								if(command == null) {
+									return;
+								}
+								
+								taskActive = true;
+								
+								/*Flag item as active*/
+								command.setActive(true);
+								
+								switch(command.getAction().toLowerCase()) {
+									case "wait":
+										var startTime = new Date().getTime();
+										var waitInterval = window.setInterval(function() {
+											var executeTime = new Date().getTime() - startTime;
+											var remaining = command.getParam().waitTime - executeTime;
+											
+											if(remaining < 0) {
+												window.clearInterval(waitInterval);
+												command.remove();
+												taskActive = false;
+											}
+											else {
+												command.setArgs((Math.round(remaining / 1000)) + "s");
+											}
+										}, 100);
+										break;
+									case "like":
+										performAction(command.getParam().imageUrl, command.getAction(), function() {
+											command.remove();
+											
+											taskActive = false;
+										});
+										break;
+									case "follow":
+									case "unfollow":
+									case "giveloveto":
+										var user = command.getParam().user;
+										user.PerformAction(command.getAction(), function() {
+											command.remove();
+											
+											taskActive = false;
+										});
+										break;
+									case "export":
+									case "exportdetails":
+									case "loadlist":
+										performAction("https://www.instagram.com", command.getAction(), function() {
+											command.remove();
+											
+											taskActive = false;
+										});
+										break;
+									default:
+										console.log("Command '" + command.getAction() + "' not recognized!");
+										command.remove();
+										taskActive = false;
+										break;
+								}
+							}, 10);
+						}
+					}, 0);
 					
-					/* Perform an console action */
-					function performAction(value, action, callback) {
-						/* In those cases the value will be an URL */
-						if(["giveloveto", "follow", "unfollow", "like"].indexOf(action.toLowerCase()) != -1) {
+					/* Functions */ {
+						/* Returns the next command to be executed */
+						function getNextCommand() {
+							var item = $("#CommandList").children().first();
+							
+							if(item.length == 0) {
+								return null;
+							}
+							
+							return {
+								setAction: function(action) {
+									item.data("action", action);
+									$(".item_action", item).text(action);
+								},
+								setArgs: function(args) {
+									item.data("args", args);
+									$(".item_args", item).text(args);
+								},
+								setActive: function(isActive) {
+									$(item).toggleClass("isActive", isActive);
+								},
+								
+								getAction: function() {
+									return $(".item_action", item).text();
+								},
+								getArgs: function() {
+									return $(".item_args", item).text();
+								},
+								getParam: function() {
+									return item.data("param");
+								},
+								
+								remove: function() {
+									item.remove();
+								}
+							};
+						}
+						
+						/* Add commands to command list */
+						function addCommand(action, args, param, prepend) {
+							var commandList = $("#CommandList");
+							
+							var item = $("<li>")
+								.data("action", action)
+								.data("args", args)
+								.data("param", param)
+								.addClass("insta-console_item");
+							
+							if(prepend) {
+								item.prependTo(commandList);
+							}
+							else {
+								item.appendTo(commandList);
+							}
+							
+							var title = $("<h1>")
+								.css("font-size", "inherit")
+								.css("display", "inline-block")
+								.css("margin", "0px")
+								.css("font-weight", "inherit")
+								.appendTo(item);
+							
+							var actionSpan = $("<span>")
+								.addClass("item_action")
+								.text(action)
+								.appendTo(title);
+							
+							$("<span>")
+								.text(" ")
+								.appendTo(title);
+							
+							var argsSpan = $("<span>")
+								.addClass("item_args")
+								.text(args)
+								.appendTo(title);
+							
+							var removeBtn = $("<aside>")
+								.addClass("insta-console_item_remove")
+								.click(function() {
+									item.remove();
+								})
+								.appendTo(item);
+							
+							return getNextCommand();
+						};
+						
+						/* Download a given list of user-objects as a CSV-file */
+						function downloadUsersAsCsv(users) {
+							if(users.length == 0) {
+								alert("No users found to download!");
+								return;
+							}
+							
+							console.log("Build data");
+							var header = users[0].GetHeaderAttributes();
+							
+							var usersArray = [];
+							for(var f in users) {
+								var user = users[f];
+								var userAsAnArray = [];
+								
+								for(var g in header) {
+									attrName = header[g];
+									userAsAnArray.push(user[attrName]);
+								}
+								
+								usersArray.push(userAsAnArray);
+							}
+							
+							console.log("Build CSV");
+							var csvContent = header.join(";") + "\n";
+							usersArray.forEach(function(infoArray, index){
+								dataString = infoArray.join(";");
+								csvContent += dataString+ "\n";
+							});
+							
+							console.log("Download");
+							var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+							var link = document.createElement("a");
+							var url = URL.createObjectURL(blob);
+							link.setAttribute("href", url);
+							link.setAttribute("download", 'data.csv');
+							link.style.visibility = 'hidden';
+							document.body.appendChild(link);
+							link.click();
+							document.body.removeChild(link);
+						};
+						
+						/* Reads all users from the feed object and returns user-objects */
+						var getUsersFromFeed = function(iFrame) {
+							var frameWindow = document.getElementById(iFrame.attr("id")).contentWindow;
+							
+							var allUsers = [];
+							var feedMedia = frameWindow._sharedData.entry_data.FeedPage.pop().feed.media.nodes;
+							
+							/* Go through the own feed */
+							for(var f in feedMedia) {
+								var media = feedMedia[f];
+								allUsers.push(new User({
+									Name: media.owner.username
+								}));
+								
+								/* Go through the likes of the media */
+								for(var g in media.likes.nodes) {
+									var like = media.likes.nodes[g];
+									
+									allUsers.push(new User({
+										Name: like.user.username
+									}));
+								}
+							}
+							
+							return allUsers;
+						};
+						
+						/* Takes a list of user objects and loads their details step by step */
+						function loadAllUserInfos(userList, callback) {
+							var usersToLoad = userList.length;
+							
+							for(var f in userList) {
+								var user = userList[f];
+								
+								user.LoadInfo(function(resp) {
+									if(--usersToLoad == 0) {
+										console.log("loadAllUserInfos() - All users loaded!");
+										callback(userList);
+										return;
+									}
+									
+									console.log("loadAllUserInfos() - Load " + usersToLoad + " more users.");
+								});
+							}
+						};
+						
+						/* Perform an console action */
+						function performAction(url, action, callback) {
 							var iFrame = $("<iframe>")
 								.attr("Id", "InstaWindow")
-								.attr("src", value)
+								.attr("src", url)
 								.css("z-index", 10)
 								.css("border", "0px")
 								.height("100%")
@@ -301,11 +582,31 @@
 
 										try {
 											var iFrameContent = iframe.contents();
-
-											/*Remove images to make loading faster*/
-											$("img", iFrameContent).remove();
 											
 											switch(action.toLowerCase()) {
+												case "loadlist":
+													
+													break;
+												case "export":
+														var users = getUsersFromFeed(iframe);
+														
+														console.log("Found users:", users);
+														
+														/* Start download */
+														downloadUsersAsCsv(users);
+													break;
+												case "exportdetails":
+													var users = getUsersFromFeed(iframe);
+													
+													console.log("Found users:", users);
+													
+													loadAllUserInfos(users, function(users) {
+														console.log("Users", users);
+														
+														/* Start download */
+														downloadUsersAsCsv(users);
+													});
+													break;
 												case "giveloveto":
 													var media = $("._8mlbc", iFrameContent);
 													
@@ -378,7 +679,7 @@
 										}, 1000);
 									}, 1000);
 								});
-							
+								
 							/* If the IFrame doesn't load, remove it after a time */
 							var timeout = window.setTimeout(function() {
 								console.log("The action will be exited cause of a timeout");
@@ -389,763 +690,303 @@
 
 								callback();
 							}, 30000);
+							
+							var overlay = $("<div>")
+								.css("position", "absolute")
+								.css("top", "0px")
+								.css("left", "0px")
+								.css("right", "0px")
+								.css("bottom", "0px")
+								.css("z-index", 11)
+								.css("text-align", "center")
+								.css("color", "rgba(0,0,0,0,8)")
+								.css("padding-top", "70px")
+								.css("font-family", "Arial")
+								.text(action.toLowerCase())
+								.css("background-color", "rgba(255,255,255,0.8)");
+							
+							var wrapper = $("<div>")
+								.append(iFrame)
+								.append(overlay)
+								.css("position", "fixed")
+								.css("top", "0px")
+								.css("right", "0px")
+								.width(550)
+								.height(550);
+							
+							$("body").append(wrapper);
 						}
 						
-						var overlay = $("<div>")
-							.css("position", "absolute")
-							.css("top", "0px")
-							.css("left", "0px")
-							.css("right", "0px")
-							.css("bottom", "0px")
-							.css("z-index", 11)
-							.css("text-align", "center")
-							.css("color", "rgba(0,0,0,0,8)")
-							.css("padding-top", "70px")
-							.css("font-family", "Arial")
-							.text(action.toLowerCase())
-							.css("background-color", "rgba(255,255,255,0.8)");
-						
-						var wrapper = $("<div>")
-							.append(iFrame)
-							.append(overlay)
-							.css("position", "fixed")
-							.css("top", "0px")
-							.css("right", "0px")
-							.width(550)
-							.height(550);
-						
-						$("body").append(wrapper);
-						
-						/* If the console should wait */
-						if(action.toLowerCase() == "wait") {
-							var startTime = new Date().getTime();
-							var waitInterval = window.setInterval(function() {
-								var executeTime = new Date().getTime() - startTime;
-								var remaining = value - executeTime;
-								
-								if(remaining < 0) {
-									window.clearInterval(waitInterval);
-									
-									wrapper.remove();
+						/* Takes the text commands and pushes them into the list of tasks */
+						function addCommandsFromTextArea() {
+							var textarea = $("#Commands");
+							var commands = textarea.val().split("\n");
+							
+							console.log(commands.length + " text commands found.");
+							
+							/*Clear the textarea*/
+							textarea.val("");
+							
+							for(var f in commands) {
+								var command = commands[f];
+								var parts = command.split(" ");
 
-									callback();
-								}
-								else {
-									overlay.text(action.toLowerCase() + " " + (Math.round(remaining / 1000)) + "s");
-								}
-							}, 100);
-						}
-					}
-					
-					function addCommandsFromTextArea() {
-						var textarea = $("#Commands");
-						var commands = textarea.val().split("\n");
-						
-						console.log(commands.length + " text commands found.");
-						
-						/*Clear the textarea*/
-						textarea.val("");
-						
-						for(var f in commands) {
-							var command = commands[f];
-							var parts = command.split(" ");
+								var action = parts[0].toLowerCase();
 
-							var action = parts[0].toLowerCase();
-
-							switch(action) {
-								case "unfollow":
-									var username = parts.length > 1 ? parts[1] : null;
-									
-									if(username == null) {
-										alert("Command '" + command + "' not recognized!");
+								switch(action) {
+									case "loadlist":
+										var listName = parts.length > 1 ? parts[1] : null;
+										
+										if(listName == null) {
+											alert("Command '" + command + "' not recognized!");
+											break;
+										}
+										
+										addCommand(action, listName);
 										break;
-									}
-									
-									addCommand(action, username, { user: new User({ Name: username }) });
-									break;
-								case "giveloveto":
-									var username = parts.length > 1 ? parts[1] : null;
-									
-									if(username == null) {
-										alert("Command '" + command + "' not recognized!");
+									case "export":
+										var source = parts.length > 1 ? parts[1] : null;
+										
+										if(source == null) {
+											alert("Command '" + command + "' not recognized!");
+											break;
+										}
+										
+										addCommand(action, source);
 										break;
-									}
-									
-									addCommand(action, username, { user: new User({ Name: username }) } );
-									break;
-								case "wait":
-									var waitTime = parts.length > 1 ? parts[1] * 1.0 : null;
-									
-									if(!$.isNumeric(waitTime) || waitTime == null) {
+									case "exportdetails":
+										var source = parts.length > 1 ? parts[1] : null;
+										
+										if(source == null) {
+											alert("Command '" + command + "' not recognized!");
+											break;
+										}
+										
+										addCommand(action, source);
+										break;
+									case "unfollow":
+										var username = parts.length > 1 ? parts[1] : null;
+										
+										if(username == null) {
+											alert("Command '" + command + "' not recognized!");
+											break;
+										}
+										
+										addCommand(action, username, { user: new User({ Name: username }) });
+										break;
+									case "giveloveto":
+										var username = parts.length > 1 ? parts[1] : null;
+										
+										if(username == null) {
+											alert("Command '" + command + "' not recognized!");
+											break;
+										}
+										
+										addCommand(action, username, { user: new User({ Name: username }) } );
+										break;
+									case "wait":
+										var waitTime = parts.length > 1 ? parts[1] * 1.0 : null;
+										
+										if(!$.isNumeric(waitTime) || waitTime == null) {
+											console.log("Command '" + command + "' not recognized!");
+											break;
+										}
+										
+										addCommand(action, waitTime + "s", { waitTime: waitTime * 1000 });
+										break;
+									default:
 										console.log("Command '" + command + "' not recognized!");
-										break;
-									}
-									
-									addCommand(action, waitTime + "s", { waitTime: waitTime * 1000 });
-									break;
-								default:
-									console.log("Command '" + command + "' not recognized!");
+								}
 							}
 						}
 					}
+					
+					/* Classes */ {
+						/* Semaphore */ {
+							function Semaphore(capacity) {
+								var semaphore = {
+									capacity: capacity || 1,
+									current: 0,		
+									queue: [],
 
-					/*UI*/ {
-						/*Style*/ {
-							var styleElem = document.createElement("style");
-							styleElem.id = "instaConsoleStyle";
-							
-							var style = ".insta-console-wrapper { position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; overflow-y: scroll; padding: 10px; color: #2B2B2B; }";
-							
-							style += ".insta-console_textarea { outline: none !important; min-height: 100px; width: 100%; border-radius: 3px; color: #2B2B2B; border-color: #2B2B2B; }";
-							style += ".insta-console_execute { cursor: pointer; width: 100%; padding: 10px; background: transparent; border: 1px solid #2B2B2B; outline: 0px !important; border-radius: 3px; margin-top: 5px; min-height: 35px; }";
-							style += ".insta-console_execute:hover { background: #2B2B2B; color: #fff; }";
-							style += ".insta-console_execute:active { opacity: 0.9; }";
-							
-							style += ".insta-console_item { border: 1px solid rgba(0,0,0,0.1); border-radius: 3px; padding: 15px; margin-top: 10px }";
-							style += ".insta-console_item.isActive { border-color: #2ECC71; }";
-							style += ".insta-console_item.isActive .insta-console_item_remove { display: none !important; }";
-							style += ".insta-console_item_remove { display: inline-block; float: right; cursor: pointer; }";
-							style += ".insta-console_item_remove:before { content: 'remove'; }";
-							
-							styleElem.innerHTML = style;
-							document.head.appendChild(styleElem);
-						}
-						
-						var textarea = $("<textarea>")
-							.attr("Id", "Commands")
-							.addClass("insta-console_textarea")
-							.keyup(function(e){
-								if(e.keyCode == 13 && e.ctrlKey) {
-									addCommandsFromTextArea();
-								}
-							});
-						  
-						var btn = $("<button>")
-							.addClass("insta-console_execute")
-							.text("Execute")
-							.click(addCommandsFromTextArea);
-						  
-						var commandList = $("<div>")
-							.attr("id", "CommandList")
-							.width("100%")
-							.css("padding", 0)
-							.css("list-style-type", "none");
-						
-						$("<div>")
-							.addClass("insta-console-wrapper")
-							.append(textarea)
-							.append(btn)
-							.append(commandList)
-							.appendTo("body");
-						
-						function getAmountOfRemainingCommands() {
-							return commandList.children().length;
-						}
-						
-						function getNextCommand() {
-							var item = $("#CommandList").children().first();
-							
-							if(item.length == 0) {
-								return null;
-							}
-							
-							return {
-								setAction: function(action) {
-									item.data("action", action);
-									$(".item_action", item).text(action);
-								},
-								setArgs: function(args) {
-									item.data("args", args);
-									$(".item_args", item).text(args);
-								},
-								setActive: function(isActive) {
-									$(item).toggleClass("isActive", isActive);
-								},
-								
-								getAction: function() {
-									return $(".item_action", item).text();
-								},
-								getArgs: function() {
-									return $(".item_args", item).text();
-								},
-								getParam: function() {
-									return item.data("param");
-								},
-								
-								remove: function() {
-									item.remove();
-								}
+									take: function() {
+										var item = { n: 1 };
+
+										if (typeof arguments[0] == 'function') item.task = arguments[0];
+										else if (typeof arguments[0] == 'object') item.args = arguments[0];
+										else item.n = arguments[0];
+
+										if (arguments.length == 2)  {
+											if (typeof arguments[1] == 'function') item.task = arguments[1];
+											else if (typeof arguments[1] == 'object') item.args = arguments[1];
+											else item.n = arguments[1];
+										}
+										
+										if (arguments.length == 3)  {
+											if (typeof arguments[2] == 'function') item.task = arguments[2];
+											else if (typeof arguments[2] == 'object') item.args = arguments[2];
+											else item.n = arguments[2];
+										}
+
+										if (semaphore.current + item.n > semaphore.capacity) {
+											return semaphore.queue.push(item);
+										}
+
+										semaphore.current += item.n;
+										item.task(item.args);
+									},
+
+									leave: function(n) {
+										n = n || 1;
+
+										semaphore.current -= n;
+										
+										if (!semaphore.queue.length) {
+											if (semaphore.current < 0) {
+												throw new Error('leave called too many times.');
+											}
+
+											return;
+										}
+
+										var item = semaphore.queue[0];
+
+										if (item.n + semaphore.current > semaphore.capacity) {
+											return;
+										}
+
+										semaphore.queue = semaphore.queue.splice(1);
+										semaphore.current += item.n;
+										
+										item.task(item.args);
+									}
+								};
+
+								return semaphore
 							};
 						}
 						
-						/*Add test commands to command list*/
-						function addCommand(action, args, param, prepend) {
-							var item = $("<li>")
-								.data("action", action)
-								.data("args", args)
-								.data("param", param)
-								.addClass("insta-console_item");
-							
-							if(prepend) {
-								item.prependTo(commandList);
-							}
-							else {
-								item.appendTo(commandList);
-							}
-							
-							var title = $("<h1>")
-								.css("font-size", "inherit")
-								.css("display", "inline-block")
-								.css("margin", "0px")
-								.css("font-weight", "inherit")
-								.appendTo(item);
-							
-							var actionSpan = $("<span>")
-								.addClass("item_action")
-								.text(action)
-								.appendTo(title);
-							
-							$("<span>")
-								.text(" ")
-								.appendTo(title);
-							
-							var argsSpan = $("<span>")
-								.addClass("item_args")
-								.text(args)
-								.appendTo(title);
-							
-							var removeBtn = $("<aside>")
-								.addClass("insta-console_item_remove")
-								.click(function() {
-									item.remove();
-								})
-								.appendTo(item);
-							
-							return getNextCommand();
-						};
-					}
-					
-					/* Start listening for new commands */
-					var taskActive = false;
-					
-					window.setInterval(function() {
-						if(taskActive) return;
-						
-						var command = getNextCommand();
-						
-						if(command == null) {
-							return;
-						}
-						
-						taskActive = true;
-						
-						/*Flag item as active*/
-						command.setActive(true);
-						
-						switch(command.getAction().toLowerCase()) {
-							case "wait":
-								var startTime = new Date().getTime();
-								var waitInterval = window.setInterval(function() {
-									var executeTime = new Date().getTime() - startTime;
-									var remaining = command.getParam().waitTime - executeTime;
-									
-									if(remaining < 0) {
-										window.clearInterval(waitInterval);
-										command.remove();
-										taskActive = false;
-									}
-									else {
-										command.setArgs((Math.round(remaining / 1000)) + "s");
-									}
-								}, 100);
-								break;
-							case "like":
-								performAction(command.getParam().imageUrl, command.getAction(), function() {
-									command.remove();
-									
-									taskActive = false;
-								});
-								break;
-							case "follow":
-							case "unfollow":
-							case "giveloveto":
-								var user = command.getParam().user;
-								user.PerformAction(command.getAction(), function() {
-									command.remove();
-									
-									taskActive = false;
-								});
-								break;
-							default:
-								console.log("Command '" + command.getAction() + "' not recognized!");
-								command.remove();
-								taskActive = false;
-								
-						}
-					}, 10);
-					
-					/* Semaphore */ {
-						function Semaphore(capacity) {
-							var semaphore = {
-								capacity: capacity || 1,
-								current: 0,		
-								queue: [],
-
-								take: function() {
-									var item = { n: 1 };
-
-									if (typeof arguments[0] == 'function') item.task = arguments[0];
-									else if (typeof arguments[0] == 'object') item.args = arguments[0];
-									else item.n = arguments[0];
-
-									if (arguments.length == 2)  {
-										if (typeof arguments[1] == 'function') item.task = arguments[1];
-										else if (typeof arguments[1] == 'object') item.args = arguments[1];
-										else item.n = arguments[1];
-									}
-									
-									if (arguments.length == 3)  {
-										if (typeof arguments[2] == 'function') item.task = arguments[2];
-										else if (typeof arguments[2] == 'object') item.args = arguments[2];
-										else item.n = arguments[2];
-									}
-
-									if (semaphore.current + item.n > semaphore.capacity) {
-										return semaphore.queue.push(item);
-									}
-
-									semaphore.current += item.n;
-									item.task(item.args);
-								},
-
-								leave: function(n) {
-									n = n || 1;
-
-									semaphore.current -= n;
-									
-									if (!semaphore.queue.length) {
-										if (semaphore.current < 0) {
-											throw new Error('leave called too many times.');
-										}
-
-										return;
-									}
-
-									var item = semaphore.queue[0];
-
-									if (item.n + semaphore.current > semaphore.capacity) {
-										return;
-									}
-
-									semaphore.queue = semaphore.queue.splice(1);
-									semaphore.current += item.n;
-									
-									item.task(item.args);
+						/* Class User */ {
+							function User(attr) {
+								for(var f in attr) {
+									this[f] = attr[f];
 								}
+								
+								this.Url = "https://www.instagram.com/" + attr.Name;
+
+								/*Some commands*/
+								this.CmdUnfollow = "unfollow " + attr.Name;
+								this.CmdFollow = "follow " + attr.Name;
+								this.CmdGiveLoveTo = "giveloveto " + attr.Name;
 							};
-
-							return semaphore
-						};
-					}
-					
-					/* Class User */ {
-						function User(attr) {
-							for(var f in attr) {
-								this[f] = attr[f];
-							}
 							
-							this.Url = "https://www.instagram.com/" + attr.Name;
-
-							/*Some commands*/
-							this.CmdUnfollow = "unfollow " + attr.Name;
-							this.CmdFollow = "follow " + attr.Name;
-							this.CmdGiveLoveTo = "giveloveto " + attr.Name;
-						};
-						
-						User.prototype = {
-							Name: null,
-							Url: null,
-							IsPrivate: null,
-							
-							Posts: null,
-							Followers: null,
-							Follows: null,
-							
-							MostLikesOnFirstPage: null,
-							TotalLikesOnFirstPage: null,
-
-							/*Commands*/
-							CmdUnfollow: null,
-							CmdFollow: null,
-							CmdGiveLoveTo: null,
-							
-							Semaphore: new Semaphore(1),
-							
-							GetHeaderAttributes: function() {
-								return [
-									"Name",
-									"Url",
-									"Posts",
-									"Followers",
-									"Follows",
-									"IsPrivate",
-									"MostLikesOnFirstPage",
-									"TotalLikesOnFirstPage",
-									"CmdUnfollow",
-									"CmdFollow",
-									"CmdGiveLoveTo"
-								];
-							},
-							
-							PerformAction: function(action, callback) {
-								console.log("Perform action '" + action + "' on " + this.Url);
-								performAction(this.Url, action, callback);
-							},
-							
-							LoadInfo: function(callback) {
-								var me = this;
+							User.prototype = {
+								Name: null,
+								Url: null,
+								IsPrivate: null,
 								
-								me.Semaphore.take(function() {
-								$.get(me.Url, function(resp) {
-										console.log("Analyze " + me.Name);
-										
-									var sharedData = resp.split("window._sharedData =");
-									sharedData = sharedData.pop();
-									sharedData = sharedData.split(";<\/script>")[0];
-									sharedData = sharedData.trim();
-										
-									try {
-										sharedData = JSON.parse(sharedData);
-									}
-									catch(e) {
-										console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
-											
-										callback({
-											success: false,
-											data: me
-										});
-									}
-										
-									var user = sharedData.entry_data.ProfilePage[0].user;
-										
-									resp = $(resp);
-										
-									me.Posts = user.media.count;
-									me.Followers = user.followed_by.count;
-									me.Follows = user.follows.count;
-										me.IsPrivate = user.is_private;
-										
-										if(!me.IsPrivate) {
-									var mostLikes = 0;
-									var totalLikes = 0;
-									for(var f in user.media.nodes) {
-										var media = user.media.nodes[f];
-										if(media.likes.count > mostLikes) {
-											mostLikes = media.likes.count;
-										}
-												
-										totalLikes += media.likes.count;
-									}
-											
-									me.MostLikesOnFirstPage = mostLikes;
-									me.TotalLikesOnFirstPage = totalLikes;
-										}
-										
-									callback({
-										success: true,
-										data: me
-									});
-										
-										me.Semaphore.leave();
-									}).fail(function() {
-									callback({
-										success: false,
-										data: null
-									});
-										
-										me.Semaphore.leave();
-								});
-								});
-							}
-						};
-					}
-				};
-				
-				function scriptLoadFunctionFeed2Excel() {
-					window.setTimeout(function(){
-						var allUsers = [];
-						
-						var feedMedia = window._sharedData.entry_data.FeedPage.pop().feed.media.nodes;
-						
-						/* Go through the own feed */
-						for(var f in feedMedia) {
-							var media = feedMedia[f];
-							allUsers.push(new User({
-								Name: media.owner.username
-							}));
-							
-							/* Go through the likes of the media */
-							for(var g in media.likes.nodes) {
-								var like = media.likes.nodes[g];
+								Posts: null,
+								Followers: null,
+								Follows: null,
 								
-								allUsers.push(new User({
-									Name: like.user.username
-								}));
-							}
-						}
-						
-						loadAllUserInfos(allUsers, function(users) {
-							console.log("Users", users);
-							alert("Finished loading users. Downlaod starts now.");
-							
-							/* Start download */
-							downloadUsersAsCsv(users);
-						})
-					}, 0);
-					
-					function loadAllUserInfos(userList, callback) {
-						var usersToLoad = userList.length;
-						
-						for(var f in userList) {
-							var user = userList[f];
-							
-							user.LoadInfo(function(resp) {
-								if(--usersToLoad == 0) {
-									console.log("loadAllUserInfos() - All users loaded!");
-									callback(userList);
-									return;
-								}
+								MostLikesOnFirstPage: null,
+								TotalLikesOnFirstPage: null,
+
+								/*Commands*/
+								CmdUnfollow: null,
+								CmdFollow: null,
+								CmdGiveLoveTo: null,
 								
-								console.log("loadAllUserInfos() - Load " + usersToLoad + " more users.");
-							});
-						}
-					};
-					
-					function downloadUsersAsCsv(users) {
-						if(users.length == 0) {
-							alert("No users found to download!");
-							return;
-						}
-						
-						var header = users[0].GetHeaderAttributes();
-						
-						var usersArray = [];
-						
-						for(var f in users) {
-							var user = users[f];
-							var userAsAnArray = [];
-							
-							for(var g in header) {
-								attrName = header[g];
-								userAsAnArray.push(user[attrName]);
-							}
-							
-							usersArray.push(userAsAnArray);
-						}
-						
-						var csvContent = header.join(";") + "\n";
-						usersArray.forEach(function(infoArray, index){
-							dataString = infoArray.join(";");
-							csvContent += dataString+ "\n";
-						});
-
-						var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-						var link = document.createElement("a");
-						var url = URL.createObjectURL(blob);
-						link.setAttribute("href", url);
-						link.setAttribute("download", 'data.csv');
-						link.style.visibility = 'hidden';
-						document.body.appendChild(link);
-						link.click();
-						document.body.removeChild(link);
-					};
-					
-					
-					
-					/* Semaphore */ {
-						function Semaphore(capacity) {
-							var semaphore = {
-								capacity: capacity || 1,
-								current: 0,		
-								queue: [],
-
-								take: function() {
-									var item = { n: 1 };
-
-									if (typeof arguments[0] == 'function') item.task = arguments[0];
-									else if (typeof arguments[0] == 'object') item.args = arguments[0];
-									else item.n = arguments[0];
-
-									if (arguments.length == 2)  {
-										if (typeof arguments[1] == 'function') item.task = arguments[1];
-										else if (typeof arguments[1] == 'object') item.args = arguments[1];
-										else item.n = arguments[1];
-									}
-									
-									if (arguments.length == 3)  {
-										if (typeof arguments[2] == 'function') item.task = arguments[2];
-										else if (typeof arguments[2] == 'object') item.args = arguments[2];
-										else item.n = arguments[2];
-									}
-
-									if (semaphore.current + item.n > semaphore.capacity) {
-										return semaphore.queue.push(item);
-									}
-
-									semaphore.current += item.n;
-									item.task(item.args);
+								Semaphore: new Semaphore(1),
+								
+								GetHeaderAttributes: function() {
+									return [
+										"Name",
+										"Url",
+										"Posts",
+										"Followers",
+										"Follows",
+										"IsPrivate",
+										"MostLikesOnFirstPage",
+										"TotalLikesOnFirstPage",
+										"CmdUnfollow",
+										"CmdFollow",
+										"CmdGiveLoveTo"
+									];
 								},
-
-								leave: function(n) {
-									n = n || 1;
-
-									semaphore.current -= n;
-									
-									if (!semaphore.queue.length) {
-										if (semaphore.current < 0) {
-											throw new Error('leave called too many times.');
-										}
-
-										return;
-									}
-
-									var item = semaphore.queue[0];
-
-									if (item.n + semaphore.current > semaphore.capacity) {
-										return;
-									}
-
-									semaphore.queue = semaphore.queue.splice(1);
-									semaphore.current += item.n;
-									
-									item.task(item.args);
-								}
-							};
-
-							return semaphore
-						};
-					}
-					
-					/* Class User */ {
-						function User(attr) {
-							for(var f in attr) {
-								this[f] = attr[f];
-							}
-							
-							this.Url = "https://www.instagram.com/" + attr.Name;
-
-							/*Some commands*/
-							this.CmdUnfollow = "unfollow " + attr.Name;
-							this.CmdFollow = "follow " + attr.Name;
-							this.CmdGiveLoveTo = "giveloveto " + attr.Name;
-						};
-						
-						User.prototype = {
-							Name: null,
-							Url: null,
-							IsPrivate: null,
-							
-							Posts: null,
-							Followers: null,
-							Follows: null,
-							
-							MostLikesOnFirstPage: null,
-							TotalLikesOnFirstPage: null,
-
-							/*Commands*/
-							CmdUnfollow: null,
-							CmdFollow: null,
-							CmdGiveLoveTo: null,
-							
-							Semaphore: new Semaphore(1),
-							
-							GetHeaderAttributes: function() {
-								return [
-									"Name",
-									"Url",
-									"Posts",
-									"Followers",
-									"Follows",
-									"IsPrivate",
-									"MostLikesOnFirstPage",
-									"TotalLikesOnFirstPage",
-									"CmdUnfollow",
-									"CmdFollow",
-									"CmdGiveLoveTo"
-								];
-							},
-							
-							PerformAction: function(action, callback) {
-								console.log("Perform action '" + action + "' on " + this.Url);
-								performAction(this.Url, action, callback);
-							},
-							
-							LoadInfo: function(callback) {
-								var me = this;
 								
-								me.Semaphore.take(function() {
+								PerformAction: function(action, callback) {
+									console.log("Perform action '" + action + "' on " + this.Url);
+									performAction(this.Url, action, callback);
+								},
+								
+								LoadInfo: function(callback) {
+									var me = this;
+									
+									me.Semaphore.take(function() {
 									$.get(me.Url, function(resp) {
-										console.log("Analyze " + me.Name);
-										
+											console.log("Analyze " + me.Name);
+											
 										var sharedData = resp.split("window._sharedData =");
 										sharedData = sharedData.pop();
 										sharedData = sharedData.split(";<\/script>")[0];
 										sharedData = sharedData.trim();
-										
+											
 										try {
 											sharedData = JSON.parse(sharedData);
 										}
 										catch(e) {
 											console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
-											
+												
 											callback({
 												success: false,
 												data: me
 											});
 										}
-										
+											
 										var user = sharedData.entry_data.ProfilePage[0].user;
-										
+											
 										resp = $(resp);
-										
+											
 										me.Posts = user.media.count;
 										me.Followers = user.followed_by.count;
 										me.Follows = user.follows.count;
-										me.IsPrivate = user.is_private;
-										
-										if(!me.IsPrivate) {
-											var mostLikes = 0;
-											var totalLikes = 0;
-											for(var f in user.media.nodes) {
-												var media = user.media.nodes[f];
-												if(media.likes.count > mostLikes) {
-													mostLikes = media.likes.count;
-												}
+											me.IsPrivate = user.is_private;
+											
+											if(!me.IsPrivate) {
+										var mostLikes = 0;
+										var totalLikes = 0;
+										for(var f in user.media.nodes) {
+											var media = user.media.nodes[f];
+											if(media.likes.count > mostLikes) {
+												mostLikes = media.likes.count;
+											}
+													
+											totalLikes += media.likes.count;
+										}
 												
-												totalLikes += media.likes.count;
+										me.MostLikesOnFirstPage = mostLikes;
+										me.TotalLikesOnFirstPage = totalLikes;
 											}
 											
-											me.MostLikesOnFirstPage = mostLikes;
-											me.TotalLikesOnFirstPage = totalLikes;
-										}
-										
 										callback({
 											success: true,
 											data: me
 										});
-										
-										me.Semaphore.leave();
-									}).fail(function() {
+											
+											me.Semaphore.leave();
+										}).fail(function() {
 										callback({
 											success: false,
 											data: null
 										});
-										
-										me.Semaphore.leave();
+											
+											me.Semaphore.leave();
 									});
-								});
-							}
-						};
+									});
+								}
+							};
+						}
 					}
 				};
 				
@@ -1501,7 +1342,7 @@
 				
 				setJsLinks('javascript:(' + scriptLoadFunctionConsole + ')();');
 				
-				(function() {
+				(function preparePage() {
 					/*Get GET-parameters*/ {
 						var _GET = {};
 						var parts = location.href.split("?");
@@ -1545,11 +1386,11 @@
 							$("#HowToAddModal").modal();
 						};
 					}
+					
+					$(".explain").click(function() {
+						$("#HowToUseModal").modal();
+					});
 				})();
-				
-				$(".explain").click(function() {
-					$("#HowToUseModal").modal();
-				});
 			})();
 			
 			function changeToStep(nr){
