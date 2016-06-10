@@ -263,6 +263,10 @@
 								style += ".insta-console_item { border: 1px solid rgba(0,0,0,0.1); border-radius: 3px; padding: 15px; margin-top: 10px }";
 								style += ".insta-console_item.isActive { border-color: #2ECC71; }";
 								style += ".insta-console_item.isActive .insta-console_item_remove { display: none !important; }";
+								
+								/*style += ".insta-console_item.insta-console_item-giveloveto:before { content: '\\2665'; margin-right: 5px; }";*/
+								style += ".insta-console_item.insta-console_item-follow:before { content: '\\21D2'; margin-right: 5px; }";
+								
 								style += ".insta-console_item_remove { display: inline-block; float: right; cursor: pointer; }";
 								style += ".insta-console_item_remove:before { content: 'remove'; }";
 								
@@ -407,6 +411,14 @@
 					}, 0);
 					
 					/* Functions */ {
+						/* Helper */ {
+							var INT_MAX = Math.pow(2,32);
+							
+							var getMilliseconds = function() {
+								return Date.UTC(0,0,0,0,new Date().getMinutes(),new Date().getSeconds());
+							};
+						}
+						
 						/* Returns the next command to be executed */
 						function getNextCommand() {
 							var item = $("#CommandList").children().first();
@@ -452,7 +464,8 @@
 								.data("action", action)
 								.data("args", args)
 								.data("param", param)
-								.addClass("insta-console_item");
+								.addClass("insta-console_item")
+								.addClass("insta-console_item-" + action);
 							
 							if(prepend) {
 								item.prependTo(commandList);
@@ -637,14 +650,6 @@
 									scrollContainer.scrollTop(Math.pow(2,32));
 								};
 								
-								/* Helper */ {
-									var INT_MAX = Math.pow(2,32);
-									
-									var getMilliseconds = function() {
-										return Date.UTC(0,0,0,0,new Date().getMinutes(),new Date().getSeconds());
-									};
-								}
-								
 								/*Scroll down as long as new followers appear or the wanted amount is reached*/
 								function loadUsers(usersToLoad, updateCallback, successCallback) {
 									var amountOfUsers = 0;
@@ -730,11 +735,8 @@
 						
 						/* Perform an console action */
 						function performAction(config, callback) {
-							var url = config.url;
-							var action = config.action;
-							var command = config.command;
-							
-							console.log("performAction('" + url + "', '" + action + "', " + typeof(callback) + ")");
+							console.log("performAction('" + config.url + "', '" + config.action + "', " + typeof(callback) + ")");
+							console.log("Config object", config);
 							
 							/* If the IFrame doesn't load, remove it after a time */
 							var timeout = window.setTimeout(function() {
@@ -747,7 +749,7 @@
 							
 							var iFrame = $("<iframe>")
 								.attr("Id", "InstaWindow")
-								.attr("src", url)
+								.attr("src", config.url)
 								.css("z-index", 501)
 								.css("border", "0px")
 								.height("100%")
@@ -778,7 +780,7 @@
 										try {
 											var iFrameContent = iframe.contents();
 											
-											switch(action.toLowerCase()) {
+											switch(config.action.toLowerCase()) {
 												case "export-home-users":
 													isOneTimeAction= true;
 												
@@ -899,36 +901,43 @@
 												case "fill-console":
 													var commands = [];
 													
-													var users = getUsersFromFeed(iframe).slice(0, 100);
+													/*var max = config.command.getParam().max || INT_MAX;*/
+													maxUsers = 100;
+													
+													var users = getUsersFromFeed(iframe).slice(0, maxUsers);
 													
 													loadAllUserInfos(users, function(users) {
 														console.log("Users", users);
 														
 														/*Get follow commands*/
-														for(var f in users) {
-															var user = users[f];
-															
-															/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
-															if(user.Followers < 400 && user.Follows < 400) {
-																commands.push({
-																	action: "follow",
-																	args: user.Name,
-																	parameters: { user: new User({ Name: user.Name }) }
-																});
+														if(config.command.getParam().args_1 != "giveloveto") {
+															for(var f in users) {
+																var user = users[f];
+																
+																/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
+																if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3) {
+																	commands.push({
+																		action: "follow",
+																		args: user.Name,
+																		parameters: { user: new User({ Name: user.Name }) }
+																	});
+																}
 															}
 														}
 														
 														/*Get giveloveto commands*/
-														for(var f in users) {
-															var user = users[f];
-															
-															/*Cause too big instagrammers won't recognize yur likes*/
-															if(user.Followers < 2000 && user.Follows < 1000) {
-																commands.push({
-																	action: "giveloveto",
-																	args: user.Name,
-																	parameters: { user: new User({ Name: user.Name }) }
-																});
+														if(config.command.getParam().args_1 != "follow") {
+															for(var f in users) {
+																var user = users[f];
+																
+																/*Cause too big instagrammers won't recognize yur likes*/
+																if(user.Followers < 2000 && user.Follows < 1000 && user.Posts > 1) {
+																	commands.push({
+																		action: "giveloveto",
+																		args: user.Name,
+																		parameters: { user: new User({ Name: user.Name }) }
+																	});
+																}
 															}
 														}
 														
@@ -954,12 +963,22 @@
 																followCount = 0;
 															}
 														}
+														console.log(config.command);
+														/*If it should be repeated, add command*/
+														if(config.command.getParam().args_1 == "repeat") {
+															console.log("Repeat fill-console");
+															commands.push({
+																action: "fill-console",
+																args: "repeat",
+																parameters: config.command.getParam()
+															});
+														}
 														
 														/*Add all commands*/
-														for(var f in commands) {
-															var command = commands[f];
+														for(var i = commands.length - 1; i >= 0; i--) {
+															var command = commands[i];
 															
-															addCommand(command.action, command.args, command.parameters);
+															addCommand(command.action, command.args, command.parameters, true);
 														}
 														
 														/*Continue*/
@@ -1022,7 +1041,7 @@
 								.css("color", "rgba(0,0,0,0,8)")
 								.css("padding-top", "70px")
 								.css("font-family", "Arial")
-								.text(action.toLowerCase())
+								.text(config.action.toLowerCase())
 								.css("background-color", "rgba(255,255,255,0.8)");
 							
 							var wrapper = $("<div>")
@@ -1057,8 +1076,15 @@
 								var action = parts[0].toLowerCase();
 
 								switch(action) {
-									/*They don't need any parameters*/
+									/*They take one optional parameter*/
 									case "fill-console":
+										var args_1 = parts.length > 1 ? parts[1] : "";
+										var max = parts.length > 2 ? parts[2] : "";
+										
+										addCommand(action, args_1 + " " + max, { args_1: args_1, INT_MAX, max: max });
+										break;
+										
+									/*They don't need any parameters*/
 									case "export-home-users":
 									case "export-home-users-details":
 										addCommand(action, "");
