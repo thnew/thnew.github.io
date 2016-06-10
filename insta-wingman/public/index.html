@@ -918,7 +918,7 @@
 																var user = users[f];
 																
 																/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
-																if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3) {
+																if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3 && !user.IsPrivate) {
 																	commands.push({
 																		action: "follow",
 																		args: user.Name,
@@ -934,7 +934,7 @@
 																var user = users[f];
 																
 																/*Cause too big instagrammers won't recognize yur likes*/
-																if(user.Followers < 2000 && user.Follows < 1000 && user.Posts > 1) {
+																if(user.Followers < 2000 && user.Follows < 1000 && user.Posts > 1 && !user.IsPrivate) {
 																	commands.push({
 																		action: "giveloveto",
 																		args: user.Name,
