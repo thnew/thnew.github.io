@@ -362,6 +362,7 @@
 											taskActive = false;
 										});
 										break;
+									case "fill-console-all-day-long":
 									case "fill-console":
 										performAction({ url: "https://www.instagram.com", action: command.getAction(), command: command }, function() {
 											command.remove();
@@ -898,11 +899,13 @@
 													next();
 													break;
 												
+												case "fill-console-all-day-long":
+													var modeAllDayLong = true;
 												case "fill-console":
 													var commands = [];
 													
 													/*var max = config.command.getParam().max || INT_MAX;*/
-													maxUsers = 100;
+													var maxUsers = 60;
 													
 													var users = getUsersFromFeed(iframe).slice(0, maxUsers);
 													
@@ -944,32 +947,66 @@
 														/*Shuffle all commands*/
 														shuffle(commands);
 														
-														/*Add waiting time every 10 follow commands*/
-														var followCount = 0;
-														for(var f in commands) {
-															var command = commands[f];
-															
-															if(command.action == "follow") {
-																followCount++;
+														if(!modeAllDayLong) {
+															/*Add waiting time every 10 follow commands*/
+															var followCount = 0;
+															for(var f in commands) {
+																var command = commands[f];
+																
+																if(command.action == "follow") {
+																	followCount++;
+																}
+																
+																if(followCount == 10) {
+																	commands.splice(f, 0, {
+																		action: "wait",
+																		args: "900s",
+																		parameters: { waitTime: 900 * 1000 }
+																	});
+																	
+																	followCount = 0;
+																}
 															}
 															
-															if(followCount == 10) {
-																commands.splice(f, 0, {
-																	action: "wait",
-																	args: "900s",
-																	parameters: { waitTime: 900 * 1000 }
+															/*If it should be repeated, add command*/
+															if(config.command.getParam().args_1 == "repeat") {
+																console.log("Repeat fill-console");
+																commands.push({
+																	action: "fill-console",
+																	args: "repeat",
+																	parameters: config.command.getParam()
 																});
-																
-																followCount = 0;
 															}
 														}
-														console.log(config.command);
-														/*If it should be repeated, add command*/
-														if(config.command.getParam().args_1 == "repeat") {
-															console.log("Repeat fill-console");
+														else {
+															/*Prevent following more than 10 followers*/
+															var followCount = 0;
+															for(var f in commands) {
+																var command = commands[f];
+																
+																if(command.action == "follow") {
+																	followCount++;
+																}
+																
+																if(followCount == 11) {
+																	/*Delete all after this index*/
+																	commands.splice(f, INT_MAX);
+																	
+																	break;
+																}
+															}
+															
+															/*Add wait*/
 															commands.push({
-																action: "fill-console",
-																args: "repeat",
+																action: "wait",
+																args: "2400s",
+																parameters: { waitTime: 2400 * 1000 }
+															});
+															
+															/*Repeat it*/
+															commands.push({
+																action: "fill-console-all-day-long",
+																args: "",
 																parameters: config.command.getParam()
 															});
 														}
@@ -1077,11 +1114,12 @@
 
 								switch(action) {
 									/*They take one optional parameter*/
+									case "fill-console-all-day-long":
 									case "fill-console":
 										var args_1 = parts.length > 1 ? parts[1] : "";
 										var max = parts.length > 2 ? parts[2] : "";
 										
-										addCommand(action, args_1 + " " + max, { args_1: args_1, INT_MAX, max: max });
+										addCommand(action, args_1 + " " + max, { args_1: args_1, max: max });
 										break;
 										
 									/*They don't need any parameters*/
