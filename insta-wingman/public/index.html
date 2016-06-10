@@ -341,7 +341,9 @@
 											
 											if(remaining < 0) {
 												window.clearInterval(waitInterval);
+												
 												command.remove();
+												
 												taskActive = false;
 											}
 											else {
@@ -350,7 +352,14 @@
 										}, 100);
 										break;
 									case "like":
-										performAction(command.getParam().imageUrl, command.getAction(), function() {
+										performAction({ url: command.getParam().imageUrl, action: command.getAction(), command: command }, function() {
+											command.remove();
+											
+											taskActive = false;
+										});
+										break;
+									case "fill-console":
+										performAction({ url: "https://www.instagram.com", action: command.getAction(), command: command }, function() {
 											command.remove();
 											
 											taskActive = false;
@@ -360,16 +369,26 @@
 									case "unfollow":
 									case "giveloveto":
 										var user = command.getParam().user;
-										user.PerformAction(command.getAction(), function() {
+										user.PerformAction(command.getAction(), command, function() {
 											command.remove();
 											
 											taskActive = false;
 										});
 										break;
-									case "export":
-									case "exportdetails":
-									case "loadlist":
-										performAction("https://www.instagram.com", command.getAction(), function() {
+									case "export-followers":
+									case "export-followers-details":
+									case "export-following":
+									case "export-following-details":
+										var user = command.getParam().user;
+										user.PerformAction(command.getAction(), command, function() {
+											command.remove();
+											
+											taskActive = false;
+										});
+										break;
+									case "export-home-users":
+									case "export-home-users-details":
+										performAction({ url: "https://www.instagram.com", action: command.getAction(), command: command }, function() {
 											command.remove();
 											
 											taskActive = false;
@@ -377,7 +396,9 @@
 										break;
 									default:
 										console.log("Command '" + command.getAction() + "' not recognized!");
+										
 										command.remove();
+										
 										taskActive = false;
 										break;
 								}
@@ -559,12 +580,175 @@
 							}
 						};
 						
+						/* Loads a lazy loading list till teh end and returns its users as user-objects */
+						function loadFrontendList(parentObj, type, listLoadCallback) {
+							/*Find out the list button Id for the given user type*/
+							var buttonToClick;
+							switch(type) {
+								case "followers":
+									buttonToClick = $("._pr3wx", parentObj);
+									break;
+								case "following":
+									buttonToClick = $("._bgvpv", parentObj);
+									break;
+								default:
+									alert("loadFrontendList() Type " + type + " not found!");
+									return;
+							}
+							
+							buttonToClick.click();
+							
+							window.setTimeout(function() {
+								/* list */
+								var userListElem = $("._4j13h", parentObj);
+								
+								var scrollContainer = $("._4gt3b", parentObj);
+								
+								var getFollowButtons = function() {
+									return $("._csba8[data-reactid]", userListElem);
+								};
+								
+								var followTwentyUsers = function() {
+									getFollowButtons().slice(0, 20).click();
+								};
+								
+								var getUsers = function() {
+									var users = [];
+									
+									/* Go through the list and grab all the user names */
+									$("._4zhc5", userListElem).each(function(index, value){
+										var elem = $(value);
+										var name = elem.text();
+										
+										users.push(new User({
+											Name: name
+										}));
+									});
+									
+									return users;
+								};
+								
+								var countUsers = function() {
+									return $("._4zhc5", userListElem).length;
+								};
+								
+								var scrollWindowDown = function() {
+									console.log("scrollWindowDown()");
+									scrollContainer.scrollTop(Math.pow(2,32));
+								};
+								
+								/* Helper */ {
+									var INT_MAX = Math.pow(2,32);
+									
+									var getMilliseconds = function() {
+										return Date.UTC(0,0,0,0,new Date().getMinutes(),new Date().getSeconds());
+									};
+								}
+								
+								/*Scroll down as long as new followers appear or the wanted amount is reached*/
+								function loadUsers(usersToLoad, updateCallback, successCallback) {
+									var amountOfUsers = 0;
+									if(amountOfUsers < usersToLoad)
+									{
+										var maxWaitingTime = 2000;
+										
+										var lastSuccessTime = getMilliseconds();
+										
+										/* Watch */
+										var interval = window.setInterval(function(){
+											console.log("Check");
+											
+											var timeSinceLastSuccess = getMilliseconds() - lastSuccessTime;
+											
+											var userCount = countUsers();
+											
+											if(userCount > amountOfUsers) {
+												lastSuccessTime = getMilliseconds();
+												amountOfUsers = userCount;
+
+												updateCallback(amountOfUsers);
+												
+												if(amountOfUsers >= usersToLoad) {
+													window.clearInterval(interval);
+													successCallback(amountOfUsers);
+													return;
+												}
+												
+												console.log("Too less users: " + amountOfUsers + ". Try to load more users.");
+												scrollWindowDown();
+												return;
+											}
+											
+											if(timeSinceLastSuccess > maxWaitingTime) {
+												window.clearInterval(interval);
+												successCallback(amountOfUsers);
+												return;
+											}
+										}, 50);
+									}
+								};
+								
+								function loadAllUserInfos(userList, callback) {
+									var usersToLoad = userList.length;
+									
+									for(var f in userList) {
+										var user = userList[f];
+										
+										user.LoadInfo(function(resp) {
+											if(--usersToLoad == 0) {
+												console.log("loadAllUserInfos() - All users loaded!");
+												callback(userList);
+												return;
+											}
+											
+											console.log("loadAllUserInfos() - Load " + usersToLoad + " more users.");
+										});
+									}
+								};
+								
+								loadUsers(INT_MAX, function(usersLoaded) {
+									$("._q44m8 span", parentObj).remove();
+									$("._q44m8", parentObj).append($("<span>").text(usersLoaded + " users loaded."));
+								}, function(usersLoaded) {
+									var users = getUsers();
+									
+									listLoadCallback(users);
+								});
+							}, 1000);
+						}
+						
+						/*Shuffle an array*/
+						function shuffle(a) {
+							var j, x, i;
+							for (i = a.length; i; i -= 1) {
+								j = Math.floor(Math.random() * i);
+								x = a[i - 1];
+								a[i - 1] = a[j];
+								a[j] = x;
+							}
+						}
+						
 						/* Perform an console action */
-						function performAction(url, action, callback) {
+						function performAction(config, callback) {
+							var url = config.url;
+							var action = config.action;
+							var command = config.command;
+							
+							console.log("performAction('" + url + "', '" + action + "', " + typeof(callback) + ")");
+							
+							/* If the IFrame doesn't load, remove it after a time */
+							var timeout = window.setTimeout(function() {
+								console.log("The action will be exited cause of a timeout");
+								
+								wrapper.remove();
+
+								callback();
+							}, 30000);
+							
 							var iFrame = $("<iframe>")
 								.attr("Id", "InstaWindow")
 								.attr("src", url)
-								.css("z-index", 10)
+								.css("z-index", 501)
 								.css("border", "0px")
 								.height("100%")
 								.width("100%")
@@ -574,28 +758,41 @@
 										return;
 									}
 									
-									/* Clear the timeout */
+									/*Clear the timeout*/
 									window.clearTimeout(timeout);
 									
+									/*Wait till the page is fully built up*/
 									window.setTimeout(function() {
+										/*Function to call to go on*/
+										function next() {
+											window.setTimeout(function() {
+												wrapper.remove();
+												
+												callback();
+											}, 1000);
+										}
+										
+										/*Try to execute the action*/
 										var iframe = $("#InstaWindow");
-
+										
 										try {
 											var iFrameContent = iframe.contents();
 											
 											switch(action.toLowerCase()) {
-												case "loadlist":
+												case "export-home-users":
+													isOneTimeAction= true;
+												
+													var users = getUsersFromFeed(iframe);
 													
+													console.log("Found users:", users);
+													
+													/* Start download */
+													downloadUsersAsCsv(users);
+													
+													/*Continue*/
+													next();
 													break;
-												case "export":
-														var users = getUsersFromFeed(iframe);
-														
-														console.log("Found users:", users);
-														
-														/* Start download */
-														downloadUsersAsCsv(users);
-													break;
-												case "exportdetails":
+												case "export-home-users-details":
 													var users = getUsersFromFeed(iframe);
 													
 													console.log("Found users:", users);
@@ -605,8 +802,66 @@
 														
 														/* Start download */
 														downloadUsersAsCsv(users);
+														
+														/*Continue*/
+														next();
 													});
 													break;
+												
+												case "export-followers":
+													loadFrontendList(iFrameContent, "followers", function(users) {
+														console.log("Users", users);
+														
+														/* Start download */
+														downloadUsersAsCsv(users);
+														
+														/*Continue*/
+														next();
+													});
+													break;
+												case "export-followers-details":
+													loadFrontendList(iFrameContent, "followers", function(users) {
+														console.log("Users", users);
+														
+														loadAllUserInfos(users, function(users) {
+															console.log("Users", users);
+															
+															/* Start download */
+															downloadUsersAsCsv(users);
+															
+															/*Continue*/
+															next();
+														});
+													});
+													break;
+													
+												case "export-following":
+													loadFrontendList(iFrameContent, "following", function(users) {
+														console.log("Users", users);
+														
+														/* Start download */
+														downloadUsersAsCsv(users);
+														
+														/*Continue*/
+														next();
+													});
+													break;
+												case "export-following-details":
+													loadFrontendList(iFrameContent, "following", function(users) {
+														console.log("Users", users);
+														
+														loadAllUserInfos(users, function(users) {
+															console.log("Users", users);
+															
+															/* Start download */
+															downloadUsersAsCsv(users);
+															
+															/*Continue*/
+															next();
+														});
+													});
+													break;
+												
 												case "giveloveto":
 													var media = $("._8mlbc", iFrameContent);
 													
@@ -636,7 +891,82 @@
 													var waitTime = Math.round(Math.random() * 21 + 5);
 													if(waitTime == 25) waitTime = Math.round(Math.random() * 20 + 50);
 													addCommand("wait", waitTime + "s", { waitTime: waitTime * 1000 }, true);
+													
+													/*Continue*/
+													next();
 													break;
+												
+												case "fill-console":
+													var commands = [];
+													
+													var users = getUsersFromFeed(iframe).slice(0, 100);
+													
+													loadAllUserInfos(users, function(users) {
+														console.log("Users", users);
+														
+														/*Get follow commands*/
+														for(var f in users) {
+															var user = users[f];
+															
+															/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
+															if(user.Followers < 400 && user.Follows < 400) {
+																commands.push({
+																	action: "follow",
+																	args: user.Name,
+																	parameters: { user: new User({ Name: user.Name }) }
+																});
+															}
+														}
+														
+														/*Get giveloveto commands*/
+														for(var f in users) {
+															var user = users[f];
+															
+															/*Cause too big instagrammers won't recognize yur likes*/
+															if(user.Followers < 2000 && user.Follows < 1000) {
+																commands.push({
+																	action: "giveloveto",
+																	args: user.Name,
+																	parameters: { user: new User({ Name: user.Name }) }
+																});
+															}
+														}
+														
+														/*Shuffle all commands*/
+														shuffle(commands);
+														
+														/*Add waiting time every 10 follow commands*/
+														var followCount = 0;
+														for(var f in commands) {
+															var command = commands[f];
+															
+															if(command.action == "follow") {
+																followCount++;
+															}
+															
+															if(followCount == 10) {
+																commands.splice(f, 0, {
+																	action: "wait",
+																	args: "900s",
+																	parameters: { waitTime: 900 * 1000 }
+																});
+																
+																followCount = 0;
+															}
+														}
+														
+														/*Add all commands*/
+														for(var f in commands) {
+															var command = commands[f];
+															
+															addCommand(command.action, command.args, command.parameters);
+														}
+														
+														/*Continue*/
+														next();
+													});
+													break;
+													
 												case "like":
 													var likeBtn = $("._1tv0k > span[class~='whiteoutSpriteHeartOpen']", iFrameContent);
 													
@@ -645,51 +975,41 @@
 													}
 													
 													likeBtn.click();
+													
+													/*Continue*/
+													next();
 													break;
 												case "follow":
-													var btn = $("._2hpcs[data-reactid='.0.1.0.0:0.1.0.2.0']", iFrameContent);
+													var btn = $("._2hpcs", iFrameContent);
 													
 													if(btn.length == 0) {
-														console.log("Unfollow button not found");
+														console.log("Follow button not found");
 													}
 													
 													btn.click();
+													
+													/*Continue*/
+													next();
 													break;
 												case "unfollow":
-													var btn = $("._r4e4p[data-reactid='.0.1.0.0:0.1.2.0.0']", iFrameContent);
+													var btn = $("._r4e4p", iFrameContent);
 													
 													if(btn.length == 0) {
 														console.log("Unfollow button not found");
 													}
 													
 													btn.click();
+													
+													/*Continue*/
+													next();
 													break;
 												default:
 													console.log("Action " + action.toLowerCase() + " not found");
 											}
 										}
 										catch(e) {}
-
-										var timeout = window.setTimeout(function() {
-											wrapper.remove();
-											
-											timeout = null;
-											
-											callback();
-										}, 1000);
 									}, 1000);
 								});
-								
-							/* If the IFrame doesn't load, remove it after a time */
-							var timeout = window.setTimeout(function() {
-								console.log("The action will be exited cause of a timeout");
-								
-								exited = true;
-								
-								wrapper.remove();
-
-								callback();
-							}, 30000);
 							
 							var overlay = $("<div>")
 								.css("position", "absolute")
@@ -697,7 +1017,7 @@
 								.css("left", "0px")
 								.css("right", "0px")
 								.css("bottom", "0px")
-								.css("z-index", 11)
+								.css("z-index", 502)
 								.css("text-align", "center")
 								.css("color", "rgba(0,0,0,0,8)")
 								.css("padding-top", "70px")
@@ -706,14 +1026,17 @@
 								.css("background-color", "rgba(255,255,255,0.8)");
 							
 							var wrapper = $("<div>")
+								.attr("id", "IFrameWindowWrapper")
 								.append(iFrame)
 								.append(overlay)
 								.css("position", "fixed")
 								.css("top", "0px")
 								.css("right", "0px")
+								.css("z-index", 500)
 								.width(550)
 								.height(550);
 							
+							console.log("Append the IFrame");
 							$("body").append(wrapper);
 						}
 						
@@ -734,37 +1057,21 @@
 								var action = parts[0].toLowerCase();
 
 								switch(action) {
-									case "loadlist":
-										var listName = parts.length > 1 ? parts[1] : null;
-										
-										if(listName == null) {
-											alert("Command '" + command + "' not recognized!");
-											break;
-										}
-										
-										addCommand(action, listName);
+									/*They don't need any parameters*/
+									case "fill-console":
+									case "export-home-users":
+									case "export-home-users-details":
+										addCommand(action, "");
 										break;
-									case "export":
-										var source = parts.length > 1 ? parts[1] : null;
-										
-										if(source == null) {
-											alert("Command '" + command + "' not recognized!");
-											break;
-										}
-										
-										addCommand(action, source);
-										break;
-									case "exportdetails":
-										var source = parts.length > 1 ? parts[1] : null;
-										
-										if(source == null) {
-											alert("Command '" + command + "' not recognized!");
-											break;
-										}
-										
-										addCommand(action, source);
-										break;
+									
+									/*Their only parameter is the username*/
+									case "follow":
 									case "unfollow":
+									case "export-followers":
+									case "export-followers-details":
+									case "export-following":
+									case "export-following-details":
+									case "giveloveto":
 										var username = parts.length > 1 ? parts[1] : null;
 										
 										if(username == null) {
@@ -774,16 +1081,8 @@
 										
 										addCommand(action, username, { user: new User({ Name: username }) });
 										break;
-									case "giveloveto":
-										var username = parts.length > 1 ? parts[1] : null;
-										
-										if(username == null) {
-											alert("Command '" + command + "' not recognized!");
-											break;
-										}
-										
-										addCommand(action, username, { user: new User({ Name: username }) } );
-										break;
+									
+									/*This is especially for wait*/
 									case "wait":
 										var waitTime = parts.length > 1 ? parts[1] * 1.0 : null;
 										
@@ -915,396 +1214,45 @@
 									];
 								},
 								
-								PerformAction: function(action, callback) {
+								PerformAction: function(action, command, callback) {
 									console.log("Perform action '" + action + "' on " + this.Url);
-									performAction(this.Url, action, callback);
+									performAction({ url: this.Url, action: action, command: command }, callback);
 								},
 								
 								LoadInfo: function(callback) {
 									var me = this;
 									
 									me.Semaphore.take(function() {
-									$.get(me.Url, function(resp) {
-											console.log("Analyze " + me.Name);
-											
-										var sharedData = resp.split("window._sharedData =");
-										sharedData = sharedData.pop();
-										sharedData = sharedData.split(";<\/script>")[0];
-										sharedData = sharedData.trim();
-											
-										try {
-											sharedData = JSON.parse(sharedData);
-										}
-										catch(e) {
-											console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
+										$.get(me.Url, function(resp) {
+												console.log("Analyze " + me.Name);
 												
-											callback({
-												success: false,
-												data: me
-											});
-										}
-											
-										var user = sharedData.entry_data.ProfilePage[0].user;
-											
-										resp = $(resp);
-											
-										me.Posts = user.media.count;
-										me.Followers = user.followed_by.count;
-										me.Follows = user.follows.count;
-											me.IsPrivate = user.is_private;
-											
-											if(!me.IsPrivate) {
-										var mostLikes = 0;
-										var totalLikes = 0;
-										for(var f in user.media.nodes) {
-											var media = user.media.nodes[f];
-											if(media.likes.count > mostLikes) {
-												mostLikes = media.likes.count;
+											var sharedData = resp.split("window._sharedData =");
+											sharedData = sharedData.pop();
+											sharedData = sharedData.split(";<\/script>")[0];
+											sharedData = sharedData.trim();
+												
+											try {
+												sharedData = JSON.parse(sharedData);
 											}
+											catch(e) {
+												console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
 													
-											totalLikes += media.likes.count;
-										}
-												
-										me.MostLikesOnFirstPage = mostLikes;
-										me.TotalLikesOnFirstPage = totalLikes;
+												callback({
+													success: false,
+													data: me
+												});
 											}
-											
-										callback({
-											success: true,
-											data: me
-										});
-											
-											me.Semaphore.leave();
-										}).fail(function() {
-										callback({
-											success: false,
-											data: null
-										});
-											
-											me.Semaphore.leave();
-									});
-									});
-								}
-							};
-						}
-					}
-				};
-				
-				function scriptLoadFunctionExcel() {
-					/* wrapper */
-					$("._n3cp9");
-					
-					/* list */
-					var userListElem = $("._4j13h");
-					
-					var scrollContainer = $("._4gt3b");
-					
-					var getFollowButtons = function() {
-						return $("._csba8[data-reactid]", userListElem);
-					};
-					
-					var followTwentyUsers = function() {
-						getFollowButtons().slice(0, 20).click();
-					};
-					
-					var getUsers = function() {
-						var users = [];
-						
-						/* Go through the list and grab all the user names */
-						$("._4zhc5", userListElem).each(function(index, value){
-							var elem = $(value);
-							var name = elem.text();
-							
-							users.push(new User({
-								Name: name
-							}));
-						});
-						
-						return users;
-					};
-					
-					var loadMoreUsers = function() {
-						console.log("loadMoreUsers()");
-						scrollContainer.scrollTop(Math.pow(2,32));
-					};
-					
-					/* Helper */ {
-						var INT_MAX = Math.pow(2,32);
-						
-						var getMilliseconds = function() {
-							return Date.UTC(0,0,0,0,new Date().getMinutes(),new Date().getSeconds());
-						};
-					}
-					
-					/*Scroll down as long as new followers appear or the wanted amount is reached*/
-					function loadUsers(usersToLoad, updateCallback, successCallback) {
-						var amountOfUsers = 0;
-						if(amountOfUsers < usersToLoad)
-						{
-							var maxWaitingTime = 2000;
-							
-							var lastSuccessTime = getMilliseconds();
-							
-							/* Watch */
-							var interval = window.setInterval(function(){
-								console.log("Check");
-								
-								var timeSinceLastSuccess = getMilliseconds() - lastSuccessTime;
-								
-								var users = getUsers();
-								
-								if(users.length > amountOfUsers) {
-									lastSuccessTime = getMilliseconds();
-									amountOfUsers = users.length;
-
-									updateCallback(amountOfUsers);
-									
-									if(amountOfUsers >= usersToLoad) {
-										window.clearInterval(interval);
-										successCallback(amountOfUsers);
-										return;
-									}
-									
-									console.log("Too less users: " + amountOfUsers + ". Try to load more users.");
-									loadMoreUsers();
-									return;
-								}
-								
-								if(timeSinceLastSuccess > maxWaitingTime) {
-									window.clearInterval(interval);
-									successCallback(amountOfUsers);
-									return;
-								}
-							}, 50);
-						}
-					};
-					
-					function loadAllUserInfos(userList, callback) {
-						var usersToLoad = userList.length;
-						
-						for(var f in userList) {
-							var user = userList[f];
-							
-							user.LoadInfo(function(resp) {
-								if(--usersToLoad == 0) {
-									console.log("loadAllUserInfos() - All users loaded!");
-									callback(userList);
-									return;
-								}
-								
-								console.log("loadAllUserInfos() - Load " + usersToLoad + " more users.");
-							});
-						}
-					};
-					
-					loadUsers(INT_MAX, function(usersLoaded) {
-						$("._q44m8 span").remove();
-						$("._q44m8").append($("<span>").text(usersLoaded + " users loaded."));
-					}, function(usersLoaded) {
-						var users = getUsers();
-						
-						console.log(users);
-						
-						loadAllUserInfos(users, function(users) {
-							console.log("Users", users);
-							alert("Finished loading users. Downlaod starts now.");
-							
-							/* Start download */
-							downloadUsersAsCsv(users);
-						});
-					});
-					
-					function downloadUsersAsCsv(users) {
-						if(users.length == 0) {
-							alert("No users found to download!");
-							return;
-						}
-						
-						var header = users[0].GetHeaderAttributes();
-						
-						var usersArray = [];
-						
-						for(var f in users) {
-							var user = users[f];
-							var userAsAnArray = [];
-							
-							for(var g in header) {
-								attrName = header[g];
-								userAsAnArray.push(user[attrName]);
-							}
-							
-							usersArray.push(userAsAnArray);
-						}
-						
-						var csvContent = header.join(";") + "\n";
-						usersArray.forEach(function(infoArray, index){
-							dataString = infoArray.join(";");
-							csvContent += dataString+ "\n";
-						});
-
-						var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-						var link = document.createElement("a");
-						var url = URL.createObjectURL(blob);
-						link.setAttribute("href", url);
-						link.setAttribute("download", 'data.csv');
-						link.style.visibility = 'hidden';
-						document.body.appendChild(link);
-						link.click();
-						document.body.removeChild(link);
-					};
-					
-					/* Semaphore */ {
-						function Semaphore(capacity) {
-							var semaphore = {
-								capacity: capacity || 1,
-								current: 0,		
-								queue: [],
-
-								take: function() {
-									var item = { n: 1 };
-
-									if (typeof arguments[0] == 'function') item.task = arguments[0];
-									else if (typeof arguments[0] == 'object') item.args = arguments[0];
-									else item.n = arguments[0];
-
-									if (arguments.length == 2)  {
-										if (typeof arguments[1] == 'function') item.task = arguments[1];
-										else if (typeof arguments[1] == 'object') item.args = arguments[1];
-										else item.n = arguments[1];
-									}
-									
-									if (arguments.length == 3)  {
-										if (typeof arguments[2] == 'function') item.task = arguments[2];
-										else if (typeof arguments[2] == 'object') item.args = arguments[2];
-										else item.n = arguments[2];
-									}
-
-									if (semaphore.current + item.n > semaphore.capacity) {
-										return semaphore.queue.push(item);
-									}
-
-									semaphore.current += item.n;
-									item.task(item.args);
-								},
-
-								leave: function(n) {
-									n = n || 1;
-
-									semaphore.current -= n;
-									
-									if (!semaphore.queue.length) {
-										if (semaphore.current < 0) {
-											throw new Error('leave called too many times.');
-										}
-
-										return;
-									}
-
-									var item = semaphore.queue[0];
-
-									if (item.n + semaphore.current > semaphore.capacity) {
-										return;
-									}
-
-									semaphore.queue = semaphore.queue.splice(1);
-									semaphore.current += item.n;
-									
-									item.task(item.args);
-								}
-							};
-
-							return semaphore
-						};
-					}
-					
-					/* Class User */ {
-						function User(attr) {
-							for(var f in attr) {
-								this[f] = attr[f];
-							}
-							
-							this.Url = "https://www.instagram.com/" + attr.Name;
-
-							/*Some commands*/
-							this.CmdUnfollow = "unfollow " + attr.Name;
-							this.CmdFollow = "follow " + attr.Name;
-							this.CmdGiveLoveTo = "giveloveto " + attr.Name;
-						};
-						
-						User.prototype = {
-							Name: null,
-							Url: null,
-							IsPrivate: null,
-							
-							Posts: null,
-							Followers: null,
-							Follows: null,
-							
-							MostLikesOnFirstPage: null,
-							TotalLikesOnFirstPage: null,
-
-							/*Commands*/
-							CmdUnfollow: null,
-							CmdFollow: null,
-							CmdGiveLoveTo: null,
-							
-							Semaphore: new Semaphore(1),
-							
-							GetHeaderAttributes: function() {
-								return [
-									"Name",
-									"Url",
-									"Posts",
-									"Followers",
-									"Follows",
-									"IsPrivate",
-									"MostLikesOnFirstPage",
-									"TotalLikesOnFirstPage",
-									"CmdUnfollow",
-									"CmdFollow",
-									"CmdGiveLoveTo"
-								];
-							},
-							
-							PerformAction: function(action, callback) {
-								console.log("Perform action '" + action + "' on " + this.Url);
-								performAction(this.Url, action, callback);
-							},
-							
-							LoadInfo: function(callback) {
-								var me = this;
-								
-								me.Semaphore.take(function() {
-									$.get(me.Url, function(resp) {
-										console.log("Analyze " + me.Name);
-										
-										var sharedData = resp.split("window._sharedData =");
-										sharedData = sharedData.pop();
-										sharedData = sharedData.split(";<\/script>")[0];
-										sharedData = sharedData.trim();
-										
-										try {
-											sharedData = JSON.parse(sharedData);
-										}
-										catch(e) {
-											console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
-											
-											callback({
-												success: false,
-												data: me
-											});
-										}
-										
-										var user = sharedData.entry_data.ProfilePage[0].user;
-										
-										resp = $(resp);
-										
-										me.Posts = user.media.count;
-										me.Followers = user.followed_by.count;
-										me.Follows = user.follows.count;
-										me.IsPrivate = user.is_private;
-										
-										if(!me.IsPrivate) {
+												
+											var user = sharedData.entry_data.ProfilePage[0].user;
+												
+											resp = $(resp);
+												
+											me.Posts = user.media.count;
+											me.Followers = user.followed_by.count;
+											me.Follows = user.follows.count;
+												me.IsPrivate = user.is_private;
+												
+												if(!me.IsPrivate) {
 											var mostLikes = 0;
 											var totalLikes = 0;
 											for(var f in user.media.nodes) {
@@ -1312,31 +1260,32 @@
 												if(media.likes.count > mostLikes) {
 													mostLikes = media.likes.count;
 												}
-												
+														
 												totalLikes += media.likes.count;
 											}
-											
+													
 											me.MostLikesOnFirstPage = mostLikes;
 											me.TotalLikesOnFirstPage = totalLikes;
-										}
-										
-										callback({
-											success: true,
-											data: me
+												}
+												
+											callback({
+												success: true,
+												data: me
+											});
+												
+												me.Semaphore.leave();
+											}).fail(function() {
+											callback({
+												success: false,
+												data: null
+											});
+												
+												me.Semaphore.leave();
 										});
-										
-										me.Semaphore.leave();
-									}).fail(function() {
-										callback({
-											success: false,
-											data: null
-										});
-										
-										me.Semaphore.leave();
 									});
-								});
-							}
-						};
+								}
+							};
+						}
 					}
 				};
 				
