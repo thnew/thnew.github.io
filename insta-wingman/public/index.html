@@ -739,13 +739,20 @@
 							console.log("performAction('" + config.url + "', '" + config.action + "', " + typeof(callback) + ")");
 							console.log("Config object", config);
 							
+							/*Function to call to go on*/
+							function next() {
+								window.setTimeout(function() {
+									wrapper.remove();
+									
+									callback();
+								}, 1000);
+							}
+
 							/* If the IFrame doesn't load, remove it after a time */
 							var timeout = window.setTimeout(function() {
 								console.log("The action will be exited cause of a timeout");
 								
-								wrapper.remove();
-
-								callback();
+								next();
 							}, 30000);
 							
 							var iFrame = $("<iframe>")
@@ -766,15 +773,6 @@
 									
 									/*Wait till the page is fully built up*/
 									window.setTimeout(function() {
-										/*Function to call to go on*/
-										function next() {
-											window.setTimeout(function() {
-												wrapper.remove();
-												
-												callback();
-											}, 1000);
-										}
-										
 										/*Try to execute the action*/
 										var iframe = $("#InstaWindow");
 										
@@ -783,8 +781,6 @@
 											
 											switch(config.action.toLowerCase()) {
 												case "export-home-users":
-													isOneTimeAction= true;
-												
 													var users = getUsersFromFeed(iframe);
 													
 													console.log("Found users:", users);
@@ -1063,7 +1059,9 @@
 													console.log("Action " + action.toLowerCase() + " not found");
 											}
 										}
-										catch(e) {}
+										catch(e) {
+											next();
+										}
 									}, 1000);
 								});
 							
