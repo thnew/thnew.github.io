@@ -914,7 +914,7 @@
 																var user = users[f];
 																
 																/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
-																if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3 && !user.IsPrivate) {
+																if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3 && !user.IsPrivate && !user.FollowedByViewer) {
 																	commands.push({
 																		action: "follow",
 																		args: user.Name,
@@ -1288,59 +1288,60 @@
 										$.get(me.Url, function(resp) {
 												console.log("Analyze " + me.Name);
 												
-											var sharedData = resp.split("window._sharedData =");
-											sharedData = sharedData.pop();
-											sharedData = sharedData.split(";<\/script>")[0];
-											sharedData = sharedData.trim();
-												
-											try {
-												sharedData = JSON.parse(sharedData);
-											}
-											catch(e) {
-												console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
+												var sharedData = resp.split("window._sharedData =");
+												sharedData = sharedData.pop();
+												sharedData = sharedData.split(";<\/script>")[0];
+												sharedData = sharedData.trim();
+													
+												try {
+													sharedData = JSON.parse(sharedData);
+												}
+												catch(e) {
+													console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
+														
+													callback({
+														success: false,
+														data: me
+													});
+												}
+													
+												var user = sharedData.entry_data.ProfilePage[0].user;
+													
+												resp = $(resp);
+													
+												me.Posts = user.media.count;
+												me.Followers = user.followed_by.count;
+												me.Follows = user.follows.count;
+												me.IsPrivate = user.is_private;
+												me.FollowedByViewer = user.followed_by_viewer;
+													
+												if(!me.IsPrivate) {
+													var mostLikes = 0;
+													var totalLikes = 0;
+													for(var f in user.media.nodes) {
+														var media = user.media.nodes[f];
+														if(media.likes.count > mostLikes) {
+															mostLikes = media.likes.count;
+														}
+																
+														totalLikes += media.likes.count;
+													}
+															
+													me.MostLikesOnFirstPage = mostLikes;
+													me.TotalLikesOnFirstPage = totalLikes;
+												}
 													
 												callback({
-													success: false,
+													success: true,
 													data: me
 												});
-											}
-												
-											var user = sharedData.entry_data.ProfilePage[0].user;
-												
-											resp = $(resp);
-												
-											me.Posts = user.media.count;
-											me.Followers = user.followed_by.count;
-											me.Follows = user.follows.count;
-												me.IsPrivate = user.is_private;
-												
-												if(!me.IsPrivate) {
-											var mostLikes = 0;
-											var totalLikes = 0;
-											for(var f in user.media.nodes) {
-												var media = user.media.nodes[f];
-												if(media.likes.count > mostLikes) {
-													mostLikes = media.likes.count;
-												}
-														
-												totalLikes += media.likes.count;
-											}
 													
-											me.MostLikesOnFirstPage = mostLikes;
-											me.TotalLikesOnFirstPage = totalLikes;
-												}
-												
-											callback({
-												success: true,
-												data: me
-											});
-												
 												me.Semaphore.leave();
 											}).fail(function() {
-											callback({
-												success: false,
-												data: null
-											});
+												callback({
+													success: false,
+													data: null
+												});
 												
 												me.Semaphore.leave();
 										});
