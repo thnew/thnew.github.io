@@ -380,6 +380,7 @@
 											taskActive = false;
 										});
 										break;
+									case "export-non-followers":
 									case "export-followers":
 									case "export-followers-details":
 									case "export-following":
@@ -789,7 +790,7 @@
 													
 													console.log("Found users:", users);
 													
-													/* Start download */
+													/*Start download*/
 													downloadUsersAsCsv(users);
 													
 													/*Continue*/
@@ -803,7 +804,7 @@
 													loadAllUserInfos(users, function(users) {
 														console.log("Users", users);
 														
-														/* Start download */
+														/*Start download*/
 														downloadUsersAsCsv(users);
 														
 														/*Continue*/
@@ -815,7 +816,7 @@
 													loadFrontendList(iFrameContent, "followers", function(users) {
 														console.log("Users", users);
 														
-														/* Start download */
+														/*Start download*/
 														downloadUsersAsCsv(users);
 														
 														/*Continue*/
@@ -829,7 +830,7 @@
 														loadAllUserInfos(users, function(users) {
 															console.log("Users", users);
 															
-															/* Start download */
+															/*Start download*/
 															downloadUsersAsCsv(users);
 															
 															/*Continue*/
@@ -842,13 +843,54 @@
 													loadFrontendList(iFrameContent, "following", function(users) {
 														console.log("Users", users);
 														
-														/* Start download */
+														/*Start download*/
 														downloadUsersAsCsv(users);
 														
 														/*Continue*/
 														next();
 													});
 													break;
+													
+												case "export-non-followers":
+													/*Load followers*/
+													loadFrontendList(iFrameContent, "followers", function(followers) {
+														console.log("Follower-Users", followers);
+														
+														/*Load following*/
+														loadFrontendList(iFrameContent, "following", function(following) {
+															console.log("Following-Users", following);
+															
+															/*Find non followers*/
+															var nonFollowers = [];
+															
+															for(var f in following) {
+																var user = following[f];
+																
+																/*Search for user in followers*/
+																var isFollowing = false;
+																for(var g in followers) {
+																	var follower = followers[g];
+																	
+																	if(follower.Name == user.Name) {
+																		isFollowing = true;
+																		break;
+																	}
+																}
+																
+																if(!isFollowing) {
+																	nonFollowers.push(user);
+																}
+															}
+															
+															/*Start download*/
+															downloadUsersAsCsv(nonFollowers);
+															
+															/*Continue*/
+															next();
+														});
+													});
+													break;
+													
 												case "export-following-details":
 													loadFrontendList(iFrameContent, "following", function(users) {
 														console.log("Users", users);
@@ -856,7 +898,7 @@
 														loadAllUserInfos(users, function(users) {
 															console.log("Users", users);
 															
-															/* Start download */
+															/*Start download*/
 															downloadUsersAsCsv(users);
 															
 															/*Continue*/
@@ -1131,6 +1173,7 @@
 									/*Their only parameter is the username*/
 									case "follow":
 									case "unfollow":
+									case "export-non-followers":
 									case "export-followers":
 									case "export-followers-details":
 									case "export-following":
