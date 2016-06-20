@@ -335,8 +335,10 @@
 								
 								/*Flag item as active*/
 								command.setActive(true);
-								
-								switch(command.getAction().toLowerCase()) {
+
+								var action = command.getAction().toLowerCase();
+
+								switch(action) {
 									case "wait":
 										var startTime = new Date().getTime();
 										var waitInterval = window.setInterval(function() {
@@ -376,6 +378,10 @@
 										var user = command.getParam().user;
 										user.PerformAction(command.getAction(), command, function() {
 											command.remove();
+
+											if(action == "follow") {
+												addToFollowerBlacklist(user.Name);
+											}
 											
 											taskActive = false;
 										});
@@ -723,6 +729,49 @@
 								});
 							}, 1000);
 						}
+
+						/*Get the shole follower blacklist*/
+						function getFollowerBlacklist() {
+							var listFromLocalStorage = window.localStorage.getItem("FollowBlacklist");
+
+							try {
+								var list = JSON.parse(listFromLocalStorage);
+
+								return list;
+							}
+							catch(e) {
+								return [];
+							}
+						}
+
+						function followerBlacklistContains(username) {
+							var list = getFollowerBlacklist();
+
+							for(var i = 0; i < list.length; i++) {
+								if(list[i].Name.toLowerCase() == username.toLowerCase()) {
+									return true;
+								}
+							}
+
+							return false;
+						}
+
+						/*Get the shole follower blacklist*/
+						function setFollowerBlacklist(list) {
+							window.localStorage.setItem("FollowBlacklist", JSON.stringify(list));
+						}
+
+						/*Add a username to the follower blacklist*/
+						function addToFollowerBlacklist(username) {
+							var currentList = getFollowerBlacklist();
+
+							currentList.push({
+								Name: username,
+								FollowedSince: JSON.stringify(new Date())
+							});
+
+							setFollowerBlacklist(currentList);
+						}
 						
 						/*Shuffle an array*/
 						function shuffle(a) {
@@ -740,13 +789,20 @@
 							console.log("performAction('" + config.url + "', '" + config.action + "', " + typeof(callback) + ")");
 							console.log("Config object", config);
 							
+							/*Function to call to go on*/
+							function next() {
+								window.setTimeout(function() {
+									wrapper.remove();
+									
+									callback();
+								}, 1000);
+							}
+
 							/* If the IFrame doesn't load, remove it after a time */
 							var timeout = window.setTimeout(function() {
 								console.log("The action will be exited cause of a timeout");
 								
-								wrapper.remove();
-
-								callback();
+								next();
 							}, 30000);
 							
 							var iFrame = $("<iframe>")
@@ -767,15 +823,6 @@
 									
 									/*Wait till the page is fully built up*/
 									window.setTimeout(function() {
-										/*Function to call to go on*/
-										function next() {
-											window.setTimeout(function() {
-												wrapper.remove();
-												
-												callback();
-											}, 1000);
-										}
-										
 										/*Try to execute the action*/
 										var iframe = $("#InstaWindow");
 										
@@ -784,8 +831,6 @@
 											
 											switch(config.action.toLowerCase()) {
 												case "export-home-users":
-													isOneTimeAction= true;
-												
 													var users = getUsersFromFeed(iframe);
 													
 													console.log("Found users:", users);
@@ -960,7 +1005,13 @@
 																var user = users[f];
 																
 																/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
-																if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3 && !user.IsPrivate) {
+																if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3 && !user.IsPrivate && !user.FollowedByViewer && !user.FollowsUser) {
+
+																	if(followerBlacklistContains(user.Name)) {
+																		console.log("User '" + user.Name + "' is on the blacklist!");
+																		continue;
+																	}
+
 																	commands.push({
 																		action: "follow",
 																		args: user.Name,
@@ -1105,7 +1156,9 @@
 													console.log("Action " + action.toLowerCase() + " not found");
 											}
 										}
-										catch(e) {}
+										catch(e) {
+											next();
+										}
 									}, 1000);
 								});
 							
@@ -1333,59 +1386,61 @@
 										$.get(me.Url, function(resp) {
 												console.log("Analyze " + me.Name);
 												
-											var sharedData = resp.split("window._sharedData =");
-											sharedData = sharedData.pop();
-											sharedData = sharedData.split(";<\/script>")[0];
-											sharedData = sharedData.trim();
-												
-											try {
-												sharedData = JSON.parse(sharedData);
-											}
-											catch(e) {
-												console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
+												var sharedData = resp.split("window._sharedData =");
+												sharedData = sharedData.pop();
+												sharedData = sharedData.split(";<\/script>")[0];
+												sharedData = sharedData.trim();
+													
+												try {
+													sharedData = JSON.parse(sharedData);
+												}
+												catch(e) {
+													console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
+														
+													callback({
+														success: false,
+														data: me
+													});
+												}
+													
+												var user = sharedData.entry_data.ProfilePage[0].user;
+													
+												resp = $(resp);
+													
+												me.Posts = user.media.count;
+												me.Followers = user.followed_by.count;
+												me.Follows = user.follows.count;
+												me.IsPrivate = user.is_private;
+												me.FollowedByViewer = user.followed_by_viewer;
+												me.FollowsUser = user.follows_viewer;
+													
+												if(!me.IsPrivate) {
+													var mostLikes = 0;
+													var totalLikes = 0;
+													for(var f in user.media.nodes) {
+														var media = user.media.nodes[f];
+														if(media.likes.count > mostLikes) {
+															mostLikes = media.likes.count;
+														}
+																
+														totalLikes += media.likes.count;
+													}
+															
+													me.MostLikesOnFirstPage = mostLikes;
+													me.TotalLikesOnFirstPage = totalLikes;
+												}
 													
 												callback({
-													success: false,
+													success: true,
 													data: me
 												});
-											}
-												
-											var user = sharedData.entry_data.ProfilePage[0].user;
-												
-											resp = $(resp);
-												
-											me.Posts = user.media.count;
-											me.Followers = user.followed_by.count;
-											me.Follows = user.follows.count;
-												me.IsPrivate = user.is_private;
-												
-												if(!me.IsPrivate) {
-											var mostLikes = 0;
-											var totalLikes = 0;
-											for(var f in user.media.nodes) {
-												var media = user.media.nodes[f];
-												if(media.likes.count > mostLikes) {
-													mostLikes = media.likes.count;
-												}
-														
-												totalLikes += media.likes.count;
-											}
 													
-											me.MostLikesOnFirstPage = mostLikes;
-											me.TotalLikesOnFirstPage = totalLikes;
-												}
-												
-											callback({
-												success: true,
-												data: me
-											});
-												
 												me.Semaphore.leave();
 											}).fail(function() {
-											callback({
-												success: false,
-												data: null
-											});
+												callback({
+													success: false,
+													data: null
+												});
 												
 												me.Semaphore.leave();
 										});
