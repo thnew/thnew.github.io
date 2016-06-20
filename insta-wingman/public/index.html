@@ -366,7 +366,19 @@
 										break;
 									case "fill-console-all-day-long":
 									case "fill-console":
-										performAction({ url: "https://www.instagram.com", action: command.getAction(), command: command }, function() {
+										var url = "https://www.instagram.com";
+										
+										/*If a hashtag is given*/
+										var args_1 = command.getParam().args_1;
+										if(args_1[0] == "#") {
+											var hashtag = args_1.substr(1).trim();
+											
+											if(hashtag.length != 0) {
+												url = "https://www.instagram.com/explore/tags/" + hashtag;
+											}
+										}
+										
+										performAction({ url: url, action: command.getAction(), command: command }, function() {
 											command.remove();
 											
 											taskActive = false;
@@ -556,30 +568,101 @@
 						};
 						
 						/* Reads all users from the feed object and returns user-objects */
-						var getUsersFromFeed = function(iFrame) {
+						var getUsersFromIFrame = function(iFrame, callback) {
 							var frameWindow = document.getElementById(iFrame.attr("id")).contentWindow;
 							
+							var sharedData = frameWindow._sharedData;
+							
+							getUsersFromSharedData(sharedData, callback);
+						};
+						
+						var getUsersFromSharedData = function(sharedData, callback) {
+							var entryData = sharedData.entry_data;
 							var allUsers = [];
-							var feedMedia = frameWindow._sharedData.entry_data.FeedPage.pop().feed.media.nodes;
+							
+							var feedMedia = [];
+							
+							if(entryData.FeedPage != null) {
+								feedMedia = entryData.FeedPage.pop().feed.media.nodes;
+							}
+							else if(entryData.TagPage != null) {
+								feedMedia = entryData.TagPage.pop().tag.media.nodes;
+							}
+							else if(entryData.PostPage != null) {
+								feedMedia = [ entryData.PostPage.pop().media ];
+							}
 							
 							/* Go through the own feed */
+							var urlsToGrabLikesFrom = [];
 							for(var f in feedMedia) {
 								var media = feedMedia[f];
+								
+								/*Add the owner of the media*/
 								allUsers.push(new User({
 									Name: media.owner.username
 								}));
 								
-								/* Go through the likes of the media */
-								for(var g in media.likes.nodes) {
-									var like = media.likes.nodes[g];
+								/*Go through the likes of the media*/
+								if(media.likes.nodes != null) {
+									for(var g in media.likes.nodes) {
+										var like = media.likes.nodes[g];
+										
+										allUsers.push(new User({
+											Name: like.user.username
+										}));
+									}
+								}
+								/*If nodes is null, try to load the picture and then*/
+								else if(media.likes.count > 0) {
+									var mediaCode = media.code;
+									var url = "https://www.instagram.com/p/" + mediaCode;
 									
-									allUsers.push(new User({
-										Name: like.user.username
-									}));
+									urlsToGrabLikesFrom.push(url);
 								}
 							}
 							
-							return allUsers;
+							/*If there are any URLs to get the likes/users from*/
+							if(urlsToGrabLikesFrom.length > 0) {
+								var loadLikes = function(list, allUsers, i) {
+									if(i == null) i = 0;
+									
+									if(i >= list.length) {
+										callback(allUsers);
+										return;
+									}
+									
+									console.debug("Analyze likes of URL " + (i + 1) + " of " + list.length + " -> " + list[i]);
+									$.get(list[i], function(resp) {
+										var sharedData = resp.split("window._sharedData =");
+										sharedData = sharedData.pop();
+										sharedData = sharedData.split(";<\/script>")[0];
+										sharedData = sharedData.trim();
+										
+										try {
+											sharedData = JSON.parse(sharedData);
+										}
+										catch(e) {
+											console.log("getUsersFromSharedData().loadLikes() - response sharedData could not be JSON parsed: ", sharedData);
+											
+											/*Continue to next URL*/
+											loadLikes(list, allUsers, i + 1);
+											return;
+										}
+										
+										getUsersFromSharedData(sharedData, function(likingUsers) {
+											allUsers = allUsers.concat(likingUsers);
+											
+											/*Continue to next URL*/
+											loadLikes(list, allUsers, i + 1);
+										});
+									});
+								};
+								
+								loadLikes(urlsToGrabLikesFrom, allUsers);
+							}
+							else {
+								callback(allUsers);
+							}
 						};
 						
 						/* Takes a list of user objects and loads their details step by step */
@@ -737,7 +820,7 @@
 							try {
 								var list = JSON.parse(listFromLocalStorage);
 
-								return list;
+								return list || [];
 							}
 							catch(e) {
 								return [];
@@ -831,29 +914,29 @@
 											
 											switch(config.action.toLowerCase()) {
 												case "export-home-users":
-													var users = getUsersFromFeed(iframe);
-													
-													console.log("Found users:", users);
-													
-													/*Start download*/
-													downloadUsersAsCsv(users);
-													
-													/*Continue*/
-													next();
-													break;
-												case "export-home-users-details":
-													var users = getUsersFromFeed(iframe);
-													
-													console.log("Found users:", users);
-													
-													loadAllUserInfos(users, function(users) {
-														console.log("Users", users);
+													getUsersFromIFrame(iframe, function(users) {
+														console.log("Found users:", users);
 														
 														/*Start download*/
 														downloadUsersAsCsv(users);
 														
 														/*Continue*/
 														next();
+													});
+													break;
+												case "export-home-users-details":
+													getUsersFromIFrame(iframe, function(users) {
+														console.log("Found users:", users);
+														
+														loadAllUserInfos(users, function(users) {
+															console.log("Users", users);
+															
+															/*Start download*/
+															downloadUsersAsCsv(users);
+															
+															/*Continue*/
+															next();
+														});
 													});
 													break;
 												
@@ -994,125 +1077,130 @@
 													/*var max = config.command.getParam().max || INT_MAX;*/
 													var maxUsers = 100;
 													
-													var users = getUsersFromFeed(iframe).slice(0, maxUsers);
+													var args_1 = config.command.getParam().args_1;
 													
-													loadAllUserInfos(users, function(users) {
-														console.log("Users", users);
+													/*Get users*/
+													getUsersFromIFrame(iframe, function(users) {
+														users = users.slice(0, maxUsers);
 														
-														/*Get follow commands*/
-														if(config.command.getParam().args_1 != "giveloveto") {
-															for(var f in users) {
-																var user = users[f];
-																
-																/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
-																if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3 && !user.IsPrivate && !user.FollowedByViewer && !user.FollowsUser) {
-
-																	if(followerBlacklistContains(user.Name)) {
-																		console.log("User '" + user.Name + "' is on the blacklist!");
-																		continue;
-																	}
-
-																	commands.push({
-																		action: "follow",
-																		args: user.Name,
-																		parameters: { user: new User({ Name: user.Name }) }
-																	});
-																}
-															}
-														}
-														
-														/*Get giveloveto commands*/
-														if(config.command.getParam().args_1 != "follow") {
-															for(var f in users) {
-																var user = users[f];
-																
-																/*Cause too big instagrammers won't recognize yur likes*/
-																if(user.Followers < 2000 && user.Follows < 1000 && user.Posts > 1 && !user.IsPrivate) {
-																	commands.push({
-																		action: "giveloveto",
-																		args: user.Name,
-																		parameters: { user: new User({ Name: user.Name }) }
-																	});
-																}
-															}
-														}
-														
-														/*Shuffle all commands*/
-														shuffle(commands);
-														
-														if(!modeAllDayLong) {
-															/*Add waiting time every 10 follow commands*/
-															var followCount = 0;
-															for(var f in commands) {
-																var command = commands[f];
-																
-																if(command.action == "follow") {
-																	followCount++;
-																}
-																
-																if(followCount == 10) {
-																	commands.splice(f, 0, {
-																		action: "wait",
-																		args: "900s",
-																		parameters: { waitTime: 900 * 1000 }
-																	});
+														loadAllUserInfos(users, function(users) {
+															console.log("Users", users);
+															
+															/*Get follow commands*/
+															if(args_1 != "giveloveto") {
+																for(var f in users) {
+																	var user = users[f];
 																	
-																	followCount = 0;
+																	/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
+																	if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3 && !user.IsPrivate && !user.FollowedByViewer && !user.FollowsUser) {
+
+																		if(followerBlacklistContains(user.Name)) {
+																			console.log("User '" + user.Name + "' is on the blacklist!");
+																			continue;
+																		}
+
+																		commands.push({
+																			action: "follow",
+																			args: user.Name,
+																			parameters: { user: new User({ Name: user.Name }) }
+																		});
+																	}
 																}
 															}
 															
-															/*If it should be repeated, add command*/
-															if(config.command.getParam().args_1 == "repeat") {
-																console.log("Repeat fill-console");
+															/*Get giveloveto commands*/
+															if(args_1 != "follow") {
+																for(var f in users) {
+																	var user = users[f];
+																	
+																	/*Cause too big instagrammers won't recognize yur likes*/
+																	if(user.Followers < 2000 && user.Follows < 1000 && user.Posts > 1 && !user.IsPrivate) {
+																		commands.push({
+																			action: "giveloveto",
+																			args: user.Name,
+																			parameters: { user: new User({ Name: user.Name }) }
+																		});
+																	}
+																}
+															}
+															
+															/*Shuffle all commands*/
+															shuffle(commands);
+															
+															if(!modeAllDayLong) {
+																/*Add waiting time every 10 follow commands*/
+																var followCount = 0;
+																for(var f in commands) {
+																	var command = commands[f];
+																	
+																	if(command.action == "follow") {
+																		followCount++;
+																	}
+																	
+																	if(followCount == 10) {
+																		commands.splice(f, 0, {
+																			action: "wait",
+																			args: "900s",
+																			parameters: { waitTime: 900 * 1000 }
+																		});
+																		
+																		followCount = 0;
+																	}
+																}
+																
+																/*If it should be repeated, add command*/
+																if(args_1 == "repeat") {
+																	console.log("Repeat fill-console");
+																	commands.push({
+																		action: "fill-console",
+																		args: "repeat",
+																		parameters: config.command.getParam()
+																	});
+																}
+															}
+															else {
+																/*Prevent following more than 10 followers*/
+																var followCount = 0;
+																for(var f in commands) {
+																	var command = commands[f];
+																	
+																	if(command.action == "follow") {
+																		followCount++;
+																	}
+																	
+																	if(followCount == 11) {
+																		/*Delete all after this index*/
+																		commands.splice(f, INT_MAX);
+																		
+																		break;
+																	}
+																}
+																
+																/*Add wait*/
 																commands.push({
-																	action: "fill-console",
-																	args: "repeat",
+																	action: "wait",
+																	args: "2400s",
+																	parameters: { waitTime: 2400 * 1000 }
+																});
+																
+																/*Repeat it*/
+																commands.push({
+																	action: "fill-console-all-day-long",
+																	args: "",
 																	parameters: config.command.getParam()
 																});
 															}
-														}
-														else {
-															/*Prevent following more than 10 followers*/
-															var followCount = 0;
-															for(var f in commands) {
-																var command = commands[f];
+															
+															/*Add all commands*/
+															for(var i = commands.length - 1; i >= 0; i--) {
+																var command = commands[i];
 																
-																if(command.action == "follow") {
-																	followCount++;
-																}
-																
-																if(followCount == 11) {
-																	/*Delete all after this index*/
-																	commands.splice(f, INT_MAX);
-																	
-																	break;
-																}
+																addCommand(command.action, command.args, command.parameters, true);
 															}
 															
-															/*Add wait*/
-															commands.push({
-																action: "wait",
-																args: "2400s",
-																parameters: { waitTime: 2400 * 1000 }
-															});
-															
-															/*Repeat it*/
-															commands.push({
-																action: "fill-console-all-day-long",
-																args: "",
-																parameters: config.command.getParam()
-															});
-														}
-														
-														/*Add all commands*/
-														for(var i = commands.length - 1; i >= 0; i--) {
-															var command = commands[i];
-															
-															addCommand(command.action, command.args, command.parameters, true);
-														}
-														
-														/*Continue*/
-														next();
+															/*Continue*/
+															next();
+														});
 													});
 													break;
 													
@@ -1212,9 +1300,8 @@
 									case "fill-console-all-day-long":
 									case "fill-console":
 										var args_1 = parts.length > 1 ? parts[1] : "";
-										var max = parts.length > 2 ? parts[2] : "";
 										
-										addCommand(action, args_1 + " " + max, { args_1: args_1, max: max });
+										addCommand(action, args_1, { args_1: args_1  });
 										break;
 										
 									/*They don't need any parameters*/
@@ -1384,65 +1471,65 @@
 									
 									me.Semaphore.take(function() {
 										$.get(me.Url, function(resp) {
-												console.log("Analyze " + me.Name);
+											console.log("Analyze " + me.Name);
+											
+											var sharedData = resp.split("window._sharedData =");
+											sharedData = sharedData.pop();
+											sharedData = sharedData.split(";<\/script>")[0];
+											sharedData = sharedData.trim();
 												
-												var sharedData = resp.split("window._sharedData =");
-												sharedData = sharedData.pop();
-												sharedData = sharedData.split(";<\/script>")[0];
-												sharedData = sharedData.trim();
+											try {
+												sharedData = JSON.parse(sharedData);
+											}
+											catch(e) {
+												console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
 													
-												try {
-													sharedData = JSON.parse(sharedData);
-												}
-												catch(e) {
-													console.log("LoadInfo() - response sharedData could not be JSON parsed: ", sharedData);
-														
-													callback({
-														success: false,
-														data: me
-													});
-												}
-													
-												var user = sharedData.entry_data.ProfilePage[0].user;
-													
-												resp = $(resp);
-													
-												me.Posts = user.media.count;
-												me.Followers = user.followed_by.count;
-												me.Follows = user.follows.count;
-												me.IsPrivate = user.is_private;
-												me.FollowedByViewer = user.followed_by_viewer;
-												me.FollowsUser = user.follows_viewer;
-													
-												if(!me.IsPrivate) {
-													var mostLikes = 0;
-													var totalLikes = 0;
-													for(var f in user.media.nodes) {
-														var media = user.media.nodes[f];
-														if(media.likes.count > mostLikes) {
-															mostLikes = media.likes.count;
-														}
-																
-														totalLikes += media.likes.count;
-													}
-															
-													me.MostLikesOnFirstPage = mostLikes;
-													me.TotalLikesOnFirstPage = totalLikes;
-												}
-													
-												callback({
-													success: true,
-													data: me
-												});
-													
-												me.Semaphore.leave();
-											}).fail(function() {
 												callback({
 													success: false,
-													data: null
+													data: me
 												});
-												
-												me.Semaphore.leave();
+											}
+											
+											var user = sharedData.entry_data.ProfilePage[0].user;
+											
+											resp = $(resp);
+											
+											me.Posts = user.media.count;
+											me.Followers = user.followed_by.count;
+											me.Follows = user.follows.count;
+											me.IsPrivate = user.is_private;
+											me.FollowedByViewer = user.followed_by_viewer;
+											me.FollowsUser = user.follows_viewer;
+											
+											if(!me.IsPrivate) {
+												var mostLikes = 0;
+												var totalLikes = 0;
+												for(var f in user.media.nodes) {
+													var media = user.media.nodes[f];
+													if(media.likes.count > mostLikes) {
+														mostLikes = media.likes.count;
+													}
+															
+													totalLikes += media.likes.count;
+												}
+														
+												me.MostLikesOnFirstPage = mostLikes;
+												me.TotalLikesOnFirstPage = totalLikes;
+											}
+											
+											callback({
+												success: true,
+												data: me
+											});
+											
+											me.Semaphore.leave();
+										}).fail(function() {
+											callback({
+												success: false,
+												data: null
+											});
+											
+											me.Semaphore.leave();
 										});
 									});
 								}
