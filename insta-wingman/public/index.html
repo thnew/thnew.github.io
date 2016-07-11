@@ -341,7 +341,8 @@
 								switch(action) {
 									case "wait":
 										var startTime = new Date().getTime();
-										var waitTime = command.getParam().waitTime;
+										var param = command.getParam();
+										var waitTime = (param == null ? null : param.waitTime);
 										
 										/*If waitTime is null, cancel execution TODO: This must not happen! Finde out why it happens*/
 										if(waitTime == null) {
