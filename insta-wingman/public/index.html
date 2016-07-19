@@ -341,9 +341,19 @@
 								switch(action) {
 									case "wait":
 										var startTime = new Date().getTime();
+										var param = command.getParam();
+										var waitTime = (param == null ? null : param.waitTime);
+										
+										/*If waitTime is null, cancel execution TODO: This must not happen! Finde out why it happens*/
+										if(waitTime == null) {
+											command.remove();
+											taskActive = false;
+											break;
+										}
+										
 										var waitInterval = window.setInterval(function() {
 											var executeTime = new Date().getTime() - startTime;
-											var remaining = command.getParam().waitTime - executeTime;
+											var remaining = waitTime - executeTime;
 											
 											if(remaining < 0) {
 												window.clearInterval(waitInterval);
@@ -1078,130 +1088,138 @@
 													var maxUsers = 100;
 													
 													var args_1 = config.command.getParam().args_1;
+													var isHashtag = (args_1[0] == "#");
 													
-													/*Get users*/
-													getUsersFromIFrame(iframe, function(users) {
-														users = users.slice(0, maxUsers);
-														
-														loadAllUserInfos(users, function(users) {
-															console.log("Users", users);
+													/*Load more photos from hashtag page*/
+													if(isHashtag) {
+														$("._oidfu", iFrameContent).click();
+													}
+													
+													window.setTimeout(function(){
+														/*Get users*/
+														getUsersFromIFrame(iframe, function(users) {
+															users = users.slice(0, maxUsers);
 															
-															/*Get follow commands*/
-															if(args_1 != "giveloveto") {
-																for(var f in users) {
-																	var user = users[f];
-																	
-																	/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
-																	if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3 && !user.IsPrivate && !user.FollowedByViewer && !user.FollowsUser) {
-
-																		if(followerBlacklistContains(user.Name)) {
-																			console.log("User '" + user.Name + "' is on the blacklist!");
-																			continue;
-																		}
-
-																		commands.push({
-																			action: "follow",
-																			args: user.Name,
-																			parameters: { user: new User({ Name: user.Name }) }
-																		});
-																	}
-																}
-															}
-															
-															/*Get giveloveto commands*/
-															if(args_1 != "follow") {
-																for(var f in users) {
-																	var user = users[f];
-																	
-																	/*Cause too big instagrammers won't recognize yur likes*/
-																	if(user.Followers < 2000 && user.Follows < 1000 && user.Posts > 1 && !user.IsPrivate) {
-																		commands.push({
-																			action: "giveloveto",
-																			args: user.Name,
-																			parameters: { user: new User({ Name: user.Name }) }
-																		});
-																	}
-																}
-															}
-															
-															/*Shuffle all commands*/
-															shuffle(commands);
-															
-															if(!modeAllDayLong) {
-																/*Add waiting time every 10 follow commands*/
-																var followCount = 0;
-																for(var f in commands) {
-																	var command = commands[f];
-																	
-																	if(command.action == "follow") {
-																		followCount++;
-																	}
-																	
-																	if(followCount == 10) {
-																		commands.splice(f, 0, {
-																			action: "wait",
-																			args: "900s",
-																			parameters: { waitTime: 900 * 1000 }
-																		});
+															loadAllUserInfos(users, function(users) {
+																console.log("Users", users);
+																
+																/*Get follow commands*/
+																if(args_1 != "giveloveto") {
+																	for(var f in users) {
+																		var user = users[f];
 																		
-																		followCount = 0;
+																		/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
+																		if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3 && !user.IsPrivate && !user.FollowedByViewer && !user.FollowsUser) {
+
+																			if(followerBlacklistContains(user.Name)) {
+																				console.log("User '" + user.Name + "' is on the blacklist!");
+																				continue;
+																			}
+
+																			commands.push({
+																				action: "follow",
+																				args: user.Name,
+																				parameters: { user: new User({ Name: user.Name }) }
+																			});
+																		}
 																	}
 																}
 																
-																/*If it should be repeated, add command*/
-																if(args_1 == "repeat") {
-																	console.log("Repeat fill-console");
+																/*Get giveloveto commands*/
+																if(args_1 != "follow") {
+																	for(var f in users) {
+																		var user = users[f];
+																		
+																		/*Cause too big instagrammers won't recognize yur likes*/
+																		if(user.Followers < 2000 && user.Follows < 1000 && user.Posts > 1 && !user.IsPrivate) {
+																			commands.push({
+																				action: "giveloveto",
+																				args: user.Name,
+																				parameters: { user: new User({ Name: user.Name }) }
+																			});
+																		}
+																	}
+																}
+																
+																/*Shuffle all commands*/
+																shuffle(commands);
+																
+																if(!modeAllDayLong) {
+																	/*Add waiting time every 10 follow commands*/
+																	var followCount = 0;
+																	for(var f in commands) {
+																		var command = commands[f];
+																		
+																		if(command.action == "follow") {
+																			followCount++;
+																		}
+																		
+																		if(followCount == 10) {
+																			commands.splice(f, 0, {
+																				action: "wait",
+																				args: "900s",
+																				parameters: { waitTime: 900 * 1000 }
+																			});
+																			
+																			followCount = 0;
+																		}
+																	}
+																	
+																	/*If it should be repeated, add command*/
+																	if(args_1 == "repeat") {
+																		console.log("Repeat fill-console");
+																		commands.push({
+																			action: "fill-console",
+																			args: "repeat",
+																			parameters: config.command.getParam()
+																		});
+																	}
+																}
+																else {
+																	/*Prevent following more than 10 followers*/
+																	var followCount = 0;
+																	for(var f in commands) {
+																		var command = commands[f];
+																		
+																		if(command.action == "follow") {
+																			followCount++;
+																		}
+																		
+																		if(followCount == 11) {
+																			/*Delete all after this index*/
+																			commands.splice(f, INT_MAX);
+																			
+																			break;
+																		}
+																	}
+																	
+																	/*Add wait*/
 																	commands.push({
-																		action: "fill-console",
-																		args: "repeat",
+																		action: "wait",
+																		args: "2400s",
+																		parameters: { waitTime: 2400 * 1000 }
+																	});
+																	
+																	/*Repeat it*/
+																	commands.push({
+																		action: "fill-console-all-day-long",
+																		args: "",
 																		parameters: config.command.getParam()
 																	});
 																}
-															}
-															else {
-																/*Prevent following more than 10 followers*/
-																var followCount = 0;
-																for(var f in commands) {
-																	var command = commands[f];
+																
+																/*Add all commands*/
+																for(var i = commands.length - 1; i >= 0; i--) {
+																	var command = commands[i];
 																	
-																	if(command.action == "follow") {
-																		followCount++;
-																	}
-																	
-																	if(followCount == 11) {
-																		/*Delete all after this index*/
-																		commands.splice(f, INT_MAX);
-																		
-																		break;
-																	}
+																	addCommand(command.action, command.args, command.parameters, true);
 																}
 																
-																/*Add wait*/
-																commands.push({
-																	action: "wait",
-																	args: "2400s",
-																	parameters: { waitTime: 2400 * 1000 }
-																});
-																
-																/*Repeat it*/
-																commands.push({
-																	action: "fill-console-all-day-long",
-																	args: "",
-																	parameters: config.command.getParam()
-																});
-															}
-															
-															/*Add all commands*/
-															for(var i = commands.length - 1; i >= 0; i--) {
-																var command = commands[i];
-																
-																addCommand(command.action, command.args, command.parameters, true);
-															}
-															
-															/*Continue*/
-															next();
+																/*Continue*/
+																next();
+															});
 														});
-													});
+													}, 1000);
 													break;
 													
 												case "like":
