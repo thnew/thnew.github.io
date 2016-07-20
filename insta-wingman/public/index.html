@@ -269,6 +269,8 @@
 								/*style += ".insta-console_item.insta-console_item-giveloveto:before { content: '\\2665'; margin-right: 5px; }";*/
 								style += ".insta-console_item.insta-console_item-follow:before { content: '\\21D2'; margin-right: 5px; }";
 								style += ".insta-console_item.insta-console_item-unfollow:before { content: '\\21D0'; margin-right: 5px; }";
+								style += ".insta-console_item.insta-console_item-unfollow-non-follower:before { content: '\\21D0'; margin-right: 5px; }";
+								style += ".insta-console_item.insta-console_item-unfollow-old-follower:before { content: '\\21D0'; margin-right: 5px; }";
 								
 								style += ".insta-console_item_remove { display: inline-block; float: right; cursor: pointer; }";
 								style += ".insta-console_item_remove:before { content: 'remove'; }";
@@ -408,7 +410,7 @@
 											for(var f in usersToUnfollow) {
 												var user = usersToUnfollow[f];
 												
-												addCommand("unfollow", user.Name, { user: user }, true);
+												addCommand("unfollow-old-follower", user.Name, { user: user }, true);
 											}
 											
 											command.remove();
@@ -417,6 +419,8 @@
 										break;
 									
 									case "follow":
+									case "unfollow-old-follower":
+									case "unfollow-non-follower":
 									case "unfollow":
 									case "giveloveto":
 										var user = command.getParam().user;
@@ -480,11 +484,11 @@
 						}
 						
 						function getNonFollowersToUnfollow(amountOfPeopleToUnfollow, callback) {
-							getPeopleToUnfollow(3, false, amountOfPeopleToUnfollow, callback);
+							getPeopleToUnfollow(3, false, amountOfPeopleToUnfollow, callback, true);
 						}
 						
 						/*Returns defined amount of people to unfollow*/
-						function getPeopleToUnfollow(followingDays, followsUser, amountOfPeopleToUnfollow, callback) {
+						function getPeopleToUnfollow(followingDays, followsUser, amountOfPeopleToUnfollow, callback, searchReverse) {
 							amountOfPeopleToUnfollow = amountOfPeopleToUnfollow || 10;
 							
 							var followerBlacklist = getFollowerBlacklist();
@@ -495,7 +499,7 @@
 								peopleToUnfollow = peopleToUnfollow || [];
 								index = index || 0;
 								
-								if(index > followerBlacklist.length - 1) {
+								if((!searchReverse && index > followerBlacklist.length - 1) || (searchReverse && index < 0)) {
 									callback(peopleToUnfollow);
 									return;
 								}
@@ -531,15 +535,17 @@
 											elem.UnfollowedSince = getDateTimeNowString();
 										}
 										
-										step(followerBlacklist, remainingUnfollows, callback, index + 1, peopleToUnfollow);
+										step(followerBlacklist, remainingUnfollows, callback, index + (searchReverse ? -1 : 1), peopleToUnfollow);
 									});
 								}
 								else {
-									step(followerBlacklist, remainingUnfollows, callback, index + 1, peopleToUnfollow);
+									step(followerBlacklist, remainingUnfollows, callback, index + (searchReverse ? -1 : 1), peopleToUnfollow);
 								}
 							};
 							
-							step(followerBlacklist, amountOfPeopleToUnfollow, callback);
+							var startIndex = (!searchReverse ? 0 : followerBlacklist.length - 1);
+							
+							step(followerBlacklist, amountOfPeopleToUnfollow, callback, startIndex);
 						};
 						
 						/* Returns the next command to be executed */
@@ -1197,138 +1203,150 @@
 														getUsersFromIFrame(iframe, function(users) {
 															users = users.slice(0, maxUsers);
 															
-															/*Get people to unfollow*/
-															getNonFollowersToUnfollow(15, function(usersToUnfollow) {
-																console.log(usersToUnfollow);
-																
+															/*Get old followers to unfollow*/
+															getOldFollowersToUnfollow(5, function(oldFollowersToUnfollow) {
 																/*Add the people to unfollow*/
-																for(var f in usersToUnfollow) {
-																	var user = usersToUnfollow[f];
+																for(var f in oldFollowersToUnfollow) {
+																	var user = oldFollowersToUnfollow[f];
 																	
 																	commands.push({
-																		action: "unfollow",
+																		action: "unfollow-old-follower",
 																		args: user.Name,
 																		parameters: { user: new User({ Name: user.Name }) }
 																	});
 																}
 																
-																loadAllUserInfos(users, function(users) {
-																	console.log("Users", users);
-																	
-																	/*Get follow commands*/
-																	if(args_1 != "giveloveto") {
-																		for(var f in users) {
-																			var user = users[f];
-																			
-																			/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
-																			if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3 && !user.IsPrivate && !user.FollowedByViewer && !user.FollowsUser) {
-
-																				if(followerBlacklistContains(user.Name)) {
-																					console.log("User '" + user.Name + "' is on the blacklist!");
-																					continue;
-																				}
-
-																				commands.push({
-																					action: "follow",
-																					args: user.Name,
-																					parameters: { user: new User({ Name: user.Name }) }
-																				});
-																			}
-																		}
+																/*Get non-followers to unfollow*/
+																getNonFollowersToUnfollow(10, function(nonFollowersToUnfollow) {
+																	/*Add the people to unfollow*/
+																	for(var f in nonFollowersToUnfollow) {
+																		var user = nonFollowersToUnfollow[f];
+																		
+																		commands.push({
+																			action: "unfollow-non-follower",
+																			args: user.Name,
+																			parameters: { user: new User({ Name: user.Name }) }
+																		});
 																	}
 																	
-																	/*Get giveloveto commands*/
-																	if(args_1 != "follow") {
-																		for(var f in users) {
-																			var user = users[f];
-																			
-																			/*Cause too big instagrammers won't recognize yur likes*/
-																			if(user.Followers < 2000 && user.Follows < 1000 && user.Posts > 1 && !user.IsPrivate) {
-																				commands.push({
-																					action: "giveloveto",
-																					args: user.Name,
-																					parameters: { user: new User({ Name: user.Name }) }
-																				});
-																			}
-																		}
-																	}
-																	
-																	/*Shuffle all commands*/
-																	shuffle(commands);
-																	
-																	if(!modeAllDayLong) {
-																		/*Add waiting time every 10 follow/unfollow commands*/
-																		var followCount = 0;
-																		for(var f in commands) {
-																			var command = commands[f];
-																			
-																			if(["follow", "unfollow"].indexOf(command.action) > -1) {
-																				followCount++;
-																			}
-																			
-																			if(followCount == 10) {
-																				commands.splice(f, 0, {
-																					action: "wait",
-																					args: "900s",
-																					parameters: { waitTime: 900 * 1000 }
-																				});
+																	loadAllUserInfos(users, function(users) {
+																		console.log("Users", users);
+																		
+																		/*Get follow commands*/
+																		if(args_1 != "giveloveto") {
+																			for(var f in users) {
+																				var user = users[f];
 																				
-																				followCount = 0;
+																				/*Cause of this target group will unfollow you just between 30% and 50% after you unfollow them*/
+																				if(user.Followers < 400 && user.Follows < 400 && user.Posts > 3 && !user.IsPrivate && !user.FollowedByViewer && !user.FollowsUser) {
+
+																					if(followerBlacklistContains(user.Name)) {
+																						console.log("User '" + user.Name + "' is on the blacklist!");
+																						continue;
+																					}
+
+																					commands.push({
+																						action: "follow",
+																						args: user.Name,
+																						parameters: { user: new User({ Name: user.Name }) }
+																					});
+																				}
 																			}
 																		}
 																		
-																		/*If it should be repeated, add command*/
-																		if(args_1 == "repeat") {
-																			console.log("Repeat fill-console");
+																		/*Get giveloveto commands*/
+																		if(args_1 != "follow") {
+																			for(var f in users) {
+																				var user = users[f];
+																				
+																				/*Cause too big instagrammers won't recognize yur likes*/
+																				if(user.Followers < 2000 && user.Follows < 1000 && user.Posts > 1 && !user.IsPrivate) {
+																					commands.push({
+																						action: "giveloveto",
+																						args: user.Name,
+																						parameters: { user: new User({ Name: user.Name }) }
+																					});
+																				}
+																			}
+																		}
+																		
+																		/*Shuffle all commands*/
+																		shuffle(commands);
+																		
+																		if(!modeAllDayLong) {
+																			/*Add waiting time every 10 follow/unfollow commands*/
+																			var followCount = 0;
+																			for(var f in commands) {
+																				var command = commands[f];
+																				
+																				if(["follow", "unfollow", "unfollow-non-follower", "unfollow-old-follower"].indexOf(command.action) > -1) {
+																					followCount++;
+																				}
+																				
+																				if(followCount == 10) {
+																					commands.splice(f, 0, {
+																						action: "wait",
+																						args: "900s",
+																						parameters: { waitTime: 900 * 1000 }
+																					});
+																					
+																					followCount = 0;
+																				}
+																			}
+																			
+																			/*If it should be repeated, add command*/
+																			if(args_1 == "repeat") {
+																				console.log("Repeat fill-console");
+																				commands.push({
+																					action: "fill-console",
+																					args: "repeat",
+																					parameters: config.command.getParam()
+																				});
+																			}
+																		}
+																		else {
+																			/*Prevent following more than 10 followers*/
+																			var followCount = 0;
+																			for(var f in commands) {
+																				var command = commands[f];
+																				
+																				if(["follow", "unfollow", "unfollow-non-follower", "unfollow-old-follower"].indexOf(command.action) > -1) {
+																					followCount++;
+																				}
+																				
+																				if(followCount == 11) {
+																					/*Delete all after this index*/
+																					commands.splice(f, INT_MAX);
+																					
+																					break;
+																				}
+																			}
+																			
+																			/*Add wait*/
 																			commands.push({
-																				action: "fill-console",
-																				args: "repeat",
+																				action: "wait",
+																				args: "2400s",
+																				parameters: { waitTime: 2400 * 1000 }
+																			});
+																			
+																			/*Repeat it*/
+																			commands.push({
+																				action: "fill-console-all-day-long",
+																				args: "",
 																				parameters: config.command.getParam()
 																			});
 																		}
-																	}
-																	else {
-																		/*Prevent following more than 10 followers*/
-																		var followCount = 0;
-																		for(var f in commands) {
-																			var command = commands[f];
+																		
+																		/*Add all commands*/
+																		for(var i = commands.length - 1; i >= 0; i--) {
+																			var command = commands[i];
 																			
-																			if(["follow", "unfollow"].indexOf(command.action) > -1) {
-																				followCount++;
-																			}
-																			
-																			if(followCount == 11) {
-																				/*Delete all after this index*/
-																				commands.splice(f, INT_MAX);
-																				
-																				break;
-																			}
+																			addCommand(command.action, command.args, command.parameters, true);
 																		}
 																		
-																		/*Add wait*/
-																		commands.push({
-																			action: "wait",
-																			args: "2400s",
-																			parameters: { waitTime: 2400 * 1000 }
-																		});
-																		
-																		/*Repeat it*/
-																		commands.push({
-																			action: "fill-console-all-day-long",
-																			args: "",
-																			parameters: config.command.getParam()
-																		});
-																	}
-																	
-																	/*Add all commands*/
-																	for(var i = commands.length - 1; i >= 0; i--) {
-																		var command = commands[i];
-																		
-																		addCommand(command.action, command.args, command.parameters, true);
-																	}
-																	
-																	/*Continue*/
-																	next();
+																		/*Continue*/
+																		next();
+																	});
 																});
 															});
 														});
@@ -1359,6 +1377,8 @@
 													/*Continue*/
 													next();
 													break;
+												case "unfollow-non-follower":
+												case "unfollow-old-follower":
 												case "unfollow":
 													var btn = $("._r4e4p", iFrameContent);
 													
@@ -1456,6 +1476,8 @@
 									
 									/*Their only parameter is the username*/
 									case "follow":
+									case "unfollow-old-follower":
+									case "unfollow-non-follower":
 									case "unfollow":
 									case "export-non-followers":
 									case "export-followers":
@@ -1656,7 +1678,7 @@
 													if(media.likes.count > mostLikes) {
 														mostLikes = media.likes.count;
 													}
-															
+													
 													totalLikes += media.likes.count;
 												}
 														
