@@ -401,7 +401,7 @@
 										break;
 									
 									case "unfollow-ten-old-followers":
-										getOldPeopleToUnfollow(10, function(usersToUnfollow) {
+										getOldFollowersToUnfollow(10, function(usersToUnfollow) {
 											console.log(usersToUnfollow);
 											
 											/*Unfollow the people*/
@@ -475,13 +475,21 @@
 							};
 						}
 						
+						function getOldFollowersToUnfollow(amountOfPeopleToUnfollow, callback) {
+							getPeopleToUnfollow(30, true, amountOfPeopleToUnfollow, callback);
+						}
+						
+						function getNonFollowersToUnfollow(amountOfPeopleToUnfollow, callback) {
+							getPeopleToUnfollow(3, false, amountOfPeopleToUnfollow, callback);
+						}
+						
 						/*Returns defined amount of people to unfollow*/
-						function getOldPeopleToUnfollow(amountOfPeopleToUnfollow, callback) {
+						function getPeopleToUnfollow(followingDays, followsUser, amountOfPeopleToUnfollow, callback) {
 							amountOfPeopleToUnfollow = amountOfPeopleToUnfollow || 10;
 							
 							var followerBlacklist = getFollowerBlacklist();
 							/*Unfollow if actor followed this guy more than 30 days ago*/
-							var unfollowElderThan = new Date().getTime() - new Date(1970, 0, 30).getTime();
+							var unfollowElderThan = new Date().getTime() - new Date(1970, 0, followingDays).getTime();
 							
 							var step = function(followerBlacklist, remainingUnfollows, callback, index, peopleToUnfollow) {
 								peopleToUnfollow = peopleToUnfollow || [];
@@ -503,7 +511,7 @@
 									
 									user.LoadInfo(function(resp){
 										if(resp.success) {
-											if(resp.data.FollowedByViewer) {
+											if(followsUser == resp.data.FollowsUser && resp.data.FollowedByViewer) {
 												peopleToUnfollow.push(user);
 												remainingUnfollows--;
 											}
@@ -518,6 +526,7 @@
 											}
 										}
 										
+										/*No success means user dows not exist, so remove | If user is not followed by viewer, remove*/
 										if(!resp.success || resp.data == null || !resp.data.FollowedByViewer) {
 											elem.UnfollowedSince = getDateTimeNowString();
 										}
@@ -1173,7 +1182,7 @@
 													var commands = [];
 													
 													/*var max = config.command.getParam().max || INT_MAX;*/
-													var maxUsers = 50;
+													var maxUsers = 30;
 													
 													var args_1 = config.command.getParam().args_1;
 													var isHashtag = (args_1[0] == "#");
@@ -1189,7 +1198,7 @@
 															users = users.slice(0, maxUsers);
 															
 															/*Get people to unfollow*/
-															getOldPeopleToUnfollow(15, function(usersToUnfollow) {
+															getNonFollowersToUnfollow(15, function(usersToUnfollow) {
 																console.log(usersToUnfollow);
 																
 																/*Add the people to unfollow*/
