@@ -25,12 +25,6 @@ namespace InstaConsole
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "FollowerApi",
-                routeTemplate: "api/follower/{username}/{action}",
-                defaults: new { id = RouteParameter.Optional, controller = "Follower", username = UrlParameter.Optional, action = UrlParameter.Optional }
-            );
-
-            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }

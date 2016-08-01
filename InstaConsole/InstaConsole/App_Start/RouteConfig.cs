@@ -14,6 +14,12 @@ namespace InstaConsole
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "FollowerApi",
+                url: "follower/{username}/{action}",
+                defaults: new { id = UrlParameter.Optional, controller = "Follower", username = UrlParameter.Optional, action = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

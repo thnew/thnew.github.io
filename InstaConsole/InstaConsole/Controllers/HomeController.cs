@@ -12,5 +12,10 @@ namespace InstaConsole.Controllers
         {
             return View();
         }
+
+        public ActionResult ApiTest()
+        {
+            return View();
+        }
     }
 }

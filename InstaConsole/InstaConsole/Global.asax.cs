@@ -1,5 +1,7 @@
-﻿using System;
+﻿using InstaConsole.Data.Entities;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -18,6 +20,12 @@ namespace InstaConsole
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            // using your DbContext to create and manage your database
+            using (var context = new InstaConsoleDbContext())
+            {
+                context.Database.Initialize(force: true);
+            }
         }
     }
 }
