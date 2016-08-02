@@ -7,8 +7,10 @@ using System;
 
 namespace InstaConsole.Models
 {
-    public class FollowerApiDto
+    public class FollowerApiDto : IScriptTransferDto
     {
+        public string TargetAttribute { get; set; }
+
         public string Username { get; set; }
         public DateTime FollowedSince { get; set; }
         public DateTime UnfollowedAt { get; set; }

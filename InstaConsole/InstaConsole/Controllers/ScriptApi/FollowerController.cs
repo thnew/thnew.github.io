@@ -2,15 +2,16 @@
 using InstaConsole.Data.Entities;
 using InstaConsole.Models;
 using InstaConsole.Repository;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace InstaConsole.Controllers
+namespace InstaConsole.Controllers.ScriptApi
 {
-    public class FollowerController : Controller
+    public class FollowerController : ScriptApiController
     {
         public List<FollowerApiDto> Followers { get; set; }
         private FollowerNotesRepository repository = new FollowerNotesRepository();
@@ -41,16 +42,12 @@ namespace InstaConsole.Controllers
             return "Delete " + username;
         }
 
+        [Authorize(Roles="User")]
         [HttpGet]
-        public string Add(string username, [ModelBinder(typeof(FollowerApiDtoModelBinder))]FollowerApiDto follower)
+        public ActionResult Update(string username, [ModelBinder(typeof(FollowerApiDtoModelBinder))]FollowerApiDto follower)
         {
-            return "Update " + username;
-        }
-
-        [HttpGet]
-        public string Update(string username, FollowerApiDto follower)
-        {
-            return "Update " + username;
+            System.Threading.Thread.Sleep(2000);
+            return new ScriptApiActionResult(follower.TargetAttribute, follower);
         }
     }
 }

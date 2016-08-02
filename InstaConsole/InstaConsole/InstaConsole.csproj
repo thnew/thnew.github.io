@@ -204,7 +204,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\Api\AccountController.cs" />
-    <Compile Include="Controllers\FollowerController.cs" />
+    <Compile Include="Controllers\ScriptApi\ScriptApiController.cs" />
+    <Compile Include="Controllers\ScriptApi\FollowerController.cs" />
     <Compile Include="Controllers\ModelBinders\FollowerApiDtoModelBinder.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -214,12 +215,14 @@
     <Compile Include="Data\Entities\User.cs" />
     <Compile Include="Data\Entities\IEntity.cs" />
     <Compile Include="Data\Entities\FollowerNote.cs" />
-    <Compile Include="Exceptions\GeneralExceptions\GeneralExceptions.cs" />
+    <Compile Include="Exceptions\GeneralExceptions\NotYetImplementedException.cs" />
+    <Compile Include="Exceptions\ScriptApiExceptions\TargetAttributeNotSetException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IScriptTransferDto.cs" />
     <Compile Include="Models\FollowerApiDto.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -241,6 +244,7 @@
     <Content Include="Content\Images\howToUse_3.jpg" />
     <Content Include="Content\Images\howToUse_4.jpg" />
     <Content Include="Content\Register.css" />
+    <Compile Include="CustomActions\ScriptApiActionResult.cs" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -288,6 +292,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\Home\ApiTest.cshtml" />
+    <Content Include="Views\ScriptApi\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

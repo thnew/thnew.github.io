@@ -1,4 +1,5 @@
-﻿using InstaConsole.Models;
+﻿using InstaConsole.Exceptions.ScriptApiExceptions;
+using InstaConsole.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,13 @@ namespace InstaConsole.Controllers.ModelBinders
             var authDatetime = queryParam["authDatetime"];
             var authHash = queryParam["authHash"];
 
+            var targetAttribute = queryParam["targetAttribute"];
+
+            if (String.IsNullOrEmpty(targetAttribute))
+            {
+                throw new TargetAttributeNotSetException();
+            }
+
             // Read username from route
             ValueProviderResult routeUserName = bindingContext.ValueProvider.GetValue("username");
             var userName = routeUserName.AttemptedValue;
@@ -33,6 +41,8 @@ namespace InstaConsole.Controllers.ModelBinders
             
             return new FollowerApiDto
             {
+                TargetAttribute = targetAttribute,
+
                 Username = userName,
 
                 FollowedSince = followedSince,
