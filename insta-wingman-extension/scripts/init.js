@@ -5,6 +5,13 @@ var followerNote = {
 	followedSince: DateTimeNow(),
 	unfollowedAt: DateTimeNow()
 };
-app.repositoryFactory.followerNoteRepository.CreateFollowerNote(followerNote);
 
-console.log("Ende Gelände");
+window.setTimeout(function(){
+	app.repositoryFactory.followerNoteRepository.CreateFollowerNote(followerNote);
+	
+	app.repositoryFactory.followerNoteRepository.CreateFollowerNote(followerNote);
+	
+	app.repositoryFactory.followerNoteRepository.CreateFollowerNote(followerNote);
+}, 1000);
+
+console.info("Finished Initialization");

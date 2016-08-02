@@ -8,11 +8,21 @@
 	</head>
 	<body>
 		<header class="main-header">
-			<h1>
+			<h1 class="title">
 				<i class="fa fa-instagram"></i>
 				<!--<i class="fa fa-terminal"></i>-->
 				INSTA Console
 			</h1>
+			
+			<div id="ServerRequestLoadingLabel">
+				<span class="serverRequestLoadingLabel serverRequestLoadingLabel-loading">
+					<span id="ServerRequestLoadingLabel-count">0</span> items left to synchronize <i class="fa fa-refresh fa-spin"></i>
+				</span>
+				
+				<span class="serverRequestLoadingLabel serverRequestLoadingLabel-not-loading">
+					Everything up to date <i class="fa fa-check"></i>
+				</span>
+			</div>
 		</header>
 		
 		<div class="main-content">

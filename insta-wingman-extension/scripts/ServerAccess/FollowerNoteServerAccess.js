@@ -10,8 +10,10 @@ FollowerNoteServerAccess.prototype = {
 			unfollowedAt: followerNote.unfollowedAt
 		};
 		
-		var path = "/follower/" + followerNote.username + "/add";
+		var path = "/follower/" + followerNote.username + "/update";
 		
-		this.serverRequest.Request(path, queryParam);
+		this.serverRequest.Request(path, queryParam, function(resp) {
+			console.log("resp", resp);
+		});
 	}
 };

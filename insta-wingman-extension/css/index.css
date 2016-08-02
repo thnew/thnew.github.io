@@ -7,6 +7,10 @@ body {
 	margin:			0px;
 }
 
+.title {
+	padding-bottom: 0px !important;
+}
+
 .main-header h1 {
 	padding:	10px;
 	margin:		0px;
@@ -78,4 +82,24 @@ body {
 }
 .insta-console_item_remove:before {
 	content: 'remove';
+}
+
+#ServerRequestLoadingLabel {
+	padding-bottom: 10px;
+}
+
+#ServerRequestLoadingLabel .serverRequestLoadingLabel {
+	display: none;
+}
+
+#ServerRequestLoadingLabel .serverRequestLoadingLabel-not-loading {
+	display: block;
+}
+
+#ServerRequestLoadingLabel.serverRequestLoadingLabel-loading .serverRequestLoadingLabel-loading {
+	display: block;
+}
+
+#ServerRequestLoadingLabel.serverRequestLoadingLabel-loading .serverRequestLoadingLabel-not-loading {
+	display: none;
 }
