@@ -1,0 +1,12 @@
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\bin\Release\VisionApiTest.exe.config
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\bin\Release\geckodriver.exe
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\bin\Release\IEDriverServer.exe
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\bin\Release\VisionApiTest.exe
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\bin\Release\VisionApiTest.pdb
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\bin\Release\Microsoft.ProjectOxford.Vision.dll
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\bin\Release\Newtonsoft.Json.dll
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\bin\Release\WebDriver.dll
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\bin\Release\Newtonsoft.Json.xml
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\bin\Release\WebDriver.xml
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\obj\Release\VisionApiTest.exe
+d:\users\thhe4de\documents\visual studio 2015\Projects\VisionApiTest\VisionApiTest\obj\Release\VisionApiTest.pdb
