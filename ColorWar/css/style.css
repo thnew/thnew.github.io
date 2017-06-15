@@ -1,0 +1,314 @@
+body {
+	background-color:	#0094FF;
+	font-family:		'Underdog', cursive;
+	margin:				0px;
+	padding:			0px;
+	cursor:				default;
+	overflow:			hidden;
+}
+
+input {
+	font-family:		'Underdog', cursive;
+	outline:			none;
+}
+
+body > header {
+	text-align:	center;
+	background:	#eee;
+	height:		30px;
+	z-index:	100;
+}
+
+body > header div {
+	position:		relative;
+	bottom:			-10px;
+	margin:			0px auto;
+	padding-bottom:	5px;
+	border-radius:	0px 0px 30px 30px;
+	width:			320px;
+	background:		#eee;
+	font-size:		50px;
+	text-shadow:	-1px -1px 1px #000, 1px 1px 1px #fff;
+	color:			#999;
+	z-index:		100;
+}
+
+.hide {
+	display:	none !important;
+}
+
+.playerRow  {
+	position:		absolute;
+	left:			50%;
+	margin-left:	-550px;
+	width:			1100px;
+	height:			60px;
+}
+
+.playerRow.top {
+	top:			180px;
+}
+
+.playerRow.bottom {
+	bottom:			20px;
+}
+
+.playerRow div {
+	position:			absolute;
+	color:				#fff;
+	font-size:			30px;
+	padding:			10px;
+	border-radius:		10px;
+}
+
+.playerRow div:first-child {
+	left:				0px;
+	top:				0px;
+}
+
+.playerRow div:last-child {
+	right:				0px;
+	top:				0px;
+}
+
+.playerRow div.active {
+	background-color:	#000;
+}
+
+.playerRow div .name {
+	cursor:	text;
+}
+
+#GameTipp .content {
+	font-size:	20px;
+	width:		400px;
+}
+
+/*Modal*/
+	.modal {
+		width:				500px;
+		position:			absolute;
+		top:				300px;
+		left:				50%;
+		margin-left:		-250px;
+		background-color:	#fff;
+		overflow:			hidden;
+		border:				15px solid #eee;
+		border-radius:		15px;
+		padding:			15px;
+		box-shadow:			0px 0px 15px #000;
+		display:			none;
+		z-index:			999999;
+	}
+	
+	.modal h1 {
+		margin:				-15px;
+		padding:			15px;
+		background-color:	#eee;
+		font-size:			40px;
+		box-shadow:			0px 2px 2px #aaa;
+	}
+	
+	.modal section {
+		min-height:		70px;
+		margin-top:		40px;
+		margin-left:	20px;
+	}
+	
+	.modal section li.clickable {
+		font-size:	30px;
+	}
+	
+	.modal section i.fa-refresh, .modal section i.fa-check {
+		position:	absolute;
+		bottom:		30px;
+		right:		30px;
+		font-size:	50px;
+	}
+
+/*ChooseName*/
+	.chooseNameModal input {
+		font-size:		30px;
+		border:			5px solid #000;
+		padding:		5px;
+		border-radius:	15px;
+	}
+	
+	.chooseNameModal h1 i {
+		float:			right;
+		margin-right:	20px;
+	}
+
+/*clickable*/
+	.clickable {
+		cursor:		pointer;
+	}
+		
+	.clickable:hover {
+		text-shadow:	0px 0px 3px #000;
+	}
+
+/*Shadow*/
+	#Shadow {
+		background-color:	#000;
+		opacity:			0.2;
+		position:			fixed;
+		top:				0px;
+		left:				0px;
+		height:				100%;
+		width:				100%;
+		display:			none;
+		z-index:			999999;
+	}
+
+/*Game finished*/
+	#GameFinished h1 i.fa-star {
+		color:			#FFD800;
+		float:			right;
+		text-shadow:	0px 0px 15px #7F6A00;
+	}
+	
+	#GameFinished section ol {
+		font-size:	30px;
+	}
+
+#Actions {
+	float:		right;
+	opacity:	0.1;
+}
+
+#Actions:hover {
+	opacity:	1;
+}
+	
+/*Playground and ColorSelection*/
+	#Playground {
+		position:		absolute;
+		top:			245px;
+		left:			50%;
+		width:			1100px;
+		background:		#fff;
+		border-radius:	10px;
+		margin:			0px auto;
+		margin-left:	-575px;
+		padding:		10px 10px 15px 10px;
+		border:			15px solid #eee;
+		box-shadow:		0px 0px 5px #000;
+	}
+	
+	#ColorSelection {
+		background:		#fff;
+		padding:		10px;
+		font-size:		30px;
+		z-index:		99;
+		box-shadow:		0px 2px 2px #aaa;
+		overflow:		hidden;
+		white-space:	nowrap;
+	}
+	
+	#ColorSelection .playername {
+		font-weight:	bold;
+	}
+	
+	#ColorSelection > header {
+		margin-bottom:	10px;
+	}
+	
+	#ColorSelection br {
+		margin-bottom:	100px;
+	}
+	
+	#ColorSelection li, #Playground li {
+		width:				10px;
+		height:				10px;
+		margin:				2.9px 0 0 2.9px;
+		background:			#000;
+		display:			inline-block;
+		border:				1px solid transparent;
+		border-radius:		3px;
+		list-style-type:	none;
+	}
+	
+	#Playground li i {
+		margin:		4px;
+	}
+	
+	#Playground li i.fa-circle {
+		visibility:	hidden;
+	}
+	
+	#ColorSelection li {
+		width:		10.7%;
+		height:		60px;
+	}
+	
+	#ColorSelection li.disabled {
+		opacity:	0.05;
+		cursor:		default;
+	}
+	
+	#ColorSelection li div {
+		text-align:	center;
+		font-size:	50px;
+		color:		#fff;
+	}
+	
+	#Playground li[Player="0"], #Playground li[Player="1"], #Playground li[Player="2"], #Playground li[Player="3"] {
+		box-shadow:		0px 0px 5px #000;
+		border-color:	#000;
+	}
+	
+	#ColorSelection li[Color="blue"], #Playground li[Color="blue"] {
+		background-color:	#0094FF;
+	}
+	
+	#ColorSelection li[Color="red"], #Playground li[Color="red"] {
+		background-color:	#FF0000;
+	}
+	
+	#ColorSelection li[Color="brown"], #Playground li[Color="brown"] {
+		background-color:	#E05600;
+	}
+	
+	#ColorSelection li[Color="pink"], #Playground li[Color="pink"] {
+		background-color:	#FF00DC;
+	}
+	
+	#ColorSelection li[Color="green"], #Playground li[Color="green"] {
+		background-color:	#00D819;
+	}
+	
+	#ColorSelection li[Color="yellow"], #Playground li[Color="yellow"] {
+		background-color:	#FFD800;
+	}
+	
+	#ColorSelection li[Color="lila"], #Playground li[Color="lila"] {
+		background-color:	#B200FF;
+	}
+	
+	#ColorSelection li[Color="grey"], #Playground li[Color="grey"] {
+		background-color:	#999;
+	}
+	
+	#ColorSelection li[Color="black"], #Playground li[Color="black"] {
+		background-color:	#000;
+	}
+	
+	#Playground li[Color="black"] i {
+		color:	#fff;
+	}
+
+@media only screen and (max-width: 992px) {
+	#Playground li {
+		width:				9px;
+		height:				9px;
+		margin:				2.6px 0 0 2.6px;
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	#ColorSelection li {
+		width:		10%;
+		height:		60px;
+	}
+}

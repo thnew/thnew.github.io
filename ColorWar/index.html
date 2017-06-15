@@ -1,0 +1,145 @@
+<html>
+	<head>
+		<title>
+			Color War
+		</title>
+		
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+		<link href='http://fonts.googleapis.com/css?family=Underdog' rel='stylesheet' type='text/css' />
+		
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="js/Playground.js"></script>
+		<script type="text/javascript" src="js/GameTipp.js"></script>
+		
+		<script type="text/javascript" src="js/app.js"></script>
+	</head>
+	
+	<body>
+		<header>
+			<div>
+				<i class="fa fa-bomb"></i> Color War
+			</div>
+		</header>
+		
+		<section id="ColorSelection">
+			<header>
+				It's your turn <span class="playername"></span>
+				
+				<div id="Actions">
+					<span class="description"></span>
+					
+					<i class="fa fa-group clickable" title="Play multiplayer"></i>
+					<i class="fa fa-trash-o clickable" title="Reset names etc."></i>
+					<i class="fa fa-refresh clickable" title="New game"></i>
+					<span class="fields clickable" title="Choose new size">16x9</span>
+				</div>
+			</header>
+		</section>
+		
+		<div id="Shadow"></div>
+		
+		<div id="GameTipp" class="modal">
+			<h1>
+				<i class="fa fa-lightbulb-o"></i>
+				<span class="title">Title</span>
+			</h1>
+			
+			<section>
+				<div class="content"></div>
+				
+				<i class="fa fa-check clickable"></i>
+			</section>
+		</div>
+		
+		<div id="GameFinished" class="modal">
+			<h1>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<i class="fa fa-star"></i>
+				<span>Player1</span> won!
+			</h1>
+			
+			<section>
+				<ol></ol>
+				
+				<i class="fa fa-refresh clickable"></i>
+			</section>
+		</div>
+		
+		<div id="ChooseNameSinglePlayer" class="modal chooseNameModal">
+			<h1>
+				Choose a name
+				
+				<i class="fa fa-group clickable hide" title="Play multiplayer"></i>
+			</h1>
+			
+			<section>
+				<input type="text" value="Player1" />
+				
+				<i class="fa fa-check clickable"></i>
+			</section>
+		</div>
+		
+		<div id="ChooseNameMultiPlayer" class="modal chooseNameModal">
+			<h1>
+				How many players?
+			</h1>
+			
+			<section>
+				<li class="clickable" data-players="1">1 Player</li>
+				<li class="clickable" data-players="2">2 Players</li>
+				<li class="clickable" data-players="3">3 Players</li>
+				<li class="clickable" data-players="4">4 Players</li>
+			</section>
+		</div>
+		
+		<div id="ChooseSize" class="modal">
+			<h1>
+				Choose the field size
+			</h1>
+			
+			<section>
+				<li class="clickable" data-fieldsx="16" data-fieldsy="6">16x6</li>
+				<li class="clickable" data-fieldsx="32" data-fieldsy="12">32x12</li>
+				<li class="clickable" data-fieldsx="48" data-fieldsy="18">48x18</li>
+				<li class="clickable" data-fieldsx="64" data-fieldsy="24">64x24</li>
+				
+				<li class="clickable">Cancel</li>
+			</section>
+		</div>
+		
+		<section id="Game">
+			<section class="playerRow top">
+				<div id="Player0" player="0">
+					<i class="fa fa-user"></i>
+					<span class="name">Player1</span>
+					(<span class="count">1</span>)
+				</div>
+				
+				<div id="Player1" player="1">
+					<i class="fa fa-rocket"></i>
+					<span class="name">Bot-man</span>
+					(<span class="count">1</span>)
+				</div>
+			</section>
+			
+			<section id="Playground"></section>
+			
+			<section class="playerRow bottom">
+				<div id="Player2" player="2">
+					<i class="fa fa-rocket"></i>
+					<span class="name">Compu-guy</span>
+					(<span class="count">1</span>)
+				</div>
+				
+				<div id="Player3" player="3">
+					<i class="fa fa-rocket"></i>
+					<span class="name">KI-dude</span>
+					(<span class="count">1</span>)
+				</div>
+			</section>
+		</section>
+	</body>
+</html>
