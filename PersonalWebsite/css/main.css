@@ -1,0 +1,153 @@
+body {
+	color: #ECF0F1;
+	font-size: 13px;
+	line-height: 23px;
+	background-color: #2B2B2B;
+	font-family: 'Encode Sans Expanded', sans-serif;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.fixed-width-md {
+	width: 660px;
+	margin: 10px auto;
+}
+
+@media (max-width: 660px) {
+	.fixed-width-md {
+		width: 100%;
+	}
+}
+
+.separator {
+	height: 20px;
+}
+
+.modal {
+	color: #2B2B2B;
+}
+
+/*.page-header*/
+.page-header {
+	position: relative;
+	height: 140px;
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	border-bottom: 1px dashed rgba(255, 255, 255, 0.5);
+}
+
+	.page-header .page-header__image {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		width:  100px;
+		height: 100px;
+		-webkit-filter: grayscale(100%);
+		filter: grayscale(100%);
+	}
+
+	.page-header .page-header__title {
+		position: absolute;
+		top: 25px;
+		left: 130px;
+		right: 0px;
+		font-size: 500%;
+	}
+
+	.page-header .page-header__description {
+		position: absolute;
+		bottom: 25px;
+		left: 130px;
+		right: 0px;
+		font-size: 200%;
+	}
+
+	.page-header .page-header__description .page-header__description__image {
+		height: 23px;
+	}
+	
+	
+@media (max-width: 768px) {
+	.page-header {
+		position: relative;
+		height: 70px;
+	}
+	
+		.page-header .page-header__image {
+			width:  50px;
+			height: 50px;
+		}
+		
+		.page-header .page-header__title {
+			left: 70px;
+			top: 10px;
+			font-size: 200%;
+		}
+
+		.page-header .page-header__description {
+			bottom: 5px;
+			left: 70px;
+			right: 0px;
+			font-size: 100%;
+		}
+}
+
+/*.dashed-border*/
+.dashed-border {
+	border: 1px dashed rgba(255, 255, 255, 0.5);
+	padding: 15px 20px;
+	display: inline-block;
+	margin-bottom: 10px;
+}
+
+/*.basic-info-item*/
+.basic-info-item {
+	display: block;
+	font-size: 150%;
+	line-height: 35px;
+}
+
+/*.contact-item */
+.contact-item {
+	font-size: 100%;
+	display: inline-block;
+	padding: 10px;
+	width: 45px;
+	text-align: center;
+	color: inherit;
+	margin-right: 10px;
+}
+
+/*.skill-item*/
+.skill-item {
+	margin-right: 5px;
+	font-size: 100%;
+	padding: 10px;
+}
+
+	.skill-item.skill-item-link {
+		background: #ECF0F1;
+		color: #2B2B2B;
+		opacity: 0.5;
+		cursor: pointer;
+	}
+	
+		.skill-item.skill-item-link:hover{
+			opacity: 1;
+		}
+
+/*.project-item*/
+.project-item {
+		margin-bottom: 10px;
+}
+
+	.project-item .project-item__title {
+		font-size: 150%;
+	}
+
+	.project-item  .project-item__description {
+		margin-top: 10px;
+	}

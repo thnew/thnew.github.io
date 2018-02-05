@@ -1,14 +1,14 @@
-
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
 		<title>Thomas Heigl</title>
+		
 		<!-- Description, Keywords and Author -->
 		<meta name="description" content="Your description">
-		<meta name="keywords" content="Your,Keywords">
-		<meta name="author" content="ResponsiveWebInc">
+		<meta name="keywords" content="Consultant, C#, MVC, HTML, Web Development">
+		<meta name="author" content="Thomas Heigl">
 		
+		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		
 		<!-- Styles -->
@@ -17,178 +17,211 @@
 		<!-- Font awesome CSS -->
 		<link href="css/font-awesome.min.css" rel="stylesheet">
 		
+		<link href="https://fonts.googleapis.com/css?family=Encode+Sans+Expanded" rel="stylesheet">
 		
 		<!-- Main CSS -->
-		<link href="css/style-168.css" rel="stylesheet">
-				
-		<!-- Favicon -->
-		<link rel="shortcut icon" href="#">
+		<link href="css/main.css" rel="stylesheet">
 	</head>
 	
-	<body class="bg-black">
-		<!-- UI # -->
-		<div class="ui-168">
-			<!-- Head starts -->
-			<div class="head clearfix">
-				<!-- Name -->
-				<div class="name">
-					<h2><a href="#">Thomas Heigl</a></h2>
+	<body ng-app="ProfilePage" ng-controller="ProfilePageController">
+		<div class="fixed-width-md">
+			<header class="page-header">
+				<img class="page-header__image"
+					 src="images/profile.png" />
+				
+				<div class="page-header__title">
+					Thomas Heigl
 				</div>
-				<!-- Description -->
-				<div class="details">
-					Hi, I'm Thomas and i am from Hamburg, Germany. I have been developing websites and software since 2005
+				
+				<div class="page-header__description">
+					<!-- <img class="page-header__description__image"
+						 src="images/certificate.png" /> -->
+					
+					Fullstack Microsoft Webdeveloper
 				</div>
-			</div>	
-			<!-- Head ends -->
+			</header>
+			
+			<div class="separator"></div>
+			
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="basic-info-item dashed-border">
+						<i class="fa fa-envelope"></i>
+						&nbsp;
+						Informatik B.Sc.
+					</div>
+				</div>
+				
+				<div class="col-sm-6">
+					<div class="basic-info-item dashed-border">
+						<i class="fa fa-home"></i>
+						&nbsp;
+						Hamburg, Germany
+					</div>
+				</div>
+				
+				<div class="col-sm-6">
+					<div class="basic-info-item dashed-border">
+						<i class="fa fa-certificate"></i>
+						&nbsp;
+						Microsoft Zertifiziert
+						<i class="fa fa-info-circle text-info clickable"
+						   ng-click="showCertificate()"></i>
+					</div>
+				</div>
+			</div>
+			
+			<div class="separator"></div>
 
-			<!-- Contact -->
-			<div class="contact">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-6 col-sm-6">
-							<!-- Contact item -->
-							<div class="c-item">
-								<!-- Icon -->
-								<i class="fa fa-envelope"></i>
-								<!-- Details -->
-								<div class="c-details">
-									thomasheigl2 (at) gmail.com
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<!-- Contact item -->
-							<div class="c-item">
-								<!-- Icon -->
-								<i class="fa fa-home"></i>
-								<!-- Details -->
-								<div class="c-details">
-									Hamburg, Germany
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<!-- Social Media -->
-							<div class="social">
-								<a href="https://www.facebook.com/thomas.heigl.9">
-									<i class="fa fa-facebook"></i>
-								</a>
-								<a href="https://www.xing.com/profile/Thomas_Heigl9">
-									<i class="fa fa-xing"></i>
-								</a>
-							</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<a href="mailto: thomasheigl2@gmail.com" class="contact-item dashed-border">
+						<i class="fa fa-envelope"></i>
+					</a>
+					<a href="https://www.facebook.com/thomas.heigl.9" class="contact-item dashed-border">
+						<i class="fa fa-facebook"></i>
+					</a>
+					<a href="https://www.xing.com/profile/Thomas_Heigl9" class="contact-item dashed-border">
+						<i class="fa fa-xing"></i>
+					</a>
+				</div>
+			</div>
+			
+			<div class="separator"></div>
+			
+			<h2>
+				Skills
+				<small>sortiert nach Monaten an Praxiserfahrung</small>
+				<br />
+				<br />
+			</h2>
+			
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="skill-item dashed-border"
+					     ng-repeat="skill in skills | orderBy: '-months'"
+						 ng-show="showSkillsWithFewMonthsExperience || skill.months >= minMonthsToDisplaySkill">
+						 {{ skill.name }} ({{ skill.months }})
+					 </div>
+					 
+					 <div class="skill-item skill-item-link dashed-border noprint"
+					      ng-click="showSkillsWithFewMonthsExperience = !showSkillsWithFewMonthsExperience">
+						 Zeige Skills mit weniger als {{ minMonthsToDisplaySkill }} Monaten Erfahrung
+					 </div>
+				</div>
+			</div>
+			
+			<div class="separator"></div>
+			
+			<h2>
+				Alle Projekte
+				<br />
+				<br />
+			</h2>
+			
+			<div class="row"
+				 ng-repeat="project in projects">
+				<div class="col-sm-3">
+					<div class="text-center">
+						<strong>
+							{{ project.months }} Monate
+						</strong>
+					</div>
+					<div class="text-center">
+						<span>
+							{{ project.start | date: "MM/yyyy" }}
+						</span>
+						bis
+						<span ng-show="project.end != null">
+							{{ project.end | date: "MM/yyyy" }}
+						</span>
+						<span ng-show="project.end == null">
+							heute
+						</span>
+					</div>
+					<div class="text-center">
+						
+					</div>
+				</div>
+				<div class="col-sm-9">
+					<div class="project-item dashed-border">
+						<div class="project-item__title">
+							<i class="fa fa-desktop" ng-show="project.typeOfSoftware == 'Web'"></i>
+							<i class="fa fa-windows" ng-show="project.typeOfSoftware == 'Desktop'"></i>
+							&nbsp;
+							{{ project.title }}
 						</div>
 						
-						<div class="col-xs-12">
-							<br />
-						</div>
-
-						<div class="col-xs-12">
-							<!-- Skills -->
-							<div class="skills">
-								<span>HTML</span>
-								<span>CSS</span>
-								<span>jQuery</span>
-								<span>PHP</span>
-								<span>MySQL</span>
-								<span>MsSQL</span>
-								<span>MongoDB</span>
-								<span>NodeJS</span>
-								<span>ASP.NET MVC</span>
-								<span>C#</span>
-								<span>Java</span>
-								<span>JavaScript</span>
-							</div>
-						</div>
-
-						<div class="col-xs-12">
-							<!-- Contact item -->
-							<div class="c-item">
-								<!-- Icon -->
-								<i class="fa fa-envelope"></i>
-								<!-- Details -->
-								<div class="c-details">
-									Projects
-
-									Baumarkt Direkt<br />
-										In this project we developed a website to support the communication between the company "Baumarkt Direkt" and their oversea suppliers. In this project I took part as a frontend developer and partly as a backend developer.
-										<br />
-										<span class="label label-default">JavaScript</span>
-										<span class="label label-default">HTML</span>
-										<span class="label label-default">CSS</span>
-										<span class="label label-default">Java</span>
-										<span class="label label-default">AngularJS</span>
-										<span class="label label-default">SCSS</span>
-										<br />
-									Performance Bookmarklet<br />
-										This small project was for the OTTO group. They have a big focus on optimizing the performance of their website, so I developed a bookmarklet that shows various performance metrics directly on the website.
-										<span class="label label-default">JavaScript</span>
-										<span class="label label-default">HTML</span>
-										<span class="label label-default">CSS</span>
-										<br />
-									Traffic Reader<br />
-										The traffic reader is a one week project I did to support the EVE system in Hamburg. It reads the forecasted traffic times in the area of the Hamburg harbour by retriving the forecasts from Google Maps and other map services. This tool is part of a bigger project, which targets the  optimization of the traffic light control in the harbour.<br />
-										<span class="label label-default">JavaScript</span>
-										<span class="label label-default">NodeJS</span>
-										<br />
-									Accerlated Uploads<br />
-										This was my bachelor project. I developed a framework which targeted to save upload time by just uploading the parts of a file, that were not yet available in an already existing file at the server.<br />
-										<span class="label label-default">NodeJS</span>
-										<span class="label label-default">JavaScript</span>
-										<br />
-									Marketing Platform<br />
-										The purpose of this small project was to make all the marketing material of the company easily available for all consultants of the company using a website.<br />
-										<span class="label label-default">JavaScript</span>
-										<span class="label label-default">HTML</span>
-										<span class="label label-default">CSS</span>
-										<span class="label label-default">Less</span>
-										<span class="label label-default">AngularJS</span>
-										<span class="label label-default">NodeJS</span>
-										<br />
-									CloudPassword<br />
-										In scope of a university project, I developed a password manager website for the Glück & Kanja Consulting AG to manage their passwords and any other sensible data like credit cards, or software license keys.<br />
-										<span class="label label-default">HMTL</span>
-										<span class="label label-default">CSS</span>
-										<span class="label label-default">ASP.NET MVC</span>
-										<span class="label label-default">C#</span>
-										<span class="label label-default">Amazon Web Services</span>
-										<br />
-									CloudFTP<br />
-										For easily exchanging big files with the customers, I developed this website for the Glück & Kanja Consulting AG.<br />
-										<span class="label label-default">HTML</span>
-										<span class="label label-default">CSS</span>
-										<span class="label label-default">JavaScript</span>
-										<span class="label label-default">Amazon Web Services</span>
-										<span class="label label-default">Microsoft Azure</span>
-										<br />
-									Racing Monitor<br />
-										For the Glück & Kanja Consulting AG I developed a racing monitor for realtime logging and displaying the ranking list of a Carrera racing course.<br />
-										<span class="label label-default">C#</span>
-										<br />
-									My own blog<br />
-										For around 5 years long I developed my own blog where I posted funny stuff. I did it with PHP and gained a lot of programming skills doing this.<br />
-										<span class="label label-default">PHP</span>
-										<span class="label label-default">JavaScript</span>
-										<span class="label label-default">HTML</span>
-										<span class="label label-default">CSS</span>
-								</div>
-							</div>
+						<div class="project-item__description">
+							{{ project.description }}
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		
-		<!-- Javascript files -->
-		<!-- jQuery -->
-		<script src="js/jquery.js"></script>
-		<!-- Bootstrap JS -->
-		<script src="js/bootstrap.min.js"></script>
-		<!-- Placeholder JS -->
-		<script src="js/placeholder.js"></script>
-		<!-- Respond JS for IE8 -->
-		<script src="js/respond.min.js"></script>
-		<!-- HTML5 Support for IE -->
-		<script src="js/html5shiv.js"></script>
+		<!--Modals-->
+		<script type="text/ng-template" id="certificateModal">
+			<div class="modal-header">
+				<h3 class="modal-title" id="modal-title">
+					Ich bin zertifizierter Microsoft Solutions Developer für Web Apps
+				</h3>
+			</div>
+			<div class="modal-body" id="modal-body">
+				<div class="row">
+					<div class="col-sm-3">
+						<img src="images/mcsd.png" class="img-responsive" />
+					</div>
+					<div class="col-sm-9">
+						<p>
+							Das Zertifikat untermauert meine Fähigkeiten als Webentwickler mit Theoriewissen aus drei Bereichen:
+						</p>
+						
+						<ul>
+							<li>
+								Programmieren in HTML5 mit JavaScript und CSS3
+								<a href="https://www.microsoft.com/de-de/learning/exam-70-480.aspx" target="_blank">
+									<i class="fa fa-external-link"></i>
+								<a/>
+							</li>
+							<li>
+								Developing ASP.NET MVC Web Applications
+								<a href="https://www.microsoft.com/de-de/learning/exam-70-486.aspx" target="_blank">
+									<i class="fa fa-external-link"></i>
+								<a/>
+							</li>
+							<li>
+								Developing Microsoft Azure and Web Services
+								<a href="https://www.microsoft.com/de-de/learning/exam-70-487.aspx" target="_blank">
+									<i class="fa fa-external-link"></i>
+								<a/>
+							</li>
+						</ul>
+						
+						<p>
+							<a href="files/certificate_4.pdf" target="_blank">
+								<i class="fa fa-download"></i>
+								Microsoft Certified Professional Transcript herunterladen
+							<a/>
+						</p>
+					</div>
+				</div>	
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+			</div>
+		</script>
+		
+		<!--Scripts-->
+		<script src="js/libs/angular.min.js" type="text/javascript"></script>
+		<script src="js/libs/ui-bootstrap-tpls-2.5.0.min.js" type="text/javascript"></script>
+		
+		<!--Angular-->
+		<script src="js/app.js" type="text/javascript"></script>
+		
+		<script src="js/ProjectsFactory.js" type="text/javascript"></script>
+		
+		<script src="js/MessageModalController.js" type="text/javascript"></script>
+		<script src="js/ProfilePageController.js" type="text/javascript"></script>
 	</body>	
 </html>
