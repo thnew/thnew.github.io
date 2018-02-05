@@ -38,7 +38,8 @@
 					
 					Fullstack Microsoft Webdeveloper
 				</div>
-			<div class="page-header__contacts">
+				
+				<div class="page-header__contacts">
 					<a href="mailto: thomasheigl2@gmail.com" target="_blank" class="contact-item dashed-border">
 						<i class="fa fa-envelope"></i>
 					</a>
@@ -57,163 +58,165 @@
 				</div>
 			</header>
 			
-			<div class="separator"></div>
-			
-			<div class="row">
-				<div class="col-sm-6">
-					<div class="basic-info-item dashed-border">
-						<i class="fa fa-envelope"></i>
-						&nbsp;
-						Informatik B.Sc.
-					</div>
-				</div>
+			<section class="main">
+				<div class="separator"></div>
 				
-				<div class="col-sm-6">
-					<div class="basic-info-item dashed-border">
-						<i class="fa fa-home"></i>
-						&nbsp;
-						Hamburg, Germany
-					</div>
-				</div>
-				
-				<div class="col-sm-6">
-					<div class="basic-info-item dashed-border">
-						<i class="fa fa-certificate"></i>
-						&nbsp;
-						Microsoft Zertifiziert
-						<i class="fa fa-info-circle text-info clickable"
-						   ng-click="showCertificate()"></i>
-					</div>
-				</div>
-			</div>
-			
-			<div class="separator"></div>
-			
-			<h2>
-				Skills
-				<small>sortiert nach Monaten an gesammelter Praxiserfahrung</small>
-				<br />
-				<br />
-			</h2>
-			
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="skill-item dashed-border"
-					     ng-repeat="skill in skills | orderBy: '-months'"
-						 ng-show="showSkillsWithFewMonthsExperience || skill.months >= minMonthsToDisplaySkill">
-						 {{ skill.name }} ({{ skill.months }})
-					 </div>
-					 
-					 <div class="skill-item skill-item-link dashed-border noprint"
-					      ng-click="showSkillsWithFewMonthsExperience = !showSkillsWithFewMonthsExperience">
-						 Zeige Skills mit weniger als {{ minMonthsToDisplaySkill }} Monaten Erfahrung
-					 </div>
-				</div>
-			</div>
-			
-			<div class="separator"></div>
-			
-			<h2>
-				Alle Projekte
-				<br />
-				<br />
-			</h2>
-			
-			<div class="row"
-				 ng-repeat="project in projects">
-				<div class="col-sm-3">
-					<div class="text-center">
-						<strong>
-							{{ project.months }} Monate
-						</strong>
-					</div>
-					<div class="text-center">
-						<span>
-							{{ project.start | date: "MM/yyyy" }}
-						</span>
-						bis
-						<span ng-show="project.end != null">
-							{{ project.end | date: "MM/yyyy" }}
-						</span>
-						<span ng-show="project.end == null">
-							heute
-						</span>
-					</div>
-				</div>
-				
-				<div class="col-sm-9">
-					<div class="project-item dashed-border">
-						<div class="project-item__title">
-							<i class="fa fa-desktop" ng-show="project.typeOfSoftware == 'Web'"></i>
-							<i class="fa fa-windows" ng-show="project.typeOfSoftware == 'Desktop'"></i>
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="basic-info-item dashed-border">
+							<i class="fa fa-envelope"></i>
 							&nbsp;
-							{{ project.title }}
-							
-							<a href="{{ project.link }}"
-							   target="_blank"
-							   ng-show="project.link != null">
-							   <i class="fa fa-external-link"></i>
-						   </a>
+							Informatik B.Sc.
 						</div>
-						
-						<small class="text-muted">
-							Kunde: {{ project.customer }}
-						</small>
-						
-						<div class="project-item__more-icon clickable"
-						     ng-click="project.showFullDescription = !project.showFullDescription">
-							<i class="fa fa-caret-down" ng-show="!project.showFullDescription"></i>
-							<i class="fa fa-caret-up" ng-show="project.showFullDescription"></i>
+					</div>
+					
+					<div class="col-sm-6">
+						<div class="basic-info-item dashed-border">
+							<i class="fa fa-home"></i>
+							&nbsp;
+							Hamburg, Germany
 						</div>
-						
-						<div class="project-item__description"
-						     ng-show="project.showFullDescription">
-							{{ project.description }}
-							
-							<div class="row">
-								<div class="col-sm-2">
-									<h4>Sprache</h4>
-									<div class="skill-item skill-item-small dashed-border">
-										 {{ project.language }}
-									</div>
-								</div>
-								
-								<div class="col-sm-10">
-									<h4>Rollen</h4>
-									<div class="skill-item skill-item-small dashed-border"
-										 ng-repeat="role in project.roles">
-										 {{ role }}
-									 </div>
-								</div>
-								
-								<div class="col-sm-12">
-									<h4>Technische Sprachen</h4>
-									<div class="skill-item skill-item-small dashed-border"
-										 ng-repeat="language in project.technicalLanguages">
-										 {{ language }}
-									</div>
-								</div>
-								 
-								<div class="col-sm-12">
-									<h4>Frameworks</h4>
-									<div class="skill-item skill-item-small dashed-border"
-										 ng-repeat="framework in project.frameworks">
-										 {{ framework }}
-									</div>
-								</div>
-								 
-								<div class="col-sm-12">
-									<h4>Software</h4>
-									<div class="skill-item skill-item-small dashed-border"
-										 ng-repeat="software in project.software">
-										 {{ software }}
-									</div>
-								</div>
-							 </div>
+					</div>
+					
+					<div class="col-sm-6">
+						<div class="basic-info-item dashed-border">
+							<i class="fa fa-certificate"></i>
+							&nbsp;
+							Microsoft Zertifiziert
+							<i class="fa fa-info-circle text-info clickable"
+							   ng-click="showCertificate()"></i>
 						</div>
 					</div>
 				</div>
-			</div>
+				
+				<div class="separator"></div>
+				
+				<h2>
+					Skills
+					<small>sortiert nach Monaten an gesammelter Praxiserfahrung</small>
+					<br />
+					<br />
+				</h2>
+				
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="skill-item dashed-border"
+							 ng-repeat="skill in skills | orderBy: '-months'"
+							 ng-show="showSkillsWithFewMonthsExperience || skill.months >= minMonthsToDisplaySkill">
+							 {{ skill.name }} ({{ skill.months }})
+						 </div>
+						 
+						 <div class="skill-item skill-item-link dashed-border noprint"
+							  ng-click="showSkillsWithFewMonthsExperience = !showSkillsWithFewMonthsExperience">
+							 Zeige Skills mit weniger als {{ minMonthsToDisplaySkill }} Monaten Erfahrung
+						 </div>
+					</div>
+				</div>
+				
+				<div class="separator"></div>
+				
+				<h2>
+					Alle Projekte
+					<br />
+					<br />
+				</h2>
+				
+				<div class="row"
+					 ng-repeat="project in projects">
+					<div class="col-sm-3">
+						<div class="text-center">
+							<strong>
+								{{ project.months }} Monate
+							</strong>
+						</div>
+						<div class="text-center">
+							<span>
+								{{ project.start | date: "MM/yyyy" }}
+							</span>
+							bis
+							<span ng-show="project.end != null">
+								{{ project.end | date: "MM/yyyy" }}
+							</span>
+							<span ng-show="project.end == null">
+								heute
+							</span>
+						</div>
+					</div>
+					
+					<div class="col-sm-9">
+						<div class="project-item dashed-border">
+							<div class="project-item__title">
+								<i class="fa fa-desktop" ng-show="project.typeOfSoftware == 'Web'"></i>
+								<i class="fa fa-windows" ng-show="project.typeOfSoftware == 'Desktop'"></i>
+								&nbsp;
+								{{ project.title }}
+								
+								<a href="{{ project.link }}"
+								   target="_blank"
+								   ng-show="project.link != null">
+								   <i class="fa fa-external-link"></i>
+							   </a>
+							</div>
+							
+							<small class="text-muted">
+								Kunde: {{ project.customer }}
+							</small>
+							
+							<div class="project-item__more-icon clickable"
+								 ng-click="project.showFullDescription = !project.showFullDescription">
+								<i class="fa fa-caret-down" ng-show="!project.showFullDescription"></i>
+								<i class="fa fa-caret-up" ng-show="project.showFullDescription"></i>
+							</div>
+							
+							<div class="project-item__description"
+								 ng-show="project.showFullDescription">
+								{{ project.description }}
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<h4>Sprache</h4>
+										<div class="skill-item skill-item-small dashed-border">
+											 {{ project.language }}
+										</div>
+									</div>
+									
+									<div class="col-sm-10">
+										<h4>Rollen</h4>
+										<div class="skill-item skill-item-small dashed-border"
+											 ng-repeat="role in project.roles">
+											 {{ role }}
+										 </div>
+									</div>
+									
+									<div class="col-sm-12">
+										<h4>Technische Sprachen</h4>
+										<div class="skill-item skill-item-small dashed-border"
+											 ng-repeat="language in project.technicalLanguages">
+											 {{ language }}
+										</div>
+									</div>
+									 
+									<div class="col-sm-12">
+										<h4>Frameworks</h4>
+										<div class="skill-item skill-item-small dashed-border"
+											 ng-repeat="framework in project.frameworks">
+											 {{ framework }}
+										</div>
+									</div>
+									 
+									<div class="col-sm-12">
+										<h4>Software</h4>
+										<div class="skill-item skill-item-small dashed-border"
+											 ng-repeat="software in project.software">
+											 {{ software }}
+										</div>
+									</div>
+								 </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 		</div>
 		
 		<!--Modals-->
