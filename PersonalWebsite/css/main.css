@@ -32,7 +32,7 @@ body {
 /*.page-header*/
 .page-header {
 	position: relative;
-	height: 140px;
+	height: 155px;
 	width: 100%;
 	margin-top: 20px;
 	margin-bottom: 10px;
@@ -43,30 +43,32 @@ body {
 		position: absolute;
 		top: 10px;
 		left: 10px;
-		width:  100px;
-		height: 100px;
+		width:  125px;
+		height: 125px;
 		-webkit-filter: grayscale(100%);
 		filter: grayscale(100%);
 	}
 
 	.page-header .page-header__title {
 		position: absolute;
-		top: 25px;
-		left: 130px;
+		top: 18px;
+		left: 155px;
 		right: 0px;
-		font-size: 500%;
+		font-size: 400%;
 	}
 
 	.page-header .page-header__description {
 		position: absolute;
-		bottom: 25px;
-		left: 130px;
+		top: 70px;
+		left: 155px;
 		right: 0px;
-		font-size: 200%;
+		font-size: 160%;
 	}
 
-	.page-header .page-header__description .page-header__description__image {
-		height: 23px;
+	.page-header .page-header__contacts {
+		position: absolute;
+		bottom: 9px;
+		left: 155px;
 	}
 	
 	
@@ -114,7 +116,7 @@ body {
 .contact-item {
 	font-size: 100%;
 	display: inline-block;
-	padding: 10px;
+	padding: 0px;
 	width: 45px;
 	text-align: center;
 	color: inherit;
@@ -127,6 +129,10 @@ body {
 	font-size: 100%;
 	padding: 10px;
 }
+
+	.skill-item.skill-item-small {
+		padding: 0px 5px;
+	}
 
 	.skill-item.skill-item-link {
 		background: #ECF0F1;
@@ -141,13 +147,30 @@ body {
 
 /*.project-item*/
 .project-item {
-		margin-bottom: 10px;
+	margin-bottom: 10px;
+	width: 100%;
 }
 
 	.project-item .project-item__title {
 		font-size: 150%;
 	}
 
-	.project-item  .project-item__description {
+	.project-item .project-item__description {
 		margin-top: 10px;
+	}
+	
+		.project-item .project-item__description .project-item__description__short-text {
+			height: 20px;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
+			width: 380px;
+			display: inline-block;
+		}
+
+	.project-item .project-item__more-icon {
+		position: absolute;
+		top: 15px;
+		right: 30px;
+		font-size: 200%;
 	}

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Thomas Heigl</title>
+		<title>Thomas Heigl - Fullstack Microsoft Webdeveloper</title>
 		
 		<!-- Description, Keywords and Author -->
-		<meta name="description" content="Your description">
+		<meta name="description" content="Thomas Heigl - Fullstack Microsoft Webdeveloper">
 		<meta name="keywords" content="Consultant, C#, MVC, HTML, Web Development">
 		<meta name="author" content="Thomas Heigl">
 		
@@ -26,8 +26,7 @@
 	<body ng-app="ProfilePage" ng-controller="ProfilePageController">
 		<div class="fixed-width-md">
 			<header class="page-header">
-				<img class="page-header__image"
-					 src="images/profile.png" />
+				<img class="page-header__image" src="images/profile.png">
 				
 				<div class="page-header__title">
 					Thomas Heigl
@@ -38,6 +37,23 @@
 						 src="images/certificate.png" /> -->
 					
 					Fullstack Microsoft Webdeveloper
+				</div>
+			<div class="page-header__contacts">
+					<a href="mailto: thomasheigl2@gmail.com" target="_blank" class="contact-item dashed-border">
+						<i class="fa fa-envelope"></i>
+					</a>
+					<a href="https://www.xing.com/profile/Thomas_Heigl9" target="_blank" class="contact-item dashed-border">
+						<i class="fa fa-xing"></i>
+					</a>
+					<a href="https://www.linkedin.com/in/thomas-heigl-86462a8a/" target="_blank" class="contact-item dashed-border">
+						<i class="fa fa-linkedin"></i>
+					</a>
+					<a href="https://github.com/thnew" target="_blank" class="contact-item dashed-border">
+						<i class="fa fa-github"></i>
+					</a>
+					<a href="https://www.facebook.com/thomas.heigl.9" target="_blank" class="contact-item dashed-border">
+						<i class="fa fa-facebook"></i>
+					</a>
 				</div>
 			</header>
 			
@@ -72,26 +88,10 @@
 			</div>
 			
 			<div class="separator"></div>
-
-			<div class="row">
-				<div class="col-xs-12">
-					<a href="mailto: thomasheigl2@gmail.com" class="contact-item dashed-border">
-						<i class="fa fa-envelope"></i>
-					</a>
-					<a href="https://www.facebook.com/thomas.heigl.9" class="contact-item dashed-border">
-						<i class="fa fa-facebook"></i>
-					</a>
-					<a href="https://www.xing.com/profile/Thomas_Heigl9" class="contact-item dashed-border">
-						<i class="fa fa-xing"></i>
-					</a>
-				</div>
-			</div>
-			
-			<div class="separator"></div>
 			
 			<h2>
 				Skills
-				<small>sortiert nach Monaten an Praxiserfahrung</small>
+				<small>sortiert nach Monaten an gesammelter Praxiserfahrung</small>
 				<br />
 				<br />
 			</h2>
@@ -139,10 +139,8 @@
 							heute
 						</span>
 					</div>
-					<div class="text-center">
-						
-					</div>
 				</div>
+				
 				<div class="col-sm-9">
 					<div class="project-item dashed-border">
 						<div class="project-item__title">
@@ -150,10 +148,68 @@
 							<i class="fa fa-windows" ng-show="project.typeOfSoftware == 'Desktop'"></i>
 							&nbsp;
 							{{ project.title }}
+							
+							<a href="{{ project.link }}"
+							   target="_blank"
+							   ng-show="project.link != null">
+							   <i class="fa fa-external-link"></i>
+						   </a>
 						</div>
 						
-						<div class="project-item__description">
+						<small class="text-muted">
+							Kunde: {{ project.customer }}
+						</small>
+						
+						<div class="project-item__more-icon clickable"
+						     ng-click="project.showFullDescription = !project.showFullDescription">
+							<i class="fa fa-caret-down" ng-show="!project.showFullDescription"></i>
+							<i class="fa fa-caret-up" ng-show="project.showFullDescription"></i>
+						</div>
+						
+						<div class="project-item__description"
+						     ng-show="project.showFullDescription">
 							{{ project.description }}
+							
+							<div class="row">
+								<div class="col-sm-2">
+									<h4>Sprache</h4>
+									<div class="skill-item skill-item-small dashed-border">
+										 {{ project.language }}
+									</div>
+								</div>
+								
+								<div class="col-sm-10">
+									<h4>Rollen</h4>
+									<div class="skill-item skill-item-small dashed-border"
+										 ng-repeat="role in project.roles">
+										 {{ role }}
+									 </div>
+								</div>
+								
+								<div class="col-sm-12">
+									<h4>Technische Sprachen</h4>
+									<div class="skill-item skill-item-small dashed-border"
+										 ng-repeat="language in project.technicalLanguages">
+										 {{ language }}
+									</div>
+								</div>
+								 
+								<div class="col-sm-12">
+									<h4>Frameworks</h4>
+									<div class="skill-item skill-item-small dashed-border"
+										 ng-repeat="framework in project.frameworks">
+										 {{ framework }}
+									</div>
+								</div>
+								 
+								<div class="col-sm-12">
+									<h4>Software</h4>
+									<div class="skill-item skill-item-small dashed-border"
+										 ng-repeat="software in project.software">
+										 {{ software }}
+									</div>
+								</div>
+							 </div>
 						</div>
 					</div>
 				</div>
