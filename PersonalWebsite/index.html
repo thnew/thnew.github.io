@@ -24,9 +24,9 @@
 	</head>
 	
 	<body ng-app="ProfilePage" ng-controller="ProfilePageController">
-		<div class="fixed-width-md">
-			<header class="page-header">
-				<img class="page-header__image" src="images/profile.png">
+		<header class="page-header">
+			<div class="page-header-inner">
+				<img class="page-header__image img-circle" src="images/profile.png">
 				
 				<div class="page-header__title">
 					Thomas Heigl
@@ -56,35 +56,51 @@
 						<i class="fa fa-facebook"></i>
 					</a>
 				</div>
-			</header>
-			
+			</div>	
+		</header>
+		
+		<div class="fixed-width-md">
 			<section class="main">
 				<div class="separator"></div>
 				
 				<div class="row">
 					<div class="col-sm-6">
-						<div class="basic-info-item dashed-border">
-							<i class="fa fa-envelope"></i>
-							&nbsp;
-							Informatik B.Sc.
+						<div class="basic-info-item">
+							<i class="fa fa-university basic-info-item__icon"></i>
+							<span class="basic-info-item__label">
+								Informatik B.Sc.
+							</span>
 						</div>
 					</div>
 					
 					<div class="col-sm-6">
-						<div class="basic-info-item dashed-border">
-							<i class="fa fa-home"></i>
-							&nbsp;
-							Hamburg, Germany
+						<div class="basic-info-item">
+							<i class="fa fa-home basic-info-item__icon"></i>
+							<span class="basic-info-item__label">
+								Hamburg, Germany
+							</span>
 						</div>
 					</div>
 					
 					<div class="col-sm-6">
-						<div class="basic-info-item dashed-border">
-							<i class="fa fa-certificate"></i>
-							&nbsp;
-							Microsoft Zertifiziert
-							<i class="fa fa-info-circle text-info clickable"
-							   ng-click="showCertificate()"></i>
+						<div class="basic-info-item">
+							<i class="fa fa-certificate basic-info-item__icon"></i>
+							<span class="basic-info-item__label">
+								Microsoft Zertifiziert
+								<i class="fa fa-info-circle text-info clickable"
+								   ng-click="showCertificate()"></i>
+							</span>
+						</div>
+					</div>
+					
+					<div class="col-sm-6">
+						<div class="basic-info-item">
+							<img class="basic-info-item__image" src="images/customer_airbus.png" />
+							<img class="basic-info-item__image" src="images/customer_otto.png" />
+							<img class="basic-info-item__image" src="images/customer_draeger.png" />
+							<img class="basic-info-item__image" src="images/customer_bdo.png" />
+							<img class="basic-info-item__image" src="images/customer_cbr.png" />
+							<img class="basic-info-item__image" src="images/customer_uno.png" />
 						</div>
 					</div>
 				</div>
