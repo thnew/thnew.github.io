@@ -51,6 +51,7 @@ body {
 		position: relative;
 		height: 155px;
 		width: 100%;
+		width: 800px;
 		margin: 0px auto;
 	}
 
@@ -94,6 +95,10 @@ body {
 		position: relative;
 		height: 125px;
 	}
+		
+		.page-header .page-header-inner {
+			width: auto;
+		}
 	
 		.page-header .page-header__image {
 			width:  50px;
