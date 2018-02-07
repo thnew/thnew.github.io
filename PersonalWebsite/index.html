@@ -75,15 +75,6 @@
 					
 					<div class="col-sm-6">
 						<div class="basic-info-item">
-							<i class="fa fa-home basic-info-item__icon"></i>
-							<span class="basic-info-item__label">
-								Hamburg, Germany
-							</span>
-						</div>
-					</div>
-					
-					<div class="col-sm-6">
-						<div class="basic-info-item">
 							<i class="fa fa-certificate basic-info-item__icon"></i>
 							<span class="basic-info-item__label">
 								Microsoft Zertifiziert
@@ -95,12 +86,29 @@
 					
 					<div class="col-sm-6">
 						<div class="basic-info-item">
-							<img class="basic-info-item__image" src="images/customer_airbus.png" />
-							<img class="basic-info-item__image" src="images/customer_otto.png" />
-							<img class="basic-info-item__image" src="images/customer_draeger.png" />
-							<img class="basic-info-item__image" src="images/customer_bdo.png" />
-							<img class="basic-info-item__image" src="images/customer_cbr.png" />
-							<img class="basic-info-item__image" src="images/customer_uno.png" />
+							<i class="fa fa-code basic-info-item__icon"></i>
+							<span class="basic-info-item__label">
+								Webdeveloper seit {{ getWebDeveloperYears() }} Jahren
+							</span>
+						</div>
+					</div>
+					
+					<div class="col-sm-6">
+						<div class="basic-info-item">
+							<i class="fa fa-home basic-info-item__icon"></i>
+							<span class="basic-info-item__label">
+								Hamburg, Germany
+							</span>
+						</div>
+					</div>
+					
+					<div class="col-sm-12">
+						<div class="basic-info-item text-center">
+							<span ng-repeat="customer in customers">
+								<img class="basic-info-item__image"
+									 ng-src="{{ customer.imageSrc }}" />
+								 &nbsp;
+							</span>
 						</div>
 					</div>
 				</div>
@@ -189,14 +197,14 @@
 								{{ project.description }}
 								
 								<div class="row">
-									<div class="col-sm-2">
+									<div class="col-sm-4">
 										<h4>Sprache</h4>
 										<div class="skill-item skill-item-small dashed-border">
 											 {{ project.language }}
 										</div>
 									</div>
 									
-									<div class="col-sm-10">
+									<div class="col-sm-8">
 										<h4>Rollen</h4>
 										<div class="skill-item skill-item-small dashed-border"
 											 ng-repeat="role in project.roles">
@@ -295,6 +303,7 @@
 		<script src="js/app.js" type="text/javascript"></script>
 		
 		<script src="js/ProjectsFactory.js" type="text/javascript"></script>
+		<script src="js/CustomersFactory.js" type="text/javascript"></script>
 		
 		<script src="js/MessageModalController.js" type="text/javascript"></script>
 		<script src="js/ProfilePageController.js" type="text/javascript"></script>

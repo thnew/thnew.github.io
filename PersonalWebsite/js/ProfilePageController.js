@@ -1,11 +1,15 @@
 'use strict';
 
-app.controller('ProfilePageController', [ "$scope", "$uibModal", "ProjectsFactory", function($scope, $uibModal, ProjectsFactory) {
+app.controller('ProfilePageController', [ 
+		"$scope", "$uibModal", "ProjectsFactory", "CustomersFactory",
+		function($scope, $uibModal, ProjectsFactory, CustomersFactory) {
+		
 	var self = this;
 	
 	$scope.minMonthsToDisplaySkill = 12;
 	$scope.skills = [];
 	$scope.projects = ProjectsFactory.getProjects();
+	$scope.customers = CustomersFactory.getCustomers();
 	
 	self.getSkillByName = function(skillName) {
 		for(var f in $scope.skills)
@@ -55,5 +59,9 @@ app.controller('ProfilePageController', [ "$scope", "$uibModal", "ProjectsFactor
 			controllerAs: '$ctrl',
 			size: "md"
 		});
+	};
+	
+	$scope.getWebDeveloperYears = function() {
+		return Math.floor(Math.abs(new Date() - new Date(2005, 1)) / (1000 * 60 * 60 * 24 * 365));
 	};
 }]);
