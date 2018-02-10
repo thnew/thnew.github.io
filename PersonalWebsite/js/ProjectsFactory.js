@@ -15,7 +15,7 @@ app.factory('ProjectsFactory', function() {
 			end: null,
 			roles: [ "Developer" ],
 			technicalLanguages: [ "C#", "HTML", "CSS", "JavaScript" ],
-			frameworks: [ "ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "Entity Framework", "Swagger", "AngularJS", "Bootstrap", "MEF", "JQuery" ],
+			frameworks: [ "ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "Entity Framework", "Swagger", "AngularJS", "Bootstrap", "MEF", "JQuery", "OData" ],
 			software: [ "Visual Studio", "TFS" ]
 		},
 		{
@@ -27,7 +27,6 @@ app.factory('ProjectsFactory', function() {
 			typeOfProject: "Einmannprojekt",
 			
 			typeOfSoftware: "Web",
-			link: "http://shedule.me",
 			start: new Date(2017, 3),
 			end: new Date(2017, 5),
 			roles: [ "Developer", "Product Owner", "Software Architect" ],
