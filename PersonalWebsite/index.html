@@ -23,7 +23,7 @@
 		<link href="css/main.css" rel="stylesheet">
 	</head>
 	
-	<body ng-app="ProfilePage" ng-controller="ProfilePageController">
+	<body ng-app="ProfilePage" ng-controller="ProfilePageController as vm">
 		<header class="page-header">
 			<div class="page-header-inner">
 				<img class="page-header__image img-circle" src="images/profile.png">
@@ -52,9 +52,6 @@
 					<a href="https://github.com/thnew" target="_blank" class="contact-item dashed-border">
 						<i class="fa fa-github"></i>
 					</a>
-					<a href="https://www.facebook.com/thomas.heigl.9" target="_blank" class="contact-item dashed-border">
-						<i class="fa fa-facebook"></i>
-					</a>
 				</div>
 			</div>	
 		</header>
@@ -79,7 +76,7 @@
 							<span class="basic-info-item__label">
 								Microsoft Zertifiziert
 								<i class="fa fa-info-circle text-info clickable"
-								   ng-click="showCertificate()"></i>
+								   ng-click="vm.showCertificate()"></i>
 							</span>
 						</div>
 					</div>
@@ -88,7 +85,7 @@
 						<div class="basic-info-item">
 							<i class="fa fa-code basic-info-item__icon"></i>
 							<span class="basic-info-item__label">
-								Webdeveloper seit {{ getWebDeveloperYears() }} Jahren
+								Webdeveloper seit {{ vm.amountOfWebDeveloperYears }} Jahren
 							</span>
 						</div>
 					</div>
@@ -104,7 +101,7 @@
 					
 					<div class="col-sm-12">
 						<div class="basic-info-item text-center">
-							<span ng-repeat="customer in customers">
+							<span ng-repeat="customer in vm.customers">
 								<img class="basic-info-item__image"
 									 ng-src="{{ customer.imageSrc }}" />
 								 &nbsp;
@@ -125,14 +122,14 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="skill-item dashed-border"
-							 ng-repeat="skill in skills | orderBy: '-months'"
-							 ng-show="showSkillsWithFewMonthsExperience || skill.months >= minMonthsToDisplaySkill">
+							 ng-repeat="skill in vm.skills | orderBy: '-months'"
+							 ng-show="vm.showSkillsWithFewMonthsExperience || skill.months >= vm.minMonthsToDisplaySkill">
 							 {{ skill.name }} ({{ skill.months }})
 						 </div>
 						 
 						 <div class="skill-item skill-item-link dashed-border noprint"
-							  ng-click="showSkillsWithFewMonthsExperience = !showSkillsWithFewMonthsExperience">
-							 Zeige Skills mit weniger als {{ minMonthsToDisplaySkill }} Monaten Erfahrung
+							  ng-click="vm.showSkillsWithFewMonthsExperience = !vm.showSkillsWithFewMonthsExperience">
+							 Zeige Skills mit weniger als {{ vm.minMonthsToDisplaySkill }} Monaten Erfahrung
 						 </div>
 					</div>
 				</div>
@@ -146,11 +143,14 @@
 				</h2>
 				
 				<div class="row"
-					 ng-repeat="project in projects">
+					 ng-repeat="project in vm.projects">
 					<div class="col-sm-3">
 						<div class="text-center">
 							<strong>
-								{{ project.months }} Monate
+								{{ project.months }}
+								
+								<span ng-if="project.months == 1">Monat</span>
+								<span ng-if="project.months > 1">Monate</span>
 							</strong>
 						</div>
 						<div class="text-center">
@@ -198,9 +198,12 @@
 								
 								<div class="row">
 									<div class="col-sm-4">
-										<h4>Sprache</h4>
-										<div class="skill-item skill-item-small dashed-border">
-											 {{ project.language }}
+										<h4 ng-if="project.languages.length == 1">Sprache</h4>
+										<h4 ng-if="project.languages.length > 1">Sprachen</h4>
+
+										<div class="skill-item skill-item-small dashed-border"
+											 ng-repeat="language in project.languages">
+											{{ language }}
 										</div>
 									</div>
 									
@@ -208,15 +211,15 @@
 										<h4>Rollen</h4>
 										<div class="skill-item skill-item-small dashed-border"
 											 ng-repeat="role in project.roles">
-											 {{ role }}
+											{{ role }}
 										 </div>
 									</div>
 									
 									<div class="col-sm-12">
 										<h4>Technische Sprachen</h4>
 										<div class="skill-item skill-item-small dashed-border"
-											 ng-repeat="language in project.technicalLanguages">
-											 {{ language }}
+											ng-repeat="language in project.technicalLanguages">
+											{{ language }}
 										</div>
 									</div>
 									 
@@ -265,19 +268,19 @@
 								Programmieren in HTML5 mit JavaScript und CSS3
 								<a href="https://www.microsoft.com/de-de/learning/exam-70-480.aspx" target="_blank">
 									<i class="fa fa-external-link"></i>
-								<a/>
+								</a>
 							</li>
 							<li>
 								Developing ASP.NET MVC Web Applications
 								<a href="https://www.microsoft.com/de-de/learning/exam-70-486.aspx" target="_blank">
 									<i class="fa fa-external-link"></i>
-								<a/>
+								</a>
 							</li>
 							<li>
 								Developing Microsoft Azure and Web Services
 								<a href="https://www.microsoft.com/de-de/learning/exam-70-487.aspx" target="_blank">
 									<i class="fa fa-external-link"></i>
-								<a/>
+								</a>
 							</li>
 						</ul>
 						
@@ -285,7 +288,7 @@
 							<a href="files/Certificate_4.pdf" target="_blank">
 								<i class="fa fa-download"></i>
 								Microsoft Certified Professional Transcript herunterladen
-							<a/>
+							</a>
 						</p>
 					</div>
 				</div>	
@@ -299,6 +302,9 @@
 		<script src="js/libs/angular.min.js" type="text/javascript"></script>
 		<script src="js/libs/ui-bootstrap-tpls-2.5.0.min.js" type="text/javascript"></script>
 		
+		<!--Interfaces-->
+		<script src="js/interfaces/IProject.js" type="text/javascript"></script>
+
 		<!--Angular-->
 		<script src="js/app.js" type="text/javascript"></script>
 		
