@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Thomas Heigl - Fullstack Microsoft Webdeveloper</title>
+		
+		<!-- Description, Keywords and Author -->
+		<meta name="description" content="Thomas Heigl - Fullstack Microsoft Webdeveloper">
+		<meta name="keywords" content="Consultant, C#, MVC, HTML, Web Development">
+		<meta name="author" content="Thomas Heigl">
+		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<!-- Styles -->
+		<!-- Bootstrap CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<!-- Font awesome CSS -->
+		<link href="css/font-awesome.min.css" rel="stylesheet">
+		
+		<link href="https://fonts.googleapis.com/css?family=Encode+Sans+Expanded" rel="stylesheet">
+		
+		<!-- Main CSS -->
+		<link href="css/main.css" rel="stylesheet">
+	</head>
+	
+	<body ng-app="ProfilePage" ng-controller="ProfilePageController">
+		<header class="page-header">
+			<div class="page-header-inner">
+				<img class="page-header__image img-circle" src="images/profile.png">
+				
+				<div class="page-header__title">
+					Thomas Heigl
+				</div>
+				
+				<div class="page-header__description">
+					<!-- <img class="page-header__description__image"
+						 src="images/certificate.png" /> -->
+					
+					Fullstack Microsoft Webdeveloper
+				</div>
+				
+				<div class="page-header__contacts">
+					<a href="mailto: thomasheigl2@gmail.com" target="_blank" class="contact-item dashed-border">
+						<i class="fa fa-envelope"></i>
+					</a>
+					<a href="https://www.xing.com/profile/Thomas_Heigl9" target="_blank" class="contact-item dashed-border">
+						<i class="fa fa-xing"></i>
+					</a>
+					<a href="https://www.linkedin.com/in/thomas-heigl-86462a8a/" target="_blank" class="contact-item dashed-border">
+						<i class="fa fa-linkedin"></i>
+					</a>
+					<a href="https://github.com/thnew" target="_blank" class="contact-item dashed-border">
+						<i class="fa fa-github"></i>
+					</a>
+					<a href="https://www.facebook.com/thomas.heigl.9" target="_blank" class="contact-item dashed-border">
+						<i class="fa fa-facebook"></i>
+					</a>
+				</div>
+			</div>	
+		</header>
+		
+		<div class="fixed-width-md">
+			<section class="main">
+				<div class="separator"></div>
+				
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="basic-info-item">
+							<i class="fa fa-university basic-info-item__icon"></i>
+							<span class="basic-info-item__label">
+								Informatik B.Sc.
+							</span>
+						</div>
+					</div>
+					
+					<div class="col-sm-6">
+						<div class="basic-info-item">
+							<i class="fa fa-certificate basic-info-item__icon"></i>
+							<span class="basic-info-item__label">
+								Microsoft Zertifiziert
+								<i class="fa fa-info-circle text-info clickable"
+								   ng-click="showCertificate()"></i>
+							</span>
+						</div>
+					</div>
+					
+					<div class="col-sm-6">
+						<div class="basic-info-item">
+							<i class="fa fa-code basic-info-item__icon"></i>
+							<span class="basic-info-item__label">
+								Webdeveloper seit {{ getWebDeveloperYears() }} Jahren
+							</span>
+						</div>
+					</div>
+					
+					<div class="col-sm-6">
+						<div class="basic-info-item">
+							<i class="fa fa-home basic-info-item__icon"></i>
+							<span class="basic-info-item__label">
+								Hamburg, Germany
+							</span>
+						</div>
+					</div>
+					
+					<div class="col-sm-12">
+						<div class="basic-info-item text-center">
+							<span ng-repeat="customer in customers">
+								<img class="basic-info-item__image"
+									 ng-src="{{ customer.imageSrc }}" />
+								 &nbsp;
+							</span>
+						</div>
+					</div>
+				</div>
+				
+				<div class="separator"></div>
+				
+				<h2>
+					Skills
+					<small>sortiert nach Monaten an gesammelter Praxiserfahrung</small>
+					<br />
+					<br />
+				</h2>
+				
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="skill-item dashed-border"
+							 ng-repeat="skill in skills | orderBy: '-months'"
+							 ng-show="showSkillsWithFewMonthsExperience || skill.months >= minMonthsToDisplaySkill">
+							 {{ skill.name }} ({{ skill.months }})
+						 </div>
+						 
+						 <div class="skill-item skill-item-link dashed-border noprint"
+							  ng-click="showSkillsWithFewMonthsExperience = !showSkillsWithFewMonthsExperience">
+							 Zeige Skills mit weniger als {{ minMonthsToDisplaySkill }} Monaten Erfahrung
+						 </div>
+					</div>
+				</div>
+				
+				<div class="separator"></div>
+				
+				<h2>
+					Alle Projekte
+					<br />
+					<br />
+				</h2>
+				
+				<div class="row"
+					 ng-repeat="project in projects">
+					<div class="col-sm-3">
+						<div class="text-center">
+							<strong>
+								{{ project.months }} Monate
+							</strong>
+						</div>
+						<div class="text-center">
+							<span>
+								{{ project.start | date: "MM/yyyy" }}
+							</span>
+							bis
+							<span ng-show="project.end != null">
+								{{ project.end | date: "MM/yyyy" }}
+							</span>
+							<span ng-show="project.end == null">
+								heute
+							</span>
+						</div>
+					</div>
+					
+					<div class="col-sm-9">
+						<div class="project-item dashed-border">
+							<div class="project-item__title">
+								<i class="fa fa-desktop" ng-show="project.typeOfSoftware == 'Web'"></i>
+								<i class="fa fa-windows" ng-show="project.typeOfSoftware == 'Desktop'"></i>
+								&nbsp;
+								{{ project.title }}
+								
+								<a href="{{ project.link }}"
+								   target="_blank"
+								   ng-show="project.link != null">
+								   <i class="fa fa-external-link"></i>
+							   </a>
+							</div>
+							
+							<small class="text-muted">
+								Kunde: {{ project.customer }}
+							</small>
+							
+							<div class="project-item__more-icon clickable"
+								 ng-click="project.showFullDescription = !project.showFullDescription">
+								<i class="fa fa-caret-down" ng-show="!project.showFullDescription"></i>
+								<i class="fa fa-caret-up" ng-show="project.showFullDescription"></i>
+							</div>
+							
+							<div class="project-item__description"
+								 ng-show="project.showFullDescription">
+								{{ project.description }}
+								
+								<div class="row">
+									<div class="col-sm-4">
+										<h4>Sprache</h4>
+										<div class="skill-item skill-item-small dashed-border">
+											 {{ project.language }}
+										</div>
+									</div>
+									
+									<div class="col-sm-8">
+										<h4>Rollen</h4>
+										<div class="skill-item skill-item-small dashed-border"
+											 ng-repeat="role in project.roles">
+											 {{ role }}
+										 </div>
+									</div>
+									
+									<div class="col-sm-12">
+										<h4>Technische Sprachen</h4>
+										<div class="skill-item skill-item-small dashed-border"
+											 ng-repeat="language in project.technicalLanguages">
+											 {{ language }}
+										</div>
+									</div>
+									 
+									<div class="col-sm-12">
+										<h4>Frameworks</h4>
+										<div class="skill-item skill-item-small dashed-border"
+											 ng-repeat="framework in project.frameworks">
+											 {{ framework }}
+										</div>
+									</div>
+									 
+									<div class="col-sm-12">
+										<h4>Software</h4>
+										<div class="skill-item skill-item-small dashed-border"
+											 ng-repeat="software in project.software">
+											 {{ software }}
+										</div>
+									</div>
+								 </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		
+		<!--Modals-->
+		<script type="text/ng-template" id="certificateModal">
+			<div class="modal-header">
+				<h3 class="modal-title" id="modal-title">
+					Ich bin zertifizierter Microsoft Solutions Developer für Web Apps
+				</h3>
+			</div>
+			<div class="modal-body" id="modal-body">
+				<div class="row">
+					<div class="col-sm-3">
+						<img src="images/mcsd.png" class="img-responsive" />
+					</div>
+					<div class="col-sm-9">
+						<p>
+							Das Zertifikat untermauert meine Fähigkeiten als Webentwickler mit Theoriewissen aus drei Bereichen:
+						</p>
+						
+						<ul>
+							<li>
+								Programmieren in HTML5 mit JavaScript und CSS3
+								<a href="https://www.microsoft.com/de-de/learning/exam-70-480.aspx" target="_blank">
+									<i class="fa fa-external-link"></i>
+								<a/>
+							</li>
+							<li>
+								Developing ASP.NET MVC Web Applications
+								<a href="https://www.microsoft.com/de-de/learning/exam-70-486.aspx" target="_blank">
+									<i class="fa fa-external-link"></i>
+								<a/>
+							</li>
+							<li>
+								Developing Microsoft Azure and Web Services
+								<a href="https://www.microsoft.com/de-de/learning/exam-70-487.aspx" target="_blank">
+									<i class="fa fa-external-link"></i>
+								<a/>
+							</li>
+						</ul>
+						
+						<p>
+							<a href="files/Certificate_4.pdf" target="_blank">
+								<i class="fa fa-download"></i>
+								Microsoft Certified Professional Transcript herunterladen
+							<a/>
+						</p>
+					</div>
+				</div>	
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
+			</div>
+		</script>
+		
+		<!--Scripts-->
+		<script src="js/libs/angular.min.js" type="text/javascript"></script>
+		<script src="js/libs/ui-bootstrap-tpls-2.5.0.min.js" type="text/javascript"></script>
+		
+		<!--Angular-->
+		<script src="js/app.js" type="text/javascript"></script>
+		
+		<script src="js/ProjectsFactory.js" type="text/javascript"></script>
+		<script src="js/CustomersFactory.js" type="text/javascript"></script>
+		
+		<script src="js/MessageModalController.js" type="text/javascript"></script>
+		<script src="js/ProfilePageController.js" type="text/javascript"></script>
+	</body>	
+</html>
