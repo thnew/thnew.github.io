@@ -9,7 +9,7 @@ app.factory('ProjectsFactory', function(): IProjectsFactory {
 		{
 			title: "Erstellung von Jahresabschlüssen",
 			customer: "Deutsche Telekommunikationsgesellschaft",
-			description: "In einem Vorprojekt eine Software entwickelt um Jahresabschlüsse für Leasingverträge zu erstellen. Für eine weltweit operierende Telekommunikationsgesellschaft wurden Zusatzprodukte entwickelt, um die verbundenen Prozesse zu unterstützen.",
+			description: "In einem Vorprojekt wurde eine Software entwickelt um Jahresabschlüsse für Leasingverträge zu erstellen. Für eine weltweit operierende Telekommunikationsgesellschaft wurden Zusatzprodukte entwickelt, um die verbundenen Prozesse zu unterstützen.",
 			location: "Hamburg",
 			languages: ["Deutsch", "Englisch"],
 			typeOfProject: "Scrum",
