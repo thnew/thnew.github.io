@@ -1,11 +1,11 @@
 'use strict';
 
-interface IProjectsFactory {
-	getProjects(): IProject[]
+interface ProjectsFactory {
+	getProjects(): Project[]
 }
 
-app.factory('ProjectsFactory', function(): IProjectsFactory {
-	let projects: IProject[] = [
+app.factory('ProjectsFactory', function(): ProjectsFactory {
+	let projects: Project[] = [
 		{
 			title: "Erstellung von Jahresabschlüssen",
 			customer: "Deutsche Telekommunikationsgesellschaft",
@@ -275,7 +275,7 @@ app.factory('ProjectsFactory', function(): IProjectsFactory {
 	}
 	
 	return {
-		getProjects: function (): IProject[] {
+		getProjects: function (): Project[] {
 			return projects;
 		}
 	};

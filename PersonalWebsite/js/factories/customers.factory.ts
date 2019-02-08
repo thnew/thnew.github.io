@@ -1,11 +1,11 @@
 'use strict';
 
-interface ICustomersFactory {
-	getCustomers(): ICustomer[]
+interface CustomersFactory {
+	getCustomers(): Customer[]
 }
 
-app.factory('CustomersFactory', function (): ICustomersFactory {
-	var customers: ICustomer[] = [
+app.factory('CustomersFactory', function (): CustomersFactory {
+	var customers: Customer[] = [
 		{
 			imageSrc: "images/customers/airbus.png"
 		},
@@ -36,7 +36,7 @@ app.factory('CustomersFactory', function (): ICustomersFactory {
 	];
 	
 	return {
-		getCustomers: function (): ICustomer[] {
+		getCustomers: function (): Customer[] {
 			return customers;
 		}
 	};

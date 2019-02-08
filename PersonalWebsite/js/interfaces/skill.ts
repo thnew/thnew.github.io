@@ -1,6 +1,6 @@
 'use strict';
 
-interface ISkill {
+interface Skill {
     name: string,
     months: number
 }

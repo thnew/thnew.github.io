@@ -2,12 +2,11 @@
 
 app.controller('ProfilePageController', [
 	"$uibModal", "ProjectsFactory", "CustomersFactory",
-	function($uibModal, ProjectsFactory: IProjectsFactory, CustomersFactory: ICustomersFactory) {	
+	function($uibModal, ProjectsFactory: ProjectsFactory, CustomersFactory: CustomersFactory) {	
 		let vm = this;
-		let skills: ISkill[] = [];
+		let skills: Skill[] = [];
 
 		(function constructor() {
-			vm.minMonthsToDisplaySkill = 12;
 			vm.skills = skills;
 			vm.projects = ProjectsFactory.getProjects();
 			vm.customers = CustomersFactory.getCustomers();
@@ -31,7 +30,7 @@ app.controller('ProfilePageController', [
 			skill.months += months;
 		};
 		
-		function getSkillByName(skillName: string): ISkill {
+		function getSkillByName(skillName: string): Skill {
 			for(let f in skills)
 			{
 				let item = skills[f];

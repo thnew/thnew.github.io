@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="skill-item dashed-border"
+                ng-repeat="skill in vm.skills | orderBy: '-months'"
+                ng-show="vm.showSkillsWithFewMonthsExperience || skill.months >= vm.minMonthsToDisplaySkill">
+            {{ skill.name }} ({{ skill.months }})
+        </div>
+        
+        <div class="skill-item skill-item-link dashed-border noprint"
+                ng-click="vm.showSkillsWithFewMonthsExperience = !vm.showSkillsWithFewMonthsExperience">
+            Zeige Skills mit weniger als {{ vm.minMonthsToDisplaySkill }} Monaten Erfahrung
+        </div>
+    </div>
+</div>

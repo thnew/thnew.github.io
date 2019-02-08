@@ -1,5 +1,5 @@
 'use strict';
 
-interface ICustomer {
+interface Customer {
     imageSrc: string
 }

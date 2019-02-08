@@ -1,6 +1,6 @@
 'use strict';
 
-interface IProject {
+interface Project {
     title: string,
     customer: string,
     description: string,
