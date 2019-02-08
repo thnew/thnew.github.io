@@ -1,10 +1,10 @@
 <div class="row"
-        ng-repeat="project in vm.projects">
+     ng-repeat="project in vm.projects | filter: (vm.shouldShowOnlyTopProjects() || isTopProject)">
     <div class="col-sm-3">
         <div class="text-center">
             <strong>
                 {{ project.months }}
-                
+
                 <span ng-if="project.months == 1">Monat</span>
                 <span ng-if="project.months > 1">Monate</span>
             </strong>
@@ -99,3 +99,13 @@
         </div>
     </div>
 </div>
+
+<a class="clickable title-link pull-right"
+   ng-click="vm.shouldShowOnlyTopProjects(!vm.shouldShowOnlyTopProjects())">
+    <small ng-show="vm.shouldShowOnlyTopProjects()">
+        stattdessen alle Projekte zeigen
+    </small>
+    <small ng-show="!vm.shouldShowOnlyTopProjects()">
+        stattdessen nur Top Projekte zeigen
+    </small>
+</a>

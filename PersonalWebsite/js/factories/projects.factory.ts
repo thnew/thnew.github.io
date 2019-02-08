@@ -13,6 +13,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Hamburg",
 			languages: ["Deutsch", "Englisch"],
 			typeOfProject: "Scrum",
+			isTopProject: true,
 			
 			typeOfSoftware: "Web",
 			start: new Date(2019, 1),
@@ -29,6 +30,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Hamburg",
 			languages: ["Deutsch", "Englisch"],
 			typeOfProject: "Scrum",
+			isTopProject: true,
 			
 			typeOfSoftware: "Web",
 			start: new Date(2017, 6),
@@ -93,6 +95,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Hamburg",
 			languages: ["Deutsch"],
 			typeOfProject: "Einmannprojekt",
+			isTopProject: true,
 			
 			typeOfSoftware: "Web",
 			start: new Date(2016, 8),
@@ -109,6 +112,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Hamburg",
 			languages: ["Deutsch"],
 			typeOfProject: "Einmannprojekt",
+			isTopProject: true,
 			
 			typeOfSoftware: "Web",
 			start: new Date(2015, 10),

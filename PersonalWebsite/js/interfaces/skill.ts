@@ -2,5 +2,6 @@
 
 interface Skill {
     name: string,
-    months: number
+    months: number,
+    isTopSkill?: Boolean
 }

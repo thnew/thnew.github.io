@@ -3,12 +3,8 @@
 app.component("skillsComponent", {
     templateUrl: "js/components/skills.component.html",
     bindings: {
-        skills: '='
+        skills: '=',
+        shouldShowAllSkills: '='
     },
-    controllerAs: 'vm',
-    controller: function() {
-        var vm = this;
-
-        vm.minMonthsToDisplaySkill = 12;
-    }
+    controllerAs: 'vm'
 });

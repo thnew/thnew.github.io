@@ -8,6 +8,7 @@ interface Project {
     languages: string[],
     typeOfProject: string,
     months?: number,
+    isTopProject?: Boolean,
     
     typeOfSoftware: string,
     link?: URL,

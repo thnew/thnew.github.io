@@ -6,6 +6,15 @@ body {
 	font-family: 'Encode Sans Expanded', sans-serif;
 }
 
+a.title-link {
+	border-bottom: 1px dotted #777;
+}
+
+a.title-link:hover {
+	border-bottom: 0px;
+	text-decoration: none;
+}
+
 .clickable {
 	cursor: pointer;
 }
