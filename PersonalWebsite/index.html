@@ -131,6 +131,12 @@
 					</div>
 				</div>
 				
+				<!-- Platzhalter für die Blogpreview
+				<div class="separator"></div>
+
+				<h2>Aus Meinem Blog</h2>
+				-->
+
 				<div class="separator"></div>
 				
 				<h2>
@@ -140,6 +146,11 @@
 					<span ng-show="vm.shouldShowAllSkills()">
 						Alle meine Skills
 					</span>
+
+					<small>
+						Sortiert nach Projekterfahrung
+					</small>
+
 					<br />
 					<br />
 				</h2>
@@ -156,6 +167,10 @@
 					<span ng-show="!vm.showOnlyTopProjects">
 						Alle Projekte
 					</span>
+
+					<small>
+						{{ vm.projects.length }} insgesamt
+					</small>
 
 					<br />
 					<br />

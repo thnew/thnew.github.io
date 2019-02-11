@@ -5,10 +5,6 @@ app.component("skillsComponent", {
         skills: '=',
         shouldShowAllSkills: '='
     },
-    controllerAs: 'vm',
-    controller: function () {
-        var vm = this;
-        vm.minMonthsToDisplaySkill = 12;
-    }
+    controllerAs: 'vm'
 });
 //# sourceMappingURL=skills.component.js.map

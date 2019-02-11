@@ -9,15 +9,16 @@
                 <span ng-if="project.months > 1">Monate</span>
             </strong>
         </div>
-        <div class="text-center">
+        <div class="text-center"
+             ng-repeat="timePeriod in project.timePeriods | orderBy: '-start'">
             <span>
-                {{ project.start | date: "MM/yyyy" }}
+                {{ timePeriod.start | date: "MM/yyyy" }}
             </span>
             bis
-            <span ng-show="project.end != null">
-                {{ project.end | date: "MM/yyyy" }}
+            <span ng-show="timePeriod.end != null">
+                {{ timePeriod.end | date: "MM/yyyy" }}
             </span>
-            <span ng-show="project.end == null">
+            <span ng-show="timePeriod.end == null">
                 heute
             </span>
         </div>
@@ -102,10 +103,10 @@
 
 <a class="clickable title-link pull-right"
    ng-click="vm.shouldShowOnlyTopProjects(!vm.shouldShowOnlyTopProjects())">
-    <small ng-show="vm.shouldShowOnlyTopProjects()">
-        stattdessen alle Projekte zeigen
-    </small>
-    <small ng-show="!vm.shouldShowOnlyTopProjects()">
-        stattdessen nur Top Projekte zeigen
-    </small>
+    <span ng-show="vm.shouldShowOnlyTopProjects()">
+        zeige alle {{ vm.projects.length }} Projekte
+    </span>
+    <span ng-show="!vm.shouldShowOnlyTopProjects()">
+        zeige nur Top Projekte
+    </span>
 </a>

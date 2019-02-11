@@ -12,8 +12,7 @@ interface Project {
     
     typeOfSoftware: string,
     link?: URL,
-    start: Date,
-    end: Date,
+    timePeriods: TimePeriod[],
     roles: string[],
     technicalLanguages: string[],
     frameworks: string[],

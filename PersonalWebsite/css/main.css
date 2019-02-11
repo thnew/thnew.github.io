@@ -11,7 +11,7 @@ a.title-link {
 }
 
 a.title-link:hover {
-	border-bottom: 0px;
+	border-bottom: 1px solid transparent;
 	text-decoration: none;
 }
 
