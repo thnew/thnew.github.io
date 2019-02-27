@@ -46,38 +46,109 @@
 	
 	<body ng-app="ProfilePage" ng-controller="ProfilePageController as vm">
 		<header class="page-header">
-			<div class="page-header-inner">
-				<img class="page-header__image img-circle" src="images/profile.png">
+			<div class="page-header-inner fixed-width-md"
+			     ng-class="{ 'fixed-width-lg': vm.isTravelPage() }">
+				<img ng-if="vm.isWorkPage()"
+					 class="page-header__image img-grey img-circle"
+					 src="images/profile_work.png">
+				<img ng-if="vm.isTravelPage()"
+					 class="page-header__image img-circle"
+					 src="images/profile_travel.png">
 				
 				<div class="page-header__title">
 					Thomas Heigl
+				</div>
+				
+				<div ng-if="vm.isTravelPage()"
+				     class="page-header__world-map hidden-xs">
+					<img src="images/world_map.svg">
 				</div>
 				
 				<div class="page-header__description">
 					<!-- <img class="page-header__description__image"
 						 src="images/certificate.png" /> -->
 					
-					Fullstack Microsoft Webdeveloper
+					<span uib-dropdown on-toggle="toggled(open)">
+						<a href id="pages-dropdown" uib-dropdown-toggle>
+							<span ng-if="vm.isWorkPage()">
+								Fullstack Microsoft Webdeveloper
+							</span>
+							<span ng-if="vm.isTravelPage()">
+								Traveller | Hiker | Photographer
+							</span>
+							
+							<i class="fa fa-chevron-down"></i>
+						</a>
+						<ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="pages-dropdown">
+							<li>
+								<a href ng-click="vm.switchPage('WORK')">
+									<i class="fa fa-code"></i>
+									Fullstack Microsoft Webdeveloper
+								</a>
+							</li>
+							<li>
+								<a href ng-click="vm.switchPage('TRAVEL')">
+									<i class="fa fa-globe"></i>
+									Traveller | Hiker | Photographer
+								</a>
+							</li>
+						</ul>
+					</span>
 				</div>
 				
 				<div class="page-header__contacts">
-					<a href="mailto: thomasheigl2@gmail.com" target="_blank" class="contact-item dashed-border">
+					<a href="mailto: thomasheigl2@gmail.com"
+					   target="_blank"
+					   class="contact-item dashed-border">
 						<i class="fa fa-envelope"></i>
 					</a>
-					<a href="https://www.xing.com/profile/Thomas_Heigl9" target="_blank" class="contact-item dashed-border">
+					<a ng-if="vm.isWorkPage()"
+					   href="https://www.xing.com/profile/Thomas_Heigl9"
+					   target="_blank"
+					   class="contact-item dashed-border">
 						<i class="fa fa-xing"></i>
 					</a>
-					<a href="https://www.linkedin.com/in/thomas-heigl-86462a8a/" target="_blank" class="contact-item dashed-border">
+					<a ng-if="vm.isWorkPage()"
+					   href="https://www.linkedin.com/in/thomas-heigl-86462a8a/"
+					   target="_blank"
+					   class="contact-item dashed-border">
 						<i class="fa fa-linkedin"></i>
 					</a>
-					<a href="https://github.com/thnew" target="_blank" class="contact-item dashed-border">
+					<a ng-if="vm.isWorkPage()"
+					   href="https://github.com/thnew"
+					   target="_blank"
+					   class="contact-item dashed-border">
 						<i class="fa fa-github"></i>
+					</a>
+
+					<a ng-if="vm.isTravelPage()"
+					   href="https://www.instagram.com/onedaywewillbeold"
+					   target="_blank"
+					   class="contact-item dashed-border">
+						<i class="fa fa-instagram"></i>
 					</a>
 				</div>
 			</div>	
 		</header>
 		
-		<div class="fixed-width-md">
+		<div ng-if="vm.isTravelPage()"
+		     class="fixed-width-lg">
+			<section class="main">
+				<div class="separator"></div>
+				
+				<h2>
+					Journeys
+				</h2>
+
+				{{ vm.journeyCount }} countries
+
+				<journeys-component journeys="vm.journeys">
+				</journeys-component>
+			</section>
+		</div>
+
+		<div ng-if="vm.isWorkPage()"
+		     class="fixed-width-md">
 			<section class="main">
 				<div class="separator"></div>
 				
@@ -161,6 +232,12 @@
 				<div class="separator"></div>
 				
 				<h2>
+					Projekte
+					<br />
+					<br />
+				</h2>
+
+				<!-- <h2>
 					<span ng-show="vm.showOnlyTopProjects">
 						Top Projekte
 					</span>
@@ -174,11 +251,21 @@
 
 					<br />
 					<br />
-				</h2>
+				</h2> -->
 				
 				<projects-component projects="vm.projects"
 									should-show-only-top-projects="vm.shouldShowOnlyTopProjects">
 				</projects-component>
+
+				<!-- <a class="clickable title-link pull-right"
+				   ng-click="vm.shouldShowOnlyTopProjects(!vm.shouldShowOnlyTopProjects())">
+					<span ng-show="vm.shouldShowOnlyTopProjects()">
+						zeige alle {{ vm.projects.length }} Projekte
+					</span>
+					<span ng-show="!vm.shouldShowOnlyTopProjects()">
+						zeige nur Top Projekte
+					</span>
+				</a> -->
 			</section>
 		</div>
 
@@ -250,9 +337,11 @@
 		<script src="js/factories/projects.factory.js" type="text/javascript"></script>
 		<script src="js/factories/customers.factory.js" type="text/javascript"></script>
 		<script src="js/factories/topSkills.factory.js" type="text/javascript"></script>
+		<script src="js/factories/journeys.factory.js" type="text/javascript"></script>
 		
 		<script src="js/components/skills.component.js" type="text/javascript"></script>
 		<script src="js/components/projects.component.js" type="text/javascript"></script>
+		<script src="js/components/journeys.component.js" type="text/javascript"></script>
 		
 		<script src="js/controllers/message-modal.controller.js" type="text/javascript"></script>
 		<script src="js/controllers/profile-page.controller.js" type="text/javascript"></script>

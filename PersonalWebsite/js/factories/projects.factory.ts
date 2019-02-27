@@ -313,12 +313,12 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 		},
 	];
 	
-	projects.forEach((project) => {
+	projects.forEach(project => {
 		project.months = 0;
 
 		project
 			.timePeriods
-			.forEach((timePeriod) => {
+			.forEach(timePeriod => {
 				let end: Date = timePeriod.end || new Date();
 		
 				project.months += Math.round(Math.abs(end.getTime() - timePeriod.start.getTime()) / (1000 * 60 * 60 * 24 * 30)) + 1;

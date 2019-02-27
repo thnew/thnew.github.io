@@ -59,7 +59,7 @@
                         <h4 ng-if="project.languages.length > 1">Sprachen</h4>
 
                         <div class="skill-item skill-item-small dashed-border"
-                                ng-repeat="language in project.languages">
+                             ng-repeat="language in project.languages">
                             {{ language }}
                         </div>
                     </div>
@@ -67,15 +67,15 @@
                     <div class="col-sm-8">
                         <h4>Rollen</h4>
                         <div class="skill-item skill-item-small dashed-border"
-                                ng-repeat="role in project.roles">
+                             ng-repeat="role in project.roles">
                             {{ role }}
-                            </div>
+                        </div>
                     </div>
                     
                     <div class="col-sm-12">
                         <h4>Technische Sprachen</h4>
                         <div class="skill-item skill-item-small dashed-border"
-                            ng-repeat="language in project.technicalLanguages">
+                             ng-repeat="language in project.technicalLanguages">
                             {{ language }}
                         </div>
                     </div>
@@ -83,30 +83,20 @@
                     <div class="col-sm-12">
                         <h4>Frameworks</h4>
                         <div class="skill-item skill-item-small dashed-border"
-                                ng-repeat="framework in project.frameworks">
-                                {{ framework }}
+                             ng-repeat="framework in project.frameworks">
+                            {{ framework }}
                         </div>
                     </div>
                         
                     <div class="col-sm-12">
                         <h4>Software</h4>
                         <div class="skill-item skill-item-small dashed-border"
-                                ng-repeat="software in project.software">
-                                {{ software }}
+                            ng-repeat="software in project.software">
+                            {{ software }}
                         </div>
                     </div>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<a class="clickable title-link pull-right"
-   ng-click="vm.shouldShowOnlyTopProjects(!vm.shouldShowOnlyTopProjects())">
-    <span ng-show="vm.shouldShowOnlyTopProjects()">
-        zeige alle {{ vm.projects.length }} Projekte
-    </span>
-    <span ng-show="!vm.shouldShowOnlyTopProjects()">
-        zeige nur Top Projekte
-    </span>
-</a>

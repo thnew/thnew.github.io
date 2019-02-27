@@ -6,6 +6,11 @@ body {
 	font-family: 'Encode Sans Expanded', sans-serif;
 }
 
+img.img-grey {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+}
+
 a.title-link {
 	border-bottom: 1px dotted #777;
 }
@@ -24,8 +29,20 @@ a.title-link:hover {
 	margin: 10px auto;
 }
 
+.fixed-width-lg {
+	width: 992px;
+	margin: 10px auto;
+}
+
 @media (max-width: 800px) {
 	.fixed-width-md {
+		width: 100%;
+		overflow: hidden;
+	}
+}
+
+@media (max-width: 992px) {
+	.fixed-width-lg {
 		width: 100%;
 		overflow: hidden;
 	}
@@ -59,8 +76,6 @@ a.title-link:hover {
 	.page-header .page-header-inner {
 		position: relative;
 		height: 155px;
-		width: 100%;
-		width: 800px;
 		margin: 0px auto;
 	}
 
@@ -70,8 +85,6 @@ a.title-link:hover {
 		left: 10px;
 		width:  125px;
 		height: 125px;
-		-webkit-filter: grayscale(100%);
-		filter: grayscale(100%);
 	}
 
 	.page-header .page-header__title {
@@ -83,13 +96,28 @@ a.title-link:hover {
 		color: #2C3E50;
 	}
 
+	.page-header .page-header__world-map {
+		position: absolute;
+		top: 10px;
+		bottom: 18px;
+		right: 0px;
+	}
+
+	.page-header .page-header__world-map img {
+		height: 100%;
+	}
+
 	.page-header .page-header__description {
 		position: absolute;
 		top: 70px;
 		left: 168px;
 		right: 0px;
-		font-size: 153%;
+		font-size: 142%
+	}
+
+	.page-header .page-header__description a {
 		color: #34495E;
+		text-decoration: none;
 	}
 
 	.page-header .page-header__contacts {
@@ -207,6 +235,81 @@ a.title-link:hover {
 			opacity: 1;
 		}
 
+/*.journey-item*/
+.journey-item {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+	.journey-item:not(:last-child) {
+		border-bottom: 1px solid #00000017;
+	}
+
+	.journey-item .carousel-indicators {
+		display: none;
+	}
+
+	.journey-item .journey-item__image {
+		max-height: 320px;
+		overflow: hidden;
+	}
+
+		.journey-item .journey-item__image .journey-item__carousel__background-image {
+			height: 320px;
+			width: 100%;
+			filter: blur(10px);
+		}
+
+		.journey-item .journey-item__image .journey-item__image__front-image {
+			height: 320px;
+			width: 100%;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+
+	.journey-item [uib-slide] {
+		max-height: 320px;
+	}
+
+	.journey-item [uib-carousel]:not(:hover) .carousel-control {
+		display: none;
+	}
+
+	.journey-item .journey-item__carousel__image-background {
+		height: 320px;
+		width: 100%;
+		filter: blur(10px);
+	}
+
+	.journey-item .journey-item__carousel__image {
+		height: 320px;
+		width: 100%;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+		position: absolute;
+		top: 0px;
+	}
+
+	.journey-item .carousel-control .glyphicon-chevron-left::before {
+		background: rgba(255,255,255,0.3);
+		padding: 30px 15px;
+		position: absolute;
+		left: 0px;
+		margin-top: -25px;
+	}
+
+	.journey-item .carousel-control .glyphicon-chevron-right::before {
+		background: rgba(255,255,255,0.3);
+		padding: 30px 15px;
+		position: absolute;
+		right: 0px;
+		margin-top: -25px;
+	}
+
 /*.project-item*/
 .project-item {
 	margin-bottom: 10px;
@@ -236,3 +339,19 @@ a.title-link:hover {
 		right: 30px;
 		font-size: 200%;
 	}
+
+/*Glyphicon replacements*/
+.glyphicon.glyphicon-chevron-left::before {
+	font-family: 'FontAwesome';
+	content: '\f053';
+}
+
+.glyphicon.glyphicon-chevron-right::before {
+	font-family: 'FontAwesome';
+	content: '\f054';
+}
+
+/*.carousel modifications*/
+[uib-carousel] .carousel-control {
+	background: none;
+}

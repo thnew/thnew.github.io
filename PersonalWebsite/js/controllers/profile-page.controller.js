@@ -1,19 +1,25 @@
 'use strict';
 app.controller('ProfilePageController', [
-    "$uibModal", "ProjectsFactory", "CustomersFactory", "TopSkillsFactory",
-    function ($uibModal, ProjectsFactory, CustomersFactory, TopSkillsFactory) {
+    "$uibModal", "ProjectsFactory", "CustomersFactory", "TopSkillsFactory", "JourneysFactory",
+    function ($uibModal, ProjectsFactory, CustomersFactory, TopSkillsFactory, JourneysFactory) {
         var vm = this;
         var skills = [];
+        var activePage = "TRAVEL";
         (function constructor() {
             vm.skills = skills;
             vm.projects = ProjectsFactory.getProjects();
             vm.customers = CustomersFactory.getCustomers();
+            vm.journeys = JourneysFactory.getJourneys();
             vm.amountOfWebDeveloperYears = getWebDeveloperYears();
-            vm.showOnlyTopProjects = true;
+            vm.showOnlyTopProjects = false;
             vm.showAllSkills = false;
+            vm.journeyCount = JourneysFactory.getAmountOfCountries();
             vm.showCertificate = showCertificate;
             vm.shouldShowOnlyTopProjects = shouldShowOnlyTopProjects;
             vm.shouldShowAllSkills = shouldShowAllSkills;
+            vm.isWorkPage = isWorkPage;
+            vm.isTravelPage = isTravelPage;
+            vm.switchPage = switchPage;
             addSkillsToScope();
         })();
         function addOrIncrementSkill(skillName, months) {
@@ -70,6 +76,15 @@ app.controller('ProfilePageController', [
                 vm.showAllSkills = showAllSkills;
             }
             return vm.showAllSkills;
+        }
+        function isWorkPage() {
+            return activePage == "WORK";
+        }
+        function isTravelPage() {
+            return activePage == "TRAVEL";
+        }
+        function switchPage(pageName) {
+            return activePage = pageName;
         }
         function getWebDeveloperYears() {
             return Math.floor(Math.abs(new Date().getTime() - new Date(2005, 1).getTime()) / (1000 * 60 * 60 * 24 * 365));

@@ -1,22 +1,28 @@
 'use strict';
 
 app.controller('ProfilePageController', [
-	"$uibModal", "ProjectsFactory", "CustomersFactory", "TopSkillsFactory",
-	function($uibModal, ProjectsFactory: ProjectsFactory, CustomersFactory: CustomersFactory, TopSkillsFactory: TopSkillsFactory) {	
+	"$uibModal", "ProjectsFactory", "CustomersFactory", "TopSkillsFactory", "JourneysFactory",
+	function($uibModal, ProjectsFactory: ProjectsFactory, CustomersFactory: CustomersFactory, TopSkillsFactory: TopSkillsFactory, JourneysFactory: JourneysFactory) {	
 		let vm = this;
 		let skills: Skill[] = [];
+		let activePage = "TRAVEL";
 
 		(function constructor() {
 			vm.skills = skills;
 			vm.projects = ProjectsFactory.getProjects();
 			vm.customers = CustomersFactory.getCustomers();
+			vm.journeys = JourneysFactory.getJourneys();
 			vm.amountOfWebDeveloperYears = getWebDeveloperYears();
-			vm.showOnlyTopProjects = true;
+			vm.showOnlyTopProjects = false;
 			vm.showAllSkills = false;
+			vm.journeyCount = JourneysFactory.getAmountOfCountries();
 
 			vm.showCertificate = showCertificate;
 			vm.shouldShowOnlyTopProjects = shouldShowOnlyTopProjects;
 			vm.shouldShowAllSkills = shouldShowAllSkills;
+			vm.isWorkPage = isWorkPage;
+			vm.isTravelPage = isTravelPage;
+			vm.switchPage = switchPage;
 
 			addSkillsToScope();
 		})();
@@ -84,6 +90,18 @@ app.controller('ProfilePageController', [
 			}
 
 			return vm.showAllSkills;
+		}
+
+		function isWorkPage(){
+			return activePage == "WORK";
+		}
+
+		function isTravelPage(){
+			return activePage == "TRAVEL";
+		}
+
+		function switchPage(pageName){
+			return activePage = pageName;
 		}
 
 		function getWebDeveloperYears() {

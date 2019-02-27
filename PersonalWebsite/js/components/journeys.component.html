@@ -1,0 +1,61 @@
+<div class="row journey-item"
+     ng-repeat="journey in vm.journeys">
+    <div class="col-sm-6">
+        <div class="journey-item__image"
+             ng-if="journey.images.length == 1">
+            <img ng-src="{{ journey.images[0].source }}"
+                 class="journey-item__carousel__background-image" />
+            
+            <div class="journey-item__image__front-image"
+                 style="background-image: url('{{ journey.images[0].source }}');">
+            </div>
+        </div>
+
+        <div uib-carousel
+             ng-if="journey.images.length > 1"
+             class="journey-item__carousel"
+             active="active"
+             no-wrap="noWrapSlides">
+            <div uib-slide ng-repeat="image in journey.images track by $index" index="$index">
+                <!-- <img ng-src="{{ image.source }}" style="margin:auto;" class="img-responsive" /> -->
+                <!-- <div class="carousel-caption">
+                    <p>{{ image.description }}</p>
+                </div> -->
+
+                <img class="journey-item__carousel__image-background"
+                     ng-src="{{ image.source }}" />
+                
+                <div class="journey-item__carousel__image"
+                     style="background-image: url('{{ image.source }}');">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <p class="text-uppercase">
+            <b>
+                {{ journey.title }}
+            </b>
+        </p>
+        <p>
+            <i class="fa fa-map-marker"></i>
+            <span ng-repeat="country in journey.countries">
+                {{ country }}
+            </span>
+        </p>
+        <p>
+            <i class="fa fa-clock-o"></i>
+            <span ng-if="journey.days <  13">{{ journey.days }} days</span>
+            <span ng-if="journey.days >= 13">{{ (journey.days / 7) | number: 0 }} weeks</span>
+        </p>
+        <p>
+            <span ng-repeat="type in journey.types" class="text-lowercase">
+                #{{ type }}
+            </span>
+        </p>
+        <p class="text-justify">
+            {{ journey.description }}
+        </p>
+    </div>
+</div>
