@@ -5,7 +5,7 @@ app.controller('ProfilePageController', [
 	function($uibModal, ProjectsFactory: ProjectsFactory, CustomersFactory: CustomersFactory, TopSkillsFactory: TopSkillsFactory, JourneysFactory: JourneysFactory) {	
 		let vm = this;
 		let skills: Skill[] = [];
-		let activePage = "TRAVEL";
+		let activePage = "WORK";
 
 		(function constructor() {
 			vm.skills = skills;

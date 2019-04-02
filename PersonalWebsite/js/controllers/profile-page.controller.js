@@ -4,7 +4,7 @@ app.controller('ProfilePageController', [
     function ($uibModal, ProjectsFactory, CustomersFactory, TopSkillsFactory, JourneysFactory) {
         var vm = this;
         var skills = [];
-        var activePage = "TRAVEL";
+        var activePage = "WORK";
         (function constructor() {
             vm.skills = skills;
             vm.projects = ProjectsFactory.getProjects();
