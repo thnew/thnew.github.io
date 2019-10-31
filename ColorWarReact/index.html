@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>ColorWar</title>
+
+  <style>
+    body {
+      text-align: center;
+      background: #ECF0F1;
+    }
+
+    #Game {
+      display: inline-block;
+    }
+
+    .field {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      border: 15px solid #ECF0F1;
+      border-radius: 25px;
+      vertical-align: top;
+      margin: -2px;
+    }
+
+    .field.field-clickable {
+      animation: breathing-border-animation 1.2s infinite;
+    }
+
+    .field.field-clickable:hover {
+      cursor: pointer;
+      opacity: 0.5;
+    }
+
+    /*Field Players*/
+    .field.field-belongs-to-player-1 {
+      border-color: #555;
+    }
+
+    @keyframes breathing-border-animation {
+      0% {
+        border-width: 15px;
+        height: 100px;
+        width: 100px;
+      }
+
+      50% {
+        border-width: 5px;
+        height: 120px;
+        width: 120px;
+      }
+
+      100% {
+        border-width: 15px;
+        height: 100px;
+        width: 100px;
+      }
+    }
+
+    @keyframes player-field-animation {
+      to {
+        border-bottom-color: transparent;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+      }
+    }
+
+    /*Field connectedTo*/
+    .field.field-connected-to-bottom {
+      border-bottom-color: transparent;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+
+    .field.field-connected-to-right {
+      border-right-color: transparent;
+      border-bottom-right-radius: 0px;
+      border-top-right-radius: 0px;
+    }
+
+    .field.field-connected-to-top {
+      border-top-color: transparent;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+    }
+
+    .field.field-connected-to-left {
+      border-left-color: transparent;
+      border-bottom-left-radius: 0px;
+      border-top-left-radius: 0px;
+    }
+
+    /*Field Colors*/
+    .field-color-0 {
+      background-color: #E74C3C;
+    }
+
+    .field-color-1 {
+      background-color: #E67E22;
+    }
+
+    .field-color-2 {
+      background-color: #FFCD02;
+    }
+
+    .field-color-3 {
+      background-color: #2ECC71;
+    }
+
+    .field-color-4 {
+      background-color: #3498DB;
+    }
+
+    .field-color-5 {
+      background-color: #F47CC3;
+    }
+
+    .field-color-6 {
+      background-color: #345F41;
+    }
+
+    .field-color-7 {
+      background-color: #745EC5;
+    }
+
+    .field-color-8 {
+      background-color: #5E345E;
+    }
+
+    .field-color-9 {
+      background-color: #5E4534;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- We will put our React component inside this div. -->
+  <div id="game"></div>
+
+  <!-- Load React. -->
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+  <!-- Load our React component. -->
+  <script type="text/babel">
+      // The playground
+      class GameFields extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            mapRows: null,
+            currentPlayer: 1,
+            width: Math.ceil(window.innerWidth / 145),
+            height: Math.ceil(window.innerHeight / 145)
+          };
+
+          this.state.mapRows = this.buildRandomMap(this.state.width, this.state.height);
+          this.state.mapRows[0][0].player = this.state.currentPlayer;
+        }
+
+        buildRandomMap(width, height) {
+          const mapRows = Array(height).fill(null);
+
+          for(let y = 0; y < height; y++) {
+            mapRows[y] = Array(width).fill({});
+            const mapRow = mapRows[y];
+
+            for(let x = 0; x < width; x++) {
+              mapRow[x] = {
+                x: x,
+                y: y,
+                color: Math.round(Math.random() * 9),
+                connectedTo: {
+                  top: false,
+                  right: false,
+                  left: false,
+                  bottom: false
+                },
+                neighbours: {
+                  top: null,
+                  right: null,
+                  left: null,
+                  bottom: null
+                },
+                player: null
+              };
+
+              // Detect neighbours
+              const topNeighbour = y > 0 ? mapRows[y - 1][x] : null;
+              mapRow[x].neighbours.top = topNeighbour;
+              if(topNeighbour) {
+                topNeighbour.neighbours.bottom = mapRows[y][x];
+              }
+
+              const leftNeighbour = x > 0 ? mapRows[y][x - 1] : null;
+              mapRow[x].neighbours.left = leftNeighbour;
+              if(leftNeighbour) {
+                leftNeighbour.neighbours.right = mapRows[y][x];
+              }
+            }
+          }
+
+          return mapRows;
+        }
+
+        prepareFieldData(mapRows) {
+          // Detect vertical connections
+          for(let y = 1; y < mapRows.length; y++) {
+            const lastRow = mapRows[y - 1];
+            const currentRow = mapRows[y];
+
+            for(let x = 0; x < currentRow.length; x++) {
+              if(currentRow[x].player && currentRow[x].player === lastRow[x].player) {
+                currentRow[x].connectedTo.top = true;
+                lastRow[x].connectedTo.bottom = true;
+              }
+
+              // Detect clickable fields
+              currentRow[x].isClickable = !currentRow[x].player && (currentRow[x].isClickable || (!currentRow[x].player && lastRow[x].player));
+              lastRow[x].isClickable = lastRow[x].isClickable || (currentRow[x].player && !lastRow[x].player);
+            }
+          }
+
+          // Detect horizontal connections
+          for(let y = 0; y < mapRows.length; y++) {
+            const currentRow = mapRows[y];
+
+            for(let x = 1; x < currentRow.length; x++) {
+              const lastField = currentRow[x - 1];
+              const currentField = currentRow[x];
+              if(lastField.player && lastField.player === currentField.player) {
+                lastField.connectedTo.right = true;
+                currentField.connectedTo.left = true;
+              }
+
+              // Detect clickable fields
+              currentField.isClickable = !currentField.player && (currentField.isClickable || (!currentField.player && lastField.player));
+              lastField.isClickable = lastField.isClickable || (currentField.player && !lastField.player);
+            }
+          }
+        }
+
+        chooseField(y, x) {
+          const field = this.state.mapRows[y][x];
+          field.player = this.state.currentPlayer;
+
+          let uncheckedPlayerFields = this
+            .state
+            .mapRows
+            .flat()
+            .filter(x => x.player === this.state.currentPlayer);
+
+          while(uncheckedPlayerFields.length > 0) {
+            const uncheckedField = uncheckedPlayerFields.splice(0, 1).pop();
+              
+            // Change color
+            uncheckedField.player = this.state.currentPlayer;
+            uncheckedField.color = field.color;
+
+            // Check surroundings
+            for(const direction of ['top', 'right', 'bottom', 'left']) {
+              if(uncheckedField.neighbours[direction]
+                && !uncheckedField.neighbours[direction].player
+                && uncheckedField.neighbours[direction].color === field.color) {
+
+                uncheckedPlayerFields.push(uncheckedField.neighbours[direction]);
+              }
+            } 
+          }
+
+          this.forceUpdate();
+        }
+
+        render() {
+          this.prepareFieldData(this.state.mapRows);
+
+          var elements = [];
+          this.state.mapRows.forEach((mapRow, y) => {
+            elements = elements.concat(
+              <div>
+                {mapRow.map((field, x) => {
+                  return <Field color={field.color}
+                    connectedTo={field.connectedTo}
+                    player={field.player}
+                    onClick={() => this.chooseField(y, x)}
+                    isClickable={field.isClickable} />;
+                })}
+              </div>
+            );
+          });
+
+          return elements;
+        }
+      }
+
+      // A single playfield
+      class Field extends React.Component {
+        constructor(props) {
+          super(props);
+
+          this.state = {
+            onClick: this.props.onClick
+          };
+        }
+
+        onClick() {
+          if(!this.props.isClickable) return;
+
+          this.state.onClick();
+        }
+
+        render() {
+          let btnClasses = ['field', `field-color-${this.props.color}`];
+          if(this.props.connectedTo.bottom) {
+            btnClasses.push('field-connected-to-bottom');
+          }
+          if(this.props.connectedTo.right) {
+            btnClasses.push('field-connected-to-right');
+          }
+          if(this.props.connectedTo.top) {
+            btnClasses.push('field-connected-to-top');
+          }
+          if(this.props.connectedTo.left) {
+            btnClasses.push('field-connected-to-left');
+          }
+
+          if(this.props.player) {
+            btnClasses.push(`field-belongs-to-player-${this.props.player}`);
+          }
+
+          if(this.props.isClickable) {
+            btnClasses.push('field-clickable');
+          }
+
+          return (
+            <div className={btnClasses.join(' ')} onClick={() => this.onClick()}></div>
+          );
+        }
+      }
+
+      const domContainer = document.querySelector('#game');
+      ReactDOM.render(<GameFields />, domContainer);
+    </script>
+
+</body>
+
+</html>
