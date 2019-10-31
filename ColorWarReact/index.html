@@ -25,10 +25,10 @@
 
     .field {
       display: inline-block;
-      width: 45px;
-      height: 45px;
+      width: 25px;
+      height: 25px;
       border: 5px solid #ECF0F1;
-      border-radius: 20px;
+      border-radius: 10px;
       vertical-align: top;
     }
 
@@ -49,20 +49,20 @@
     @keyframes breathing-border-animation {
       0% {
         border-width: 5px;
-        height: 45px;
-        width: 45px;
+        height: 25px;
+        width: 25px;
       }
 
       50% {
         border-width: 1px;
-        height: 53px;
-        width: 53px;
+        height: 33px;
+        width: 33px;
       }
 
       100% {
         border-width: 5px;
-        height: 45px;
-        width: 45px;
+        height: 25px;
+        width: 25px;
       }
     }
 
@@ -140,17 +140,11 @@
       background-color: #5E4534;
     }
   </style>
-
-  <script type="text/javascript">
-    document.addEventListener('touchstart', function (e) {
-      e.preventDefault();
-    });
-  </script>
 </head>
 
 <body>
   <div>
-    ColorWar V7
+    ColorWar V8
   </div>
 
   <!-- We will put our React component inside this div. -->
@@ -171,8 +165,8 @@
           this.state = {
             mapRows: null,
             currentPlayer: 1,
-            width: Math.ceil(window.innerWidth / 70),
-            height: Math.ceil(window.innerHeight / 70)
+            width: Math.ceil(window.innerWidth / 40),
+            height: Math.ceil(window.innerHeight / 40)
           };
 
           this.state.mapRows = this.buildRandomMap(this.state.width, this.state.height);
