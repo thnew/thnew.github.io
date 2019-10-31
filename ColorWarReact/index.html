@@ -141,11 +141,17 @@
       background-color: #5E4534;
     }
   </style>
+
+  <script type="text/javascript">
+    document.addEventListener('gesturestart', function (e) {
+      e.preventDefault();
+    });
+  </script>
 </head>
 
 <body>
   <div>
-      ColorWar V 0.1.4
+    ColorWar V0.1.5
   </div>
 
   <!-- We will put our React component inside this div. -->
@@ -166,8 +172,8 @@
           this.state = {
             mapRows: null,
             currentPlayer: 1,
-            width: Math.ceil(window.innerWidth / 80),
-            height: Math.ceil(window.innerHeight / 80)
+            width: Math.ceil(window.innerWidth / 85),
+            height: Math.ceil(window.innerHeight / 85)
           };
 
           this.state.mapRows = this.buildRandomMap(this.state.width, this.state.height);
