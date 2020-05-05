@@ -2,6 +2,64 @@
 app.factory('ProjectsFactory', function () {
     var projects = [
         {
+            title: "Bau einer Progressive Web App als zusätzlichen Marketingkanal",
+            customer: "Deutsche Wirtschaftsprüfung",
+            description: "Das Unternehmen benötigte eine App um ihre Blogartikel über einen modernen Weg zu transportieren. Dazu wurde der Bau einer Progressive Web App beschlossen, die Besucher mit Push Benachrichtigungen auf neue Inhalte hinweisen kann.",
+            location: "Hamburg",
+            languages: ["Deutsch", "Englisch"],
+            typeOfProject: "Scrum",
+            isTopProject: true,
+            typeOfSoftware: "Web",
+            timePeriods: [
+                {
+                    start: new Date(2020, 2),
+                }
+            ],
+            roles: ["Technischer Projektleiter", "Requirement Engineer"],
+            technicalLanguages: [],
+            frameworks: ["Docker"],
+            software: ["Azure DevOps", "Git"]
+        },
+        {
+            title: "Integration einer globalen Mandantenplattform",
+            customer: "Deutsche Wirtschaftsprüfung",
+            description: "Das Mutterunternehmen des Kunden hat eine globale Mandantenplattform geschaffen die im Rahmen dieses Projektes in die Softwarelandschaft des Kundens integriert wurde.",
+            location: "Hamburg",
+            languages: ["Deutsch", "Englisch"],
+            typeOfProject: "Scrum",
+            isTopProject: false,
+            typeOfSoftware: "Web",
+            timePeriods: [
+                {
+                    start: new Date(2020, 4),
+                }
+            ],
+            roles: ["Developer"],
+            technicalLanguages: ["C#", "HTML", "CSS", "JavaScript"],
+            frameworks: ["ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "Entity Framework", "AngularJS", "JQuery", "OData"],
+            software: ["Visual Studio", "Azure DevOps", "TFS"]
+        },
+        {
+            title: "Automatisierung und Verarbeitung von Massenanfragen an Geschäftspartner",
+            customer: "Deutsche Wirtschaftsprüfung",
+            description: "Im Rahmen der Erstellung von Jahresabschlüssen für die Mandanten einer Deutschen Wirtschaftsprüfung mussten immer tausende Geschäftspartner per Brief kontaktiert und dann die Antworten evaluiert werden. Dieses Projekt hat den gesamten Prozess von der Dokumenterstellung, über den Versand, bis hin zum Empfang von Briefen digitalisiert und zum Teil Arbeitsschritte in Nachbarländer ausgelagert.",
+            location: "Hamburg",
+            languages: ["Deutsch", "Englisch"],
+            typeOfProject: "Scrum",
+            isTopProject: true,
+            typeOfSoftware: "Web",
+            timePeriods: [
+                {
+                    start: new Date(2019, 8),
+                    end: new Date(2020, 5)
+                }
+            ],
+            roles: ["Developer", "Architekt", "Requirement Engineer", "Scrum Master"],
+            technicalLanguages: ["C#", "HTML", "CSS", "TypeScript"],
+            frameworks: [".NET Core", "ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "EF Core", "Angular 9", "Bootstrap"],
+            software: ["Visual Studio", "Azure DevOps", "Git"]
+        },
+        {
             title: "Erstellung von Jahresabschlüssen",
             customer: "Deutsche Wirtschaftsprüfung",
             description: "Für eine Wirtschaftsprüfungsgesellschaft wurde eine Software zur Berechnung von Jahresabschlüssen entwickelt. Die größte Herausforderung dabei war die Software als Standardsoftware zu bauen, die für jeden Kunden individuelle Komponenten, Finanz-Berichte und Datenbankdesigns zulässt.",
@@ -12,13 +70,14 @@ app.factory('ProjectsFactory', function () {
             typeOfSoftware: "Web",
             timePeriods: [
                 {
-                    start: new Date(2017, 6)
+                    start: new Date(2017, 6),
+                    end: new Date(2019, 7)
                 }
             ],
-            roles: ["Developer", "Architekt", "Technischer Ansprechpartner"],
+            roles: ["Developer", "Architekt", "Requirement Engineer"],
             technicalLanguages: ["C#", "HTML", "CSS", "JavaScript"],
             frameworks: ["ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "Entity Framework", "Swagger", "AngularJS", "Bootstrap", "MEF", "JQuery", "OData"],
-            software: ["Visual Studio", "TFS"]
+            software: ["Visual Studio", "Azure DevOps", "Git", "TFS"]
         },
         {
             title: "Planung von Instagram Beiträgen",

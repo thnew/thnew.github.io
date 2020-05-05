@@ -4,8 +4,69 @@ interface ProjectsFactory {
 	getProjects(): Project[]
 }
 
-app.factory('ProjectsFactory', function(): ProjectsFactory {
+app.factory('ProjectsFactory', function (): ProjectsFactory {
 	let projects: Project[] = [
+		{
+			title: "Bau einer Progressive Web App als zusätzlichen Marketingkanal",
+			customer: "Deutsche Wirtschaftsprüfung",
+			description: "Das Unternehmen benötigte eine App um ihre Blogartikel über einen modernen Weg zu transportieren. Dazu wurde der Bau einer Progressive Web App beschlossen, die Besucher mit Push Benachrichtigungen auf neue Inhalte hinweisen kann.",
+			location: "Hamburg",
+			languages: ["Deutsch", "Englisch"],
+			typeOfProject: "Scrum",
+			isTopProject: true,
+
+			typeOfSoftware: "Web",
+			timePeriods: [
+				{
+					start: new Date(2020, 2),
+				}
+			],
+			roles: ["Technischer Projektleiter", "Requirement Engineer"],
+			technicalLanguages: [],
+			frameworks: ["Docker"],
+			software: ["Azure DevOps", "Git"]
+		},
+		{
+			title: "Integration einer globalen Mandantenplattform",
+			customer: "Deutsche Wirtschaftsprüfung",
+			description: "Das Mutterunternehmen des Kunden hat eine globale Mandantenplattform geschaffen die im Rahmen dieses Projektes in die Softwarelandschaft des Kundens integriert wurde.",
+			location: "Hamburg",
+			languages: ["Deutsch", "Englisch"],
+			typeOfProject: "Scrum",
+			isTopProject: false,
+
+			typeOfSoftware: "Web",
+			timePeriods: [
+				{
+					start: new Date(2020, 4),
+				}
+			],
+			roles: ["Developer"],
+			technicalLanguages: ["C#", "HTML", "CSS", "JavaScript"],
+			frameworks: ["ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "Entity Framework", "AngularJS", "JQuery", "OData"],
+			software: ["Visual Studio", "Azure DevOps", "TFS"]
+		},
+		{
+			title: "Automatisierung und Verarbeitung von Massenanfragen an Geschäftspartner",
+			customer: "Deutsche Wirtschaftsprüfung",
+			description: "Im Rahmen der Erstellung von Jahresabschlüssen für die Mandanten einer Deutschen Wirtschaftsprüfung mussten immer tausende Geschäftspartner per Brief kontaktiert und dann die Antworten evaluiert werden. Dieses Projekt hat den gesamten Prozess von der Dokumenterstellung, über den Versand, bis hin zum Empfang von Briefen digitalisiert und zum Teil Arbeitsschritte in Nachbarländer ausgelagert.",
+			location: "Hamburg",
+			languages: ["Deutsch", "Englisch"],
+			typeOfProject: "Scrum",
+			isTopProject: true,
+
+			typeOfSoftware: "Web",
+			timePeriods: [
+				{
+					start: new Date(2019, 8),
+					end: new Date(2020, 5)
+				}
+			],
+			roles: ["Developer", "Architekt", "Requirement Engineer", "Scrum Master"],
+			technicalLanguages: ["C#", "HTML", "CSS", "TypeScript"],
+			frameworks: [".NET Core", "ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "EF Core", "Angular 9", "Bootstrap"],
+			software: ["Visual Studio", "Azure DevOps", "Git"]
+		},
 		{
 			title: "Erstellung von Jahresabschlüssen",
 			customer: "Deutsche Wirtschaftsprüfung",
@@ -14,17 +75,18 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			languages: ["Deutsch", "Englisch"],
 			typeOfProject: "Scrum",
 			isTopProject: true,
-			
+
 			typeOfSoftware: "Web",
 			timePeriods: [
 				{
-					start: new Date(2017, 6)
+					start: new Date(2017, 6),
+					end: new Date(2019, 7)
 				}
 			],
-			roles: [ "Developer", "Architekt", "Technischer Ansprechpartner" ],
-			technicalLanguages: [ "C#", "HTML", "CSS", "JavaScript" ],
-			frameworks: [ "ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "Entity Framework", "Swagger", "AngularJS", "Bootstrap", "MEF", "JQuery", "OData" ],
-			software: [ "Visual Studio", "TFS" ]
+			roles: ["Developer", "Architekt", "Requirement Engineer"],
+			technicalLanguages: ["C#", "HTML", "CSS", "JavaScript"],
+			frameworks: ["ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "Entity Framework", "Swagger", "AngularJS", "Bootstrap", "MEF", "JQuery", "OData"],
+			software: ["Visual Studio", "Azure DevOps", "Git", "TFS"]
 		},
 		{
 			title: "Planung von Instagram Beiträgen",
@@ -33,7 +95,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Hamburg",
 			languages: ["Deutsch"],
 			typeOfProject: "Einmannprojekt",
-			
+
 			typeOfSoftware: "Web",
 			timePeriods: [
 				{
@@ -41,10 +103,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2017, 5)
 				}
 			],
-			roles: [ "Developer", "Product Owner", "Software Architect" ],
-			technicalLanguages: [ "C#", "HTML", "CSS", "JavaScript", "SQL", "Razor", "TypeScript" ],
-			frameworks: [ "ASP.NET MVC", "ASP.NET WebAPI", "Entity Framework", "AngularJS", "JQuery" ],
-			software: [ "Visual Studio", "NodeJS" ]
+			roles: ["Developer", "Product Owner", "Software Architect"],
+			technicalLanguages: ["C#", "HTML", "CSS", "JavaScript", "SQL", "Razor", "TypeScript"],
+			frameworks: ["ASP.NET MVC", "ASP.NET WebAPI", "Entity Framework", "AngularJS", "JQuery"],
+			software: ["Visual Studio", "NodeJS"]
 		},
 		{
 			title: "Medizinisches Patienten Monitoring Dashboard",
@@ -53,7 +115,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Lübeck",
 			languages: ["Englisch"],
 			typeOfProject: "Scrum",
-			
+
 			typeOfSoftware: "Desktop",
 			timePeriods: [
 				{
@@ -61,10 +123,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2017, 2)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "C#", "XAML" ],
-			frameworks: [ "UWP - Universal Windows Platform", "XUnit" ],
-			software: [ "Visual Studio", "Jira", "Jenkins" ]
+			roles: ["Developer"],
+			technicalLanguages: ["C#", "XAML"],
+			frameworks: ["UWP - Universal Windows Platform", "XUnit"],
+			software: ["Visual Studio", "Jira", "Jenkins"]
 		},
 		{
 			title: "CRM für Spendenverein",
@@ -73,7 +135,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Hamburg",
 			languages: ["Deutsch"],
 			typeOfProject: "Scrum",
-			
+
 			typeOfSoftware: "Web",
 			timePeriods: [
 				{
@@ -81,10 +143,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2017, 0)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "HTML", "CSS", "JavaScript" ],
-			frameworks: [ "Microsoft Dynamics CRM 2016", "JQuery" ],
-			software: [ "Visual Studio" ]
+			roles: ["Developer"],
+			technicalLanguages: ["HTML", "CSS", "JavaScript"],
+			frameworks: ["Microsoft Dynamics CRM 2016", "JQuery"],
+			software: ["Visual Studio"]
 		},
 		{
 			title: "Bestell-Verwaltung für Zulieferer eines Flugzeugherstellers",
@@ -93,7 +155,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Hamburg",
 			languages: ["Deutsch"],
 			typeOfProject: "Einmannprojekt",
-			
+
 			typeOfSoftware: "Web",
 			timePeriods: [
 				{
@@ -101,10 +163,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2016, 11)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "C#", "JavaScript" ],
-			frameworks: [ "Microsoft Reporting Services", "ASP.NET WebForms" ],
-			software: [ "Visual Studio", "Oracle" ]
+			roles: ["Developer"],
+			technicalLanguages: ["C#", "JavaScript"],
+			frameworks: ["Microsoft Reporting Services", "ASP.NET WebForms"],
+			software: ["Visual Studio", "Oracle"]
 		},
 		{
 			title: "Verwaltung von Werbeaktionen und Warenlieferungen einer Modemarke",
@@ -114,7 +176,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			languages: ["Deutsch"],
 			typeOfProject: "Einmannprojekt",
 			isTopProject: true,
-			
+
 			typeOfSoftware: "Web",
 			timePeriods: [
 				{
@@ -122,10 +184,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2016, 7)
 				}
 			],
-			roles: [ "Developer", "Application Manager" ],
-			technicalLanguages: [ "C#", "SQL", "HTML", "CSS", "JavaScript" ],
-			frameworks: [ "ASP.NET MVC", "ASP.NET WebAPI", "Microsoft Reporting Services", "ExtJS", "Entity Framework" ],
-			software: [ "Visual Studio", "TFS" ]
+			roles: ["Developer", "Application Manager"],
+			technicalLanguages: ["C#", "SQL", "HTML", "CSS", "JavaScript"],
+			frameworks: ["ASP.NET MVC", "ASP.NET WebAPI", "Microsoft Reporting Services", "ExtJS", "Entity Framework"],
+			software: ["Visual Studio", "TFS"]
 		},
 		{
 			title: "Online WG Mitbewohnersuche",
@@ -134,7 +196,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Hamburg",
 			languages: ["Deutsch"],
 			typeOfProject: "Scrum",
-			
+
 			typeOfSoftware: "Web",
 			link: new URL("http://www.hamburg-startups.net/comate-me-die-geburt-eines-startups/"),
 			timePeriods: [
@@ -143,10 +205,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2015, 9)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "C#", "Razor", "HTML", "CSS", "JavaScript" ],
-			frameworks: [ "ASP.NET MVC", "Bootstrap" ],
-			software: [ "Visual Studio", "Azure" ]
+			roles: ["Developer"],
+			technicalLanguages: ["C#", "Razor", "HTML", "CSS", "JavaScript"],
+			frameworks: ["ASP.NET MVC", "Bootstrap"],
+			software: ["Visual Studio", "Azure"]
 		},
 		{
 			title: "Abwicklung von Fern-Zulieferungen eines Online Baumarktes",
@@ -156,7 +218,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			languages: ["Deutsch"],
 			typeOfProject: "Scrum",
 			isTopProject: true,
-			
+
 			typeOfSoftware: "Web",
 			timePeriods: [
 				{
@@ -164,10 +226,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2015, 8)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "Java", "HTML", "CSS", "JavaScript", "SCSS" ],
-			frameworks: [ "Bootstrap", "AngularJS", "JQuery" ],
-			software: [ "Eclipse", "Jenkins" ]
+			roles: ["Developer"],
+			technicalLanguages: ["Java", "HTML", "CSS", "JavaScript", "SCSS"],
+			frameworks: ["Bootstrap", "AngularJS", "JQuery"],
+			software: ["Eclipse", "Jenkins"]
 		},
 		{
 			title: "Performance Analyse Tool für Online Shop",
@@ -176,7 +238,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Hamburg",
 			languages: ["Deutsch"],
 			typeOfProject: "Einmannprojekt",
-			
+
 			typeOfSoftware: "Web",
 			link: new URL("http://scale-team.github.io/scale-perf/"),
 			timePeriods: [
@@ -185,10 +247,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2015, 3)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "HTML", "CSS", "JavaScript" ],
-			frameworks: [ ],
-			software: [ "Notepad++" ]
+			roles: ["Developer"],
+			technicalLanguages: ["HTML", "CSS", "JavaScript"],
+			frameworks: [],
+			software: ["Notepad++"]
 		},
 		{
 			title: "System zur Unterstützung der Verkehrsmessung",
@@ -197,7 +259,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Hamburg",
 			languages: ["Deutsch"],
 			typeOfProject: "Einmannprojekt",
-			
+
 			typeOfSoftware: "Desktop",
 			timePeriods: [
 				{
@@ -205,10 +267,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2015, 2)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "JavaScript" ],
-			frameworks: [ ],
-			software: [ "NodeJs", "Notepad++" ]
+			roles: ["Developer"],
+			technicalLanguages: ["JavaScript"],
+			frameworks: [],
+			software: ["NodeJs", "Notepad++"]
 		},
 		{
 			title: "JavaScript Framework zur Optimierung von Dateiuploads",
@@ -217,7 +279,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Offenbach am Main",
 			languages: ["Deutsch"],
 			typeOfProject: "Einmannprojekt",
-			
+
 			typeOfSoftware: "Web",
 			timePeriods: [
 				{
@@ -225,10 +287,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2014, 7)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "JavaScript" ],
-			frameworks: [ ],
-			software: [ "NodeJs", "Notepad++" ]
+			roles: ["Developer"],
+			technicalLanguages: ["JavaScript"],
+			frameworks: [],
+			software: ["NodeJs", "Notepad++"]
 		},
 		{
 			title: "Verwaltung von Marketing Dokumenten",
@@ -237,7 +299,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Offenbach am Main",
 			languages: ["Deutsch"],
 			typeOfProject: "Einmannprojekt",
-			
+
 			typeOfSoftware: "Web",
 			timePeriods: [
 				{
@@ -245,10 +307,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2014, 4)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "HTML", "CSS", "JavaScript", "LESS", "JQuery" ],
-			frameworks: [ "AngularJS", "Bootstrap" ],
-			software: [ "Notepad++", "Jenkins", "Amazon Web Service" ]
+			roles: ["Developer"],
+			technicalLanguages: ["HTML", "CSS", "JavaScript", "LESS", "JQuery"],
+			frameworks: ["AngularJS", "Bootstrap"],
+			software: ["Notepad++", "Jenkins", "Amazon Web Service"]
 		},
 		{
 			title: "Cloudbasierte Verwaltung von Passwörtern",
@@ -258,7 +320,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			languages: ["Deutsch"],
 			typeOfProject: "Einmannprojekt",
 			isTopProject: true,
-			
+
 			typeOfSoftware: "Web",
 			timePeriods: [
 				{
@@ -266,10 +328,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2013, 9)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "C#", "HTML", "CSS", "JavaScript" ],
-			frameworks: [ "Bootstrap", "ASP.NET MVC", "ASP.NET WebAPI", "JQuery" ],
-			software: [ "Visual Studio", "Jenkins", "Azure", "Amazon Web Service" ]
+			roles: ["Developer"],
+			technicalLanguages: ["C#", "HTML", "CSS", "JavaScript"],
+			frameworks: ["Bootstrap", "ASP.NET MVC", "ASP.NET WebAPI", "JQuery"],
+			software: ["Visual Studio", "Jenkins", "Azure", "Amazon Web Service"]
 		},
 		{
 			title: "Cloudbasierter Datenaustausch zwischen Kunden und Consultants ",
@@ -278,7 +340,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Offenbach am Main",
 			languages: ["Deutsch"],
 			typeOfProject: "Einmannprojekt",
-			
+
 			typeOfSoftware: "Web",
 			timePeriods: [
 				{
@@ -286,10 +348,10 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2011, 9)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "C#", "HTML", "CSS", "JavaScript" ],
-			frameworks: [ "ASP.NET MVC", "JQuery" ],
-			software: [ "Visual Studio", "Jenkins", "Azure", "Amazon Web Service" ]
+			roles: ["Developer"],
+			technicalLanguages: ["C#", "HTML", "CSS", "JavaScript"],
+			frameworks: ["ASP.NET MVC", "JQuery"],
+			software: ["Visual Studio", "Jenkins", "Azure", "Amazon Web Service"]
 		},
 		{
 			title: "Renn-Anzeige für Modellrennbahn",
@@ -298,7 +360,7 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			location: "Offenbach am Main",
 			languages: ["Deutsch"],
 			typeOfProject: "Wasserfall",
-			
+
 			typeOfSoftware: "Desktop",
 			timePeriods: [
 				{
@@ -306,13 +368,13 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 					end: new Date(2009, 7)
 				}
 			],
-			roles: [ "Developer" ],
-			technicalLanguages: [ "C#", "XAML" ],
-			frameworks: [ "WPF", "Windows Forms" ],
-			software: [ "Visual Studio" ]
+			roles: ["Developer"],
+			technicalLanguages: ["C#", "XAML"],
+			frameworks: ["WPF", "Windows Forms"],
+			software: ["Visual Studio"]
 		},
 	];
-	
+
 	projects.forEach(project => {
 		project.months = 0;
 
@@ -320,11 +382,11 @@ app.factory('ProjectsFactory', function(): ProjectsFactory {
 			.timePeriods
 			.forEach(timePeriod => {
 				let end: Date = timePeriod.end || new Date();
-		
+
 				project.months += Math.round(Math.abs(end.getTime() - timePeriod.start.getTime()) / (1000 * 60 * 60 * 24 * 30)) + 1;
 			});
 	});
-	
+
 	return {
 		getProjects: function (): Project[] {
 			return projects;
