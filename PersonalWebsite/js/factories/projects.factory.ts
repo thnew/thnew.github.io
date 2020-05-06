@@ -24,8 +24,8 @@ app.factory('ProjectsFactory', function (): ProjectsFactory {
 			],
 			roles: ["Technischer Projektleiter", "Requirement Engineer"],
 			technicalLanguages: [],
-			frameworks: ["Docker"],
-			software: ["Azure DevOps", "Git"]
+			frameworks: [],
+			software: ["Azure", "Docker", "Azure DevOps", "Git"]
 		},
 		{
 			title: "Integration einer globalen Mandantenplattform",
