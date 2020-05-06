@@ -19,6 +19,7 @@ app.factory('ProjectsFactory', function (): ProjectsFactory {
 			timePeriods: [
 				{
 					start: new Date(2020, 2),
+					end: new Date(2020, 5)
 				}
 			],
 			roles: ["Technischer Projektleiter", "Requirement Engineer"],
@@ -39,6 +40,7 @@ app.factory('ProjectsFactory', function (): ProjectsFactory {
 			timePeriods: [
 				{
 					start: new Date(2020, 4),
+					end: new Date(2020, 5)
 				}
 			],
 			roles: ["Developer"],
