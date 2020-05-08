@@ -8,7 +8,7 @@
             <i class="fa fa-star" ng-show="skill.isTopSkill && vm.shouldShowAllSkills()"></i>
         </div>
         
-        <div class="skill-item skill-item-link dashed-border noprint"
+        <a class="skill-item skill-item-link dashed-border noprint"
                 ng-click="vm.shouldShowAllSkills(!vm.shouldShowAllSkills())">
             <span ng-show="vm.shouldShowAllSkills()">
                 Zeige nur Top Skills
@@ -16,6 +16,6 @@
             <span ng-show="!vm.shouldShowAllSkills()">
                 Zeige alle Skills
             </span>
-        </div>
+        </a>
     </div>
 </div>

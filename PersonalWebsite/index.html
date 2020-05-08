@@ -22,7 +22,9 @@
 
 	<!-- Main CSS -->
 	<link href="css/main.css" rel="stylesheet">
+	<link href="css/print-view.css" rel="stylesheet">
 
+	<!--Styles that need to be there immediately without the need of being relaoded-->
 	<style>
 		body:not(.ng-scope)>*:not(.loading-screen),
 		body:not(.ng-scope) .loadingoverlay {
@@ -61,11 +63,9 @@
 			</div>
 
 			<div class="page-header__description">
-				<!-- <img class="page-header__description__image"
-						 src="images/certificate.png" /> -->
-
 				Fullstack Microsoft Webdeveloper
 
+				<!--Will incldue this again when extending this page with more than my job details-->
 				<!-- <span uib-dropdown on-toggle="toggled(open)">
 					<a href id="pages-dropdown" uib-dropdown-toggle>
 						<span ng-if="vm.isWorkPage()">
@@ -95,26 +95,34 @@
 			</div>
 
 			<div class="page-header__contacts">
-				<a href="mailto: thomasheigl2@gmail.com" target="_blank" class="contact-item dashed-border">
+				<a href="mailto: thomasheigl2@gmail.com" target="_blank"
+					class="contact-item dashed-border hidden-print">
 					<i class="fa fa-envelope"></i>
 				</a>
 				<a ng-if="vm.isWorkPage()" href="https://www.xing.com/profile/Thomas_Heigl9" target="_blank"
-					class="contact-item dashed-border">
+					class="contact-item dashed-border hidden-print">
 					<i class="fa fa-xing"></i>
 				</a>
 				<a ng-if="vm.isWorkPage()" href="https://www.linkedin.com/in/thomas-heigl-86462a8a/" target="_blank"
-					class="contact-item dashed-border">
+					class="contact-item dashed-border hidden-print">
 					<i class="fa fa-linkedin"></i>
 				</a>
 				<a ng-if="vm.isWorkPage()" href="https://github.com/thnew" target="_blank"
-					class="contact-item dashed-border">
+					class="contact-item dashed-border hidden-print">
 					<i class="fa fa-github"></i>
 				</a>
 
 				<a ng-if="vm.isTravelPage()" href="https://www.instagram.com/onedaywewillbeold" target="_blank"
-					class="contact-item dashed-border">
+					class="contact-item dashed-border hidden-print">
 					<i class="fa fa-instagram"></i>
 				</a>
+
+				<div class="visible-print-block">
+					<i class="fa fa-desktop"></i> thomasheigl.com
+				</div>
+				<div class="visible-print-block">
+					<i class="fa fa-envelope"></i> thomasheigl2@gmail.com
+				</div>
 			</div>
 		</div>
 	</header>
@@ -136,7 +144,7 @@
 
 	<div ng-if="vm.isWorkPage()" class="fixed-width-md">
 		<section class="main">
-			<div class="row">
+			<div class="row hidden-print">
 				<div class="col-sm-6">
 					<div class="basic-info-item">
 						<i class="fa fa-code basic-info-item__icon"></i>
@@ -188,13 +196,7 @@
 				</div>
 			</div>
 
-			<!-- Platzhalter für die Blogpreview
-				<div class="separator"></div>
-
-				<h2>Aus Meinem Blog</h2>
-				-->
-
-			<div class="separator"></div>
+			<div class="separator hidden-print"></div>
 
 			<h2>
 				<span ng-show="!vm.shouldShowAllSkills()">
@@ -216,40 +218,14 @@
 
 			<div class="separator"></div>
 
-			<h2>
+			<h2 id="ProjectsTitle">
 				Projekte
 				<br />
 				<br />
 			</h2>
 
-			<!-- <h2>
-					<span ng-show="vm.showOnlyTopProjects">
-						Top Projekte
-					</span>
-					<span ng-show="!vm.showOnlyTopProjects">
-						Alle Projekte
-					</span>
-
-					<small>
-						{{ vm.projects.length }} insgesamt
-					</small>
-
-					<br />
-					<br />
-				</h2> -->
-
 			<projects-component projects="vm.projects" should-show-only-top-projects="vm.shouldShowOnlyTopProjects">
 			</projects-component>
-
-			<!-- <a class="clickable title-link pull-right"
-				   ng-click="vm.shouldShowOnlyTopProjects(!vm.shouldShowOnlyTopProjects())">
-					<span ng-show="vm.shouldShowOnlyTopProjects()">
-						zeige alle {{ vm.projects.length }} Projekte
-					</span>
-					<span ng-show="!vm.shouldShowOnlyTopProjects()">
-						zeige nur Top Projekte
-					</span>
-				</a> -->
 		</section>
 	</div>
 

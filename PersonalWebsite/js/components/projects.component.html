@@ -1,5 +1,4 @@
-<div class="row"
-     ng-repeat="project in vm.projects | filter: (vm.shouldShowOnlyTopProjects() || isTopProject)">
+<div class="row" ng-repeat="project in vm.projects | filter: (vm.shouldShowOnlyTopProjects() || isTopProject)">
     <div class="col-sm-3">
         <div class="text-center">
             <strong>
@@ -9,8 +8,7 @@
                 <span ng-if="project.months > 1">Monate</span>
             </strong>
         </div>
-        <div class="text-center"
-             ng-repeat="timePeriod in project.timePeriods | orderBy: '-start'">
+        <div class="text-center" ng-repeat="timePeriod in project.timePeriods | orderBy: '-start'">
             <span>
                 {{ timePeriod.start | date: "MM/yyyy" }}
             </span>
@@ -23,7 +21,7 @@
             </span>
         </div>
     </div>
-    
+
     <div class="col-sm-9">
         <div class="project-item dashed-border">
             <div class="project-item__title">
@@ -31,67 +29,62 @@
                 <i class="fa fa-windows" ng-show="project.typeOfSoftware == 'Desktop'"></i>
                 &nbsp;
                 {{ project.title }}
-                
-                <a href="{{ project.link }}"
-                    target="_blank"
-                    ng-show="project.link != null">
+
+                <a href="{{ project.link }}" target="_blank" ng-show="project.link != null">
                     <i class="fa fa-external-link"></i>
                 </a>
             </div>
-            
+
             <small class="text-muted">
                 Kunde: {{ project.customer }}
             </small>
-            
+
             <div class="project-item__more-icon clickable"
-                    ng-click="project.showFullDescription = !project.showFullDescription">
+                ng-click="project.showFullDescription = !project.showFullDescription">
                 <i class="fa fa-caret-down" ng-show="!project.showFullDescription"></i>
                 <i class="fa fa-caret-up" ng-show="project.showFullDescription"></i>
             </div>
-            
-            <div class="project-item__description"
-                    ng-show="project.showFullDescription">
+
+            <div class="project-item__description {{ !project.showFullDescription ? 'project-item__description-hidden' : '' }}">
                 {{ project.description }}
-                
+
                 <div class="row">
                     <div class="col-sm-4">
                         <h4 ng-if="project.languages.length == 1">Sprache</h4>
                         <h4 ng-if="project.languages.length > 1">Sprachen</h4>
 
                         <div class="skill-item skill-item-small dashed-border"
-                             ng-repeat="language in project.languages">
+                            ng-repeat="language in project.languages">
                             {{ language }}
                         </div>
                     </div>
-                    
+
                     <div class="col-sm-8">
                         <h4>Rollen</h4>
-                        <div class="skill-item skill-item-small dashed-border"
-                             ng-repeat="role in project.roles">
+                        <div class="skill-item skill-item-small dashed-border" ng-repeat="role in project.roles">
                             {{ role }}
                         </div>
                     </div>
-                    
+
                     <div class="col-sm-12">
                         <h4>Technische Sprachen</h4>
                         <div class="skill-item skill-item-small dashed-border"
-                             ng-repeat="language in project.technicalLanguages">
+                            ng-repeat="language in project.technicalLanguages">
                             {{ language }}
                         </div>
                     </div>
-                        
+
                     <div class="col-sm-12">
                         <h4>Frameworks</h4>
                         <div class="skill-item skill-item-small dashed-border"
-                             ng-repeat="framework in project.frameworks">
+                            ng-repeat="framework in project.frameworks">
                             {{ framework }}
                         </div>
                     </div>
-                        
+
                     <div class="col-sm-12">
                         <h4>Software</h4>
-                        <div class="skill-item skill-item-small dashed-border"
-                            ng-repeat="software in project.software">
+                        <div class="skill-item skill-item-small dashed-border" ng-repeat="software in project.software">
                             {{ software }}
                         </div>
                     </div>

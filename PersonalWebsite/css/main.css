@@ -323,6 +323,10 @@ a.title-link:hover {
 	.project-item .project-item__description {
 		margin-top: 10px;
 	}
+
+		.project-item__description-hidden {
+			display: none;
+		}
 	
 		.project-item .project-item__description .project-item__description__short-text {
 			height: 20px;
