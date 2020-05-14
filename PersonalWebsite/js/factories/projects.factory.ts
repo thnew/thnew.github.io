@@ -28,27 +28,6 @@ app.factory('ProjectsFactory', function (): ProjectsFactory {
 			software: ["Azure", "Docker", "Azure DevOps", "Git"]
 		},
 		{
-			title: "Integration einer globalen Mandantenplattform",
-			customer: "Deutsche Wirtschaftsprüfung",
-			description: "Das Mutterunternehmen des Kunden hat eine globale Mandantenplattform geschaffen die im Rahmen dieses Projektes in die Softwarelandschaft des Kundens integriert wurde.",
-			location: "Hamburg",
-			languages: ["Deutsch", "Englisch"],
-			typeOfProject: "Scrum",
-			isTopProject: false,
-
-			typeOfSoftware: "Web",
-			timePeriods: [
-				{
-					start: new Date(2020, 4),
-					end: new Date(2020, 5)
-				}
-			],
-			roles: ["Developer"],
-			technicalLanguages: ["C#", "HTML", "CSS", "JavaScript"],
-			frameworks: ["ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "Entity Framework", "AngularJS", "JQuery", "OData"],
-			software: ["Visual Studio", "Azure DevOps", "TFS"]
-		},
-		{
 			title: "Automatisierung und Verarbeitung von Massenanfragen an Geschäftspartner",
 			customer: "Deutsche Wirtschaftsprüfung",
 			description: "Im Rahmen der Erstellung von Jahresabschlüssen für die Mandanten einer Deutschen Wirtschaftsprüfung mussten immer tausende Geschäftspartner per Brief kontaktiert und dann die Antworten evaluiert werden. Dieses Projekt hat den gesamten Prozess von der Dokumenterstellung, über den Versand, bis hin zum Empfang von Briefen digitalisiert und zum Teil Arbeitsschritte in Nachbarländer ausgelagert.",
