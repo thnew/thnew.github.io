@@ -7,7 +7,7 @@ interface ProjectsFactory {
 app.factory('ProjectsFactory', function (): ProjectsFactory {
 	let projects: Project[] = [
 		{
-			title: "Automatisierung und Verarbeitung von Massenanfragen an Geschäftspartner",
+			title: "Automatisierung vom Briefversand und -empfang an und von Geschäftspartner",
 			customer: "Deutsche Wirtschaftsprüfung",
 			description: "Im Rahmen der Erstellung von Jahresabschlüssen für die Mandanten einer Deutschen Wirtschaftsprüfung mussten immer tausende Geschäftspartner per Brief kontaktiert und dann die Antworten evaluiert werden. Dieses Projekt hat den gesamten Prozess von der Dokumenterstellung, über den Versand, bis hin zum Empfang von Briefen digitalisiert und zum Teil Arbeitsschritte in Nachbarländer ausgelagert.",
 			location: "Hamburg",
