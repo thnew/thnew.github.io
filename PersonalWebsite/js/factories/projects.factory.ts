@@ -7,27 +7,6 @@ interface ProjectsFactory {
 app.factory('ProjectsFactory', function (): ProjectsFactory {
 	let projects: Project[] = [
 		{
-			title: "Bau einer Progressive Web App als zusätzlichen Marketingkanal",
-			customer: "Deutsche Wirtschaftsprüfung",
-			description: "Das Unternehmen benötigte eine App um ihre Blogartikel über einen modernen Weg zu transportieren. Dazu wurde der Bau einer Progressive Web App beschlossen, die Besucher mit Push Benachrichtigungen auf neue Inhalte hinweisen kann.",
-			location: "Hamburg",
-			languages: ["Deutsch", "Englisch"],
-			typeOfProject: "Scrum",
-			isTopProject: true,
-
-			typeOfSoftware: "Web",
-			timePeriods: [
-				{
-					start: new Date(2020, 2),
-					end: new Date(2020, 5)
-				}
-			],
-			roles: ["Technischer Projektleiter", "Requirement Engineer"],
-			technicalLanguages: [],
-			frameworks: [],
-			software: ["Azure", "Docker", "Azure DevOps", "Git"]
-		},
-		{
 			title: "Automatisierung und Verarbeitung von Massenanfragen an Geschäftspartner",
 			customer: "Deutsche Wirtschaftsprüfung",
 			description: "Im Rahmen der Erstellung von Jahresabschlüssen für die Mandanten einer Deutschen Wirtschaftsprüfung mussten immer tausende Geschäftspartner per Brief kontaktiert und dann die Antworten evaluiert werden. Dieses Projekt hat den gesamten Prozess von der Dokumenterstellung, über den Versand, bis hin zum Empfang von Briefen digitalisiert und zum Teil Arbeitsschritte in Nachbarländer ausgelagert.",
@@ -40,13 +19,75 @@ app.factory('ProjectsFactory', function (): ProjectsFactory {
 			timePeriods: [
 				{
 					start: new Date(2019, 8),
-					end: new Date(2020, 5)
 				}
 			],
 			roles: ["Developer", "Architekt", "Requirement Engineer", "Scrum Master"],
 			technicalLanguages: ["C#", "HTML", "CSS", "TypeScript"],
 			frameworks: [".NET Core", "ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "EF Core", "Angular 9", "Bootstrap"],
 			software: ["Visual Studio", "Azure DevOps", "Git"]
+		},
+		{
+			title: "Bau einer Web Applikation für Mitarbeitergespräche",
+			customer: "Deutsche Wirtschaftsprüfung",
+			description: "Das Unternehmen benötigte kurzfristig eine Anwendung für Mitarbeitergespräche die in Form einer Web Anwendung umgesetzt wurde.",
+			location: "Hamburg",
+			languages: ["Deutsch"],
+			typeOfProject: "Scrum",
+			isTopProject: true,
+
+			typeOfSoftware: "Web",
+			timePeriods: [
+				{
+					start: new Date(2020, 6),
+					end: new Date(2020, 6)
+				}
+			],
+			roles: ["Developer"],
+			technicalLanguages: ["C#", "HTML", "CSS", "TypeScript"],
+			frameworks: [".NET Core", "ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "EF Core", "Angular 9", "Bootstrap"],
+			software: ["Visual Studio", "Azure DevOps", "Git"]
+		},
+		{
+			title: "Integration einer Software zum Dokumentaustausch",
+			customer: "Deutsche Wirtschaftsprüfung",
+			description: "Die globale Dachgesellschaft der Firma hat eine Software für den digitalen Dokumentaustausch mit Kunden gebaut, die von allen nationalen Standorten verwendet werden sollte. Im Rahmen dieses Projekts wurde die Software fest mit dem internen ERP System des Standorts Deutschland verdrahtet.",
+			location: "Hamburg",
+			languages: ["Deutsch", "Englisch"],
+			typeOfProject: "Scrum",
+			isTopProject: true,
+
+			typeOfSoftware: "Web",
+			timePeriods: [
+				{
+					start: new Date(2020, 3),
+					end: new Date(2020, 5)
+				}
+			],
+			roles: ["Developer"],
+			technicalLanguages: ["C#", "HTML", "CSS", "TypeScript"],
+			frameworks: [".NET Framework", "ASP.NET MVC", "ASP.NET WebAPI", "KendoUI", "Entity Framework", "AngularJs"],
+			software: ["Visual Studio", "Azure DevOps", "TFS"]
+		},
+		{
+			title: "Bau einer Progressive Web App als zusätzlichen Marketingkanal",
+			customer: "Deutsche Wirtschaftsprüfung",
+			description: "Das Unternehmen benötigte eine App um ihre Blogartikel über einen modernen Weg zu transportieren. Dazu wurde der Bau einer Progressive Web App beschlossen, die Besucher mit Push Benachrichtigungen auf neue Inhalte hinweisen kann.",
+			location: "Hamburg",
+			languages: ["Deutsch", "Englisch"],
+			typeOfProject: "Scrum",
+			isTopProject: true,
+
+			typeOfSoftware: "Web",
+			timePeriods: [
+				{
+					start: new Date(2020, 2),
+					end: new Date(2020, 9)
+				}
+			],
+			roles: ["Technischer Projektleiter", "Requirement Engineer"],
+			technicalLanguages: [],
+			frameworks: [],
+			software: ["Azure", "Docker", "Azure DevOps", "Git"]
 		},
 		{
 			title: "Erstellung von Jahresabschlüssen",
